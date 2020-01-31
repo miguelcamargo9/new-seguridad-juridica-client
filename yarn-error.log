@@ -1,0 +1,131 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\mcamargo\bin;C:\Program Files\Java\jdk1.8.0_181\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Windows Imaging;C:\Program Files\PuTTY;C:\xampp3\php;C:\Program Files (x86)\apache-maven-3.5.4\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn;C:\Program Files\nodejs;C:\Users\mcamargo\AppData\Local\Programs\Python\Python38-32\Scripts;C:\Users\mcamargo\AppData\Local\Programs\Python\Python38-32;C:\composer;C:\Program Files (x86)\Yarn\bin;C:\Users\mcamargo\AppData\Local\Programs\Python\Python38-32\Scripts;C:\Users\mcamargo\AppData\Local\Programs\Python\Python38-32;C:\Ruby24-x64\bin;C:\Users\mcamargo\AppData\Local\Microsoft\WindowsApps;C:\Users\mcamargo\AppData\Roaming\npm;C:\Users\mcamargo\AppData\Local\atom\bin;C:\Users\mcamargo\AppData\Roaming\Composer\vendor\bin;C:\Python27;C:\Python27\Scripts;C:\Users\mcamargo\AppData\Local\Microsoft\WindowsApps;C:\Users\mcamargo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\mcamargo\AppData\Local\Yarn\bin
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  10.15.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/domino/-/domino-2.1.4.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141292:19)
+      at Object.onceWrapper (events.js:277:13)
+      at ClientRequest.emit (events.js:189:13)
+      at TLSSocket.emitRequestTimeout (_http_client.js:662:40)
+      at Object.onceWrapper (events.js:277:13)
+      at TLSSocket.emit (events.js:189:13)
+      at TLSSocket.Socket._onTimeout (net.js:440:8)
+      at ontimeout (timers.js:436:11)
+      at tryOnTimeout (timers.js:300:5)
+      at listOnTimeout (timers.js:263:5)
+
+npm manifest: 
+  {
+    "name": "material-dashboard-pro-angular",
+    "version": "2.3.0",
+    "license": "https://demos.creative-tim.com/material-dashboard-pro-angular2/documentation/tutorial",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/creativetimofficial/ct-material-dashboard-pro-angular.git"
+    },
+    "scripts": {
+      "ng": "ng",
+      "start": "ng serve",
+      "build": "ng build",
+      "test": "ng test",
+      "lint": "ng lint",
+      "e2e": "ng e2e",
+      "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install"
+    },
+    "private": true,
+    "dependencies": {
+      "@agm/core": "1.0.0-beta.6",
+      "@angular/animations": "8.0.0",
+      "@angular/cdk": "8.0.0",
+      "@angular/common": "8.0.0",
+      "@angular/compiler": "8.0.0",
+      "@angular/core": "8.0.0",
+      "@angular/forms": "8.0.0",
+      "@angular/http": "7.2.15",
+      "@angular/material": "8.0.0",
+      "@angular/platform-browser": "8.0.0",
+      "@angular/platform-browser-dynamic": "8.0.0",
+      "@angular/platform-server": "8.0.0",
+      "@angular/router": "8.0.0",
+      "ajv": "6.10.0",
+      "angular-calendar": "0.27.9",
+      "animate.css": "3.7.2",
+      "arrive": "2.4.1",
+      "bootstrap": "4.3.1",
+      "bootstrap-material-design": "4.1.2",
+      "bootstrap-notify": "3.1.3",
+      "bootstrap-rtl": "3.3.4",
+      "bootstrap-select": "1.13.10",
+      "bootstrap-tagsinput": "0.7.1",
+      "chartist": "0.9.8",
+      "chartist-plugin-zoom": "0.4.1",
+      "core-js": "3.1.3",
+      "datatables": "1.10.18",
+      "datatables.net-bs4": "1.10.19",
+      "datatables.net-responsive": "2.2.3",
+      "fullcalendar": "3.4.0",
+      "googleapis": "40.0.0",
+      "hammerjs": "2.0.8",
+      "jasny-bootstrap": "3.1.3",
+      "jquery": "3.4.1",
+      "jquery-validation": "1.17.0",
+      "jqvmap": "1.5.1",
+      "moment": "2.24.0",
+      "moment-timezone": "0.5.25",
+      "ng2-nouislider": "1.8.2",
+      "ng2-select": "2.0.0",
+      "ngx-chips": "1.9.8",
+      "nouislider": "9.2.0",
+      "perfect-scrollbar": "1.1.0",
+      "popper.js": "1.15.0",
+      "rxjs": "6.5.2",
+      "rxjs-compat": "6.5.2",
+      "sweetalert2": "7.22.2",
+      "twitter-bootstrap-wizard": "1.2.0",
+      "uglify-js": "3.6.0",
+      "validate": "3.0.1",
+      "web-animations-js": "2.3.1",
+      "zone.js": "0.9.1"
+    },
+    "devDependencies": {
+      "@angular-devkit/build-angular": "0.800.1",
+      "@angular/cli": "8.0.1",
+      "@angular/compiler-cli": "8.0.0",
+      "@types/bootstrap": "4.3.0",
+      "@types/chartist": "0.9.46",
+      "@types/jasmine": "3.3.13",
+      "@types/jquery": "3.3.29",
+      "@types/node": "12.0.5",
+      "codelyzer": "5.1.0",
+      "jasmine-core": "3.4.0",
+      "jasmine-spec-reporter": "4.2.1",
+      "karma": "4.1.0",
+      "karma-chrome-launcher": "2.2.0",
+      "karma-cli": "2.0.0",
+      "karma-coverage-istanbul-reporter": "2.0.5",
+      "karma-jasmine": "2.0.1",
+      "karma-jasmine-html-reporter": "1.4.2",
+      "protractor": "5.4.2",
+      "ts-node": "8.2.0",
+      "tslint": "5.17.0",
+      "typescript": "3.4.5"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
