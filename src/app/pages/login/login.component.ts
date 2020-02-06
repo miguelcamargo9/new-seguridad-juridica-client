@@ -95,7 +95,6 @@ export class LoginComponent implements OnInit, OnDestroy {
           console.error(err);
         },
         () => {
-          console.error("asdasdasd222222");
           console.log("User fin is logged in");
           // this.router.navigate(['/pages/auth/login']);
           // this.router.navigate(['/sample2']);

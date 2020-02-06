@@ -26,7 +26,6 @@ export class AuthGuard implements CanActivate {
     const jwtHelper: JwtHelper = new JwtHelper();
     const token = localStorage.getItem(environment.keyToken);
     let result = false;
-    console.log("permisos", jwtHelper.decodeToken(token));
 
     if (token && !jwtHelper.isTokenExpired(token)) {
       const roles = next.data["roles"] as Array<string>;

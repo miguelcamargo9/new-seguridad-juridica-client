@@ -10,6 +10,8 @@ import {
 import { ErrorStateMatcher } from "@angular/material/core";
 import { CompanyService } from "../companies.service";
 import { ToastrService } from "ngx-toastr";
+import { Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -28,10 +30,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 declare var $: any;
 
 @Component({
-  selector: "app-create-companies-cmp",
-  templateUrl: "createcompanies.component.html"
+  selector: "app-edit-companies-cmp",
+  templateUrl: "editcompanies.component.html"
 })
-export class CreateCompaniesComponent {
+export class EditCompaniesComponent {
   businessNameFormControl = new FormControl("", [Validators.required]);
 
   validTextType: boolean = false;
@@ -43,10 +45,15 @@ export class CreateCompaniesComponent {
   validDocumentNumber: boolean = false;
   validRut: boolean = false;
 
+  routeSub: Subscription;
+
+  companyId: Number;
+
   constructor(
     private formBuilder: FormBuilder,
     private companyService: CompanyService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: ActivatedRoute
   ) {}
 
   isFieldValid(form: FormGroup, field: string) {
@@ -65,21 +72,22 @@ export class CreateCompaniesComponent {
       const val = this.createComany.value;
 
       const data = {
+        id: this.companyId,
         businessName: val.businessName,
         documentNumber: val.documentNumber,
         rut: val.rut
       };
-      this.companyService.postCreateCompany(data).subscribe(
+      this.companyService.postUpdateCompany(data).subscribe(
         data => {
-          this.toastr.success("Compañia creada con exito", "Compañia");
+          this.toastr.success("Compañia editada con exito", "Compañia");
           // this.router.navigate([environment.pathInit]);
         },
         err => {
-          this.toastr.error("Error creando la compañia", "Compañia");
+          this.toastr.error("Error al editar la compañia", "Compañia");
           console.error(err);
         },
         () => {
-          console.log("Company fin is created");
+          console.log("Company fin is updated");
         }
       );
     } else {
@@ -104,6 +112,23 @@ export class CreateCompaniesComponent {
       documentNumber: [null, [Validators.required]],
       rut: [null, [Validators.required]]
     });
+    this.routeSub = this.route.params.subscribe(params => {
+      this.companyId = params["id"];
+      this.companyService.getCompanyById(params["id"]).subscribe(
+        companiesData => {
+          this.createComany.controls["businessName"].setValue(
+            companiesData.businessName
+          );
+          this.createComany.controls["documentNumber"].setValue(
+            companiesData.documentNumber
+          );
+          this.createComany.controls["rut"].setValue(companiesData.rut);
+        },
+        error => {
+          console.log("Error Obteniendo el Objeto!" + error);
+        }
+      );
+    });
   }
 
   textValidationType(e) {
@@ -112,5 +137,9 @@ export class CreateCompaniesComponent {
     } else {
       this.validTextType = false;
     }
+  }
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
 }

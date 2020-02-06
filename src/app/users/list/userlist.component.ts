@@ -22,29 +22,31 @@ export class UserListComponent implements OnInit, AfterViewInit {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
+    this.dataTable = {
+      headerRow: [
+        "Nombre",
+        "Nickname",
+        "Correo",
+        "Documento",
+        "Compañia",
+        "Rol",
+        "Actions"
+      ],
+      footerRow: [
+        "Nombre",
+        "Nickname",
+        "Correo",
+        "Documento",
+        "Compañia",
+        "Rol",
+        "Actions"
+      ],
+      dataRows: []
+    };
     this.userService.getUsers().subscribe(
       x => {
-        this.dataTable = {
-          headerRow: [
-            "Nombre",
-            "Nickname",
-            "Correo",
-            "Documento",
-            "Compañia",
-            "Rol",
-            "Actions"
-          ],
-          footerRow: [
-            "Nombre",
-            "Nickname",
-            "Correo",
-            "Documento",
-            "Compañia",
-            "Rol",
-            "Actions"
-          ],
-          dataRows: x
-        };
+        console.log(x);
+        this.dataTable.dataRows = x;
       },
       error => {
         // this.toastr.error('Error al iniciar sesión', 'Login');
@@ -63,7 +65,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
       responsive: true,
       language: {
         search: "_INPUT_",
-        searchPlaceholder: "Search records"
+        searchPlaceholder: "Buscar"
       }
     });
 

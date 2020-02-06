@@ -43,17 +43,18 @@ export const ROUTES: RouteInfo[] = [
         path: "list",
         title: "Usuarios",
         ab: "US",
-        permission: "listUserComponent"
+        permission: "UserListComponent"
       },
       {
         path: "create",
         title: "Crear Usuario",
-        ab: "CU"
+        ab: "CU",
+        permission: "CreateUserComponent"
       }
     ]
   },
   {
-    path: "/company",
+    path: "/companies",
     title: "Compañias",
     type: "sub",
     icontype: "work",
@@ -61,12 +62,12 @@ export const ROUTES: RouteInfo[] = [
     children: [
       {
         path: "all",
-        title: "Comapñias",
+        title: "Compañias",
         ab: "CM"
       },
       {
         path: "create",
-        title: "Crear Company",
+        title: "Crear Compañia",
         ab: "CC"
       }
     ]

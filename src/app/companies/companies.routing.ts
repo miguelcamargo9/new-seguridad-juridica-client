@@ -1,6 +1,8 @@
 import { Routes } from "@angular/router";
 
 import { CreateCompaniesComponent } from "./create/createcompanies.component";
+import { CompaniesListComponent } from "./list/listcompanies.component";
+import { EditCompaniesComponent } from "./edit/editcompanies.component";
 
 export const CompaniesRoutes: Routes = [
   {
@@ -9,6 +11,14 @@ export const CompaniesRoutes: Routes = [
       {
         path: "create",
         component: CreateCompaniesComponent
+      },
+      {
+        path: "all",
+        component: CompaniesListComponent
+      },
+      {
+        path: "edit/:id",
+        component: EditCompaniesComponent
       }
     ]
   }

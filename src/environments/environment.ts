@@ -8,5 +8,5 @@ export const environment = {
   apiUrl: "http://localhost:8080",
   keyToken: "token",
   pathInit: "/dashboard",
-  pathLogin: "/public/login"
+  pathLogin: "/pages/login"
 };

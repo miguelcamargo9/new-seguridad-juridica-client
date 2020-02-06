@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header card-header-primary card-header-icon">
+          <div class="card-header card-header-success card-header-icon">
             <div class="card-icon">
-              <i class="material-icons">assignment</i>
+              <i class="material-icons">person</i>
             </div>
-            <h4 class="card-title">DataTables.net</h4>
+            <h4 class="card-title">Lista de Usuarios</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -28,8 +28,9 @@
                     <th>{{ dataTable.headerRow[2] }}</th>
                     <th>{{ dataTable.headerRow[3] }}</th>
                     <th>{{ dataTable.headerRow[4] }}</th>
+                    <th>{{ dataTable.headerRow[5] }}</th>
                     <th class="disabled-sorting text-right">
-                      {{ dataTable.headerRow[5] }}
+                      {{ dataTable.headerRow[6] }}
                     </th>
                   </tr>
                 </thead>
@@ -40,16 +41,18 @@
                     <th>{{ dataTable.footerRow[2] }}</th>
                     <th>{{ dataTable.footerRow[3] }}</th>
                     <th>{{ dataTable.footerRow[4] }}</th>
-                    <th class="text-right">{{ dataTable.footerRow[5] }}</th>
+                    <th>{{ dataTable.footerRow[5] }}</th>
+                    <th class="text-right">{{ dataTable.footerRow[6] }}</th>
                   </tr>
                 </tfoot>
                 <tbody>
                   <tr *ngFor="let row of dataTable.dataRows">
-                    <td>{{ row[0] }}</td>
-                    <td>{{ row[1] }}</td>
-                    <td>{{ row[2] }}</td>
-                    <td>{{ row[3] }}</td>
-                    <td>{{ row[4] }}</td>
+                    <td>{{ row.firstName }} {{ row.lastName }}</td>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{{ row.documentNumber }}</td>
+                    <td>{{ row.companyName }}</td>
+                    <td>ADMIN</td>
                     <td class="text-right">
                       <a
                         href="javascript:void(0)"
