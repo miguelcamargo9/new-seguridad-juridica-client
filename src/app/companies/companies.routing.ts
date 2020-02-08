@@ -3,6 +3,7 @@ import { Routes } from "@angular/router";
 import { CreateCompaniesComponent } from "./create/createcompanies.component";
 import { CompaniesListComponent } from "./list/listcompanies.component";
 import { EditCompaniesComponent } from "./edit/editcompanies.component";
+import { DeleteCompaniesComponent } from "./delete/deletecompanies.component";
 
 export const CompaniesRoutes: Routes = [
   {
@@ -19,6 +20,10 @@ export const CompaniesRoutes: Routes = [
       {
         path: "edit/:id",
         component: EditCompaniesComponent
+      },
+      {
+        path: "delete/:id",
+        component: DeleteCompaniesComponent
       }
     ]
   }

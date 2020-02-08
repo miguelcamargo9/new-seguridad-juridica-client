@@ -3,4 +3,5 @@ export class Company {
   businessName: string;
   documentNumber: string;
   rut: string;
+  status: boolean;
 }

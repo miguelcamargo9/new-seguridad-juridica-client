@@ -12,6 +12,7 @@ import { FieldErrorDisplayComponent } from "../components/field-error-display/fi
 import { CompanyService } from "./companies.service";
 import { CompaniesListComponent } from "./list/listcompanies.component";
 import { EditCompaniesComponent } from "./edit/editcompanies.component";
+import { DeleteCompaniesComponent } from "./delete/deletecompanies.component";
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { EditCompaniesComponent } from "./edit/editcompanies.component";
   declarations: [
     CreateCompaniesComponent,
     EditCompaniesComponent,
+    DeleteCompaniesComponent,
     CompaniesListComponent,
     FieldErrorDisplayComponent
   ],
