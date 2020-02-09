@@ -23,4 +23,10 @@ export class CompanyService {
   postUpdateCompany(data): Observable<any> {
     return this.http.post(environment.apiUrl + "/company/update/", data);
   }
+
+  deleteDeleteCompany(companyId): Observable<any> {
+    return this.http.delete(
+      environment.apiUrl + "/company/delete/" + companyId
+    );
+  }
 }

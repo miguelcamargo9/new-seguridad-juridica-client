@@ -27,6 +27,10 @@ export const AppRoutes: Routes = [
         loadChildren: "./companies/companies.module#CompaniesModule"
       },
       {
+        path: "solicitudes",
+        loadChildren: "./solicitudes/solicitudes.module#SolicitudModule"
+      },
+      {
         path: "",
         loadChildren: "./userpage/user.module#UserModule"
       },

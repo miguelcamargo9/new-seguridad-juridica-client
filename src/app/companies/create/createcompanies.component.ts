@@ -10,6 +10,7 @@ import {
 import { ErrorStateMatcher } from "@angular/material/core";
 import { CompanyService } from "../companies.service";
 import { ToastrService } from "ngx-toastr";
+import { Router } from "@angular/router";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -46,7 +47,8 @@ export class CreateCompaniesComponent {
   constructor(
     private formBuilder: FormBuilder,
     private companyService: CompanyService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   isFieldValid(form: FormGroup, field: string) {
@@ -72,7 +74,7 @@ export class CreateCompaniesComponent {
       this.companyService.postCreateCompany(data).subscribe(
         data => {
           this.toastr.success("Compañia creada con exito", "Compañia");
-          // this.router.navigate([environment.pathInit]);
+          this.router.navigate(["/companies/all"]);
         },
         err => {
           this.toastr.error("Error creando la compañia", "Compañia");

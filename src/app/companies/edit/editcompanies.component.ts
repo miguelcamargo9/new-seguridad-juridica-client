@@ -11,7 +11,7 @@ import { ErrorStateMatcher } from "@angular/material/core";
 import { CompanyService } from "../companies.service";
 import { ToastrService } from "ngx-toastr";
 import { Subscription } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -53,7 +53,8 @@ export class EditCompaniesComponent {
     private formBuilder: FormBuilder,
     private companyService: CompanyService,
     private toastr: ToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   isFieldValid(form: FormGroup, field: string) {
@@ -80,7 +81,7 @@ export class EditCompaniesComponent {
       this.companyService.postUpdateCompany(data).subscribe(
         data => {
           this.toastr.success("Compañia editada con exito", "Compañia");
-          // this.router.navigate([environment.pathInit]);
+          this.router.navigate(["/companies/all"]);
         },
         err => {
           this.toastr.error("Error al editar la compañia", "Compañia");

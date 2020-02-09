@@ -71,6 +71,25 @@ export const ROUTES: RouteInfo[] = [
         ab: "CC"
       }
     ]
+  },
+  {
+    path: "/solicitudes",
+    title: "Solicitudes",
+    type: "sub",
+    icontype: "chrome_reader_mode",
+    collapse: "request",
+    children: [
+      {
+        path: "all",
+        title: "Buscar Solicitud",
+        ab: "SO"
+      },
+      {
+        path: "crear",
+        title: "Crear Solicitud",
+        ab: "CS"
+      }
+    ]
   }
   //   {
   //     path: "/components",
