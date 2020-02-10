@@ -1,19 +1,7 @@
 // IMPORTANT: this is a plugin which requires jQuery for initialisation and data manipulation
 
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  AfterViewInit,
-  SimpleChanges
-} from "@angular/core";
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-  FormGroup
-} from "@angular/forms";
+import { Component, OnInit, OnChanges, AfterViewInit, SimpleChanges } from "@angular/core";
+import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 import { FormBuilder } from "@angular/forms";
 
@@ -28,16 +16,9 @@ interface FileReaderEvent extends Event {
 }
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
 
@@ -45,8 +26,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: "app-crearsolicitud-cmp",
   templateUrl: "crearsolicitud.component.html"
 })
-export class CrearSolicitudComponent
-  implements OnInit, OnChanges, AfterViewInit {
+export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit {
   cities = [
     { value: "paris-0", viewValue: "Paris" },
     { value: "miami-1", viewValue: "Miami" },
@@ -56,10 +36,7 @@ export class CrearSolicitudComponent
     { value: "barcelona-5", viewValue: "Barcelona" },
     { value: "moscow-6", viewValue: "Moscow" }
   ];
-  emailFormControl = new FormControl("", [
-    Validators.required,
-    Validators.email
-  ]);
+  emailFormControl = new FormControl("", [Validators.required, Validators.email]);
 
   matcher = new MyErrorStateMatcher();
 
@@ -67,6 +44,7 @@ export class CrearSolicitudComponent
   constructor(private formBuilder: FormBuilder) {}
 
   isFieldValid(form: FormGroup, field: string) {
+    if (field == "expedienteSIT") console.log(form.get(field));
     return !form.get(field).valid && form.get(field).touched;
   }
 
@@ -81,8 +59,11 @@ export class CrearSolicitudComponent
 
     this.type = this.formBuilder.group({
       // To add a validator, we must first convert the string value into an array. The first item in the array is the default value if any, then the next item in the array is the validator. Here we are adding a required validator meaning that the firstName attribute must have a value in it.
-      expedienteSIT: [null, Validators.required],
-      fiso: [null, Validators.required],
+      expedienteSIT: [
+        null,
+        [Validators.required, Validators.minLength(19), Validators.maxLength(19)]
+      ],
+      fiso: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
       email: [null, [Validators.required]]
     });
     // Code for the Validator
@@ -168,10 +149,7 @@ export class CrearSolicitudComponent
 
         if ($current == 1 || (mobile_device == true && index % 2 == 0)) {
           move_distance -= 8;
-        } else if (
-          $current == total_steps ||
-          (mobile_device == true && index % 2 == 1)
-        ) {
+        } else if ($current == total_steps || (mobile_device == true && index % 2 == 1)) {
           move_distance += 8;
         }
 
@@ -183,8 +161,7 @@ export class CrearSolicitudComponent
 
         $wizard.find(".moving-tab").css("width", step_width);
         $(".moving-tab").css({
-          transform:
-            "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
+          transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
           transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
         });
         $(".moving-tab").css("transition", "transform 0s");
@@ -223,9 +200,7 @@ export class CrearSolicitudComponent
             .hide();
         }
 
-        const button_text = navigation
-          .find("li:nth-child(" + $current + ") a")
-          .html();
+        const button_text = navigation.find("li:nth-child(" + $current + ") a").html();
 
         setTimeout(function() {
           $(".moving-tab").text(button_text);
@@ -270,10 +245,7 @@ export class CrearSolicitudComponent
 
         if ($current == 1 || (mobile_device == true && index % 2 == 0)) {
           move_distance -= 8;
-        } else if (
-          $current == total_steps ||
-          (mobile_device == true && index % 2 == 1)
-        ) {
+        } else if ($current == total_steps || (mobile_device == true && index % 2 == 1)) {
           move_distance += 8;
         }
 
@@ -285,8 +257,7 @@ export class CrearSolicitudComponent
 
         $wizard.find(".moving-tab").css("width", step_width);
         $(".moving-tab").css({
-          transform:
-            "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
+          transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
           transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
         });
       }
@@ -381,10 +352,7 @@ export class CrearSolicitudComponent
 
           if ($current == 1 || (mobile_device == true && index % 2 == 0)) {
             move_distance -= 8;
-          } else if (
-            $current == total_steps ||
-            (mobile_device == true && index % 2 == 1)
-          ) {
+          } else if ($current == total_steps || (mobile_device == true && index % 2 == 1)) {
             move_distance += 8;
           }
 
@@ -396,12 +364,7 @@ export class CrearSolicitudComponent
 
           $wizard.find(".moving-tab").css("width", step_width);
           $(".moving-tab").css({
-            transform:
-              "translate3d(" +
-              move_distance +
-              "px, " +
-              vertical_level +
-              "px, 0)",
+            transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
             transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
           });
 
