@@ -4,6 +4,8 @@ import { Component, OnInit, OnChanges, AfterViewInit, SimpleChanges } from "@ang
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 import { FormBuilder } from "@angular/forms";
+import { DomainService } from "src/app/domains/domain.service";
+import { Departament } from "src/app/models/Deparamento";
 
 declare const $: any;
 interface FileReaderEventTarget extends EventTarget {
@@ -36,15 +38,17 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     { value: "barcelona-5", viewValue: "Barcelona" },
     { value: "moscow-6", viewValue: "Moscow" }
   ];
+
+  departamentos: Departament[];
+
   emailFormControl = new FormControl("", [Validators.required, Validators.email]);
 
   matcher = new MyErrorStateMatcher();
 
   type: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private domainServcie: DomainService) {}
 
   isFieldValid(form: FormGroup, field: string) {
-    if (field == "expedienteSIT") console.log(form.get(field));
     return !form.get(field).valid && form.get(field).touched;
   }
 
@@ -55,6 +59,15 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     };
   }
   ngOnInit() {
+    this.domainServcie.getDepartamentos().subscribe(
+      departamentosData => {
+        console.log(departamentosData);
+        this.departamentos = departamentosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Departamentos!" + error);
+      }
+    );
     const elemMainPanel = <HTMLElement>document.querySelector(".main-panel");
 
     this.type = this.formBuilder.group({

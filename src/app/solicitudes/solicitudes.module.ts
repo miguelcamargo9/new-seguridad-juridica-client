@@ -8,6 +8,7 @@ import { MaterialModule } from "../app.module";
 import { CrearSolicitudComponent } from "./crear/crearsolicitud.component";
 import { SolicitudesRoutes } from "./solicitudes.routing";
 import { FieldErrorDisplayComponent } from "../components/field-error-display/field-error-display.component";
+import { DomainService } from "../domains/domain.service";
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { FieldErrorDisplayComponent } from "../components/field-error-display/fi
     ReactiveFormsModule,
     MaterialModule
   ],
-  declarations: [CrearSolicitudComponent, FieldErrorDisplayComponent]
+  declarations: [CrearSolicitudComponent, FieldErrorDisplayComponent],
+  providers: [DomainService]
 })
 export class SolicitudModule {}

@@ -3,11 +3,11 @@ import { Observable } from "rxjs/Observable";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { Domain } from "./domain.model";
-
+import { Departament } from "../models/Deparamento";
 
 @Injectable()
 export class DomainService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getTipoCondicionSolicitante(): Observable<Domain[]> {
     return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoCondicionSolicitante");
@@ -31,7 +31,9 @@ export class DomainService {
     return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoDocumento");
   }
   getTipoEstadoInformeTecnicoJuridico(): Observable<Domain[]> {
-    return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoEstadoInformeTecnicoJuridico");
+    return this.http.get<Domain[]>(
+      environment.apiUrl + "/domains/tipoEstadoInformeTecnicoJuridico"
+    );
   }
   getTipoEstadoSinegia(): Observable<Domain[]> {
     return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoEstadoSinegia");
@@ -60,5 +62,7 @@ export class DomainService {
   getTipoTieneViabilidadJuridica(): Observable<Domain[]> {
     return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoTieneViabilidadJuridica");
   }
-
+  getDepartamentos(): Observable<Departament[]> {
+    return this.http.get<Departament[]>(environment.apiUrl + "/domains/departamentos");
+  }
 }

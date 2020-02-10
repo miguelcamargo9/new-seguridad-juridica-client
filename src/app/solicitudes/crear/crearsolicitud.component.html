@@ -104,15 +104,15 @@
                               <i class="material-icons">account_balance</i>
                             </span>
                           </div>
-                          <mat-form-field class="example-full-width">
-                            <input
-                              matInput
-                              placeholder="COD DANE DEPARTAMENTO"
-                              [formControl]="emailFormControl"
-                              type="email"
-                              id="exampleemalil"
-                              name="email"
-                            />
+                          <mat-form-field>
+                            <mat-select placeholder="Departamentos" name="deparment">
+                              <mat-option
+                                *ngFor="let departamento of departamentos"
+                                [value]="departamento.id"
+                              >
+                                {{ departamento.nombre }}
+                              </mat-option>
+                            </mat-select>
                           </mat-form-field>
                         </div>
                       </div>
