@@ -1,0 +1,277 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 mr-auto ml-auto">
+        <!--      Wizard container        -->
+        <div class="wizard-container">
+          <div class="card card-wizard" data-color="green" id="wizardProfile">
+            <form [formGroup]="createSeguimiento902" action=" method=">
+              <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
+              <div class="card-header text-center">
+                <h3 class="card-title">
+                  Seguimiento 902
+                </h3>
+                <h5 class="card-description">
+                  Información de seguimiento 902
+                </h5>
+              </div>
+              <div class="wizard-navigation">
+                <ul class="nav nav-pills">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#viabilidad" data-toggle="tab" role="tab">
+                      1. VIABILIDAD TÉCNICA
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#valoracion" data-toggle="tab" role="tab">
+                      2. VALORACIÓN RESO
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#viabilidad" data-toggle="tab" role="tab">
+                      3. PRUEBAS
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#viabilidad" data-toggle="tab" role="tab">
+                      4. VIABILIDAD JURÍDICA
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#viabilidad" data-toggle="tab" role="tab">
+                      5. ETAPA DE INICIO
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#viabilidad" data-toggle="tab" role="tab">
+                      6. PERÍODO PRUEBAS
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#viabilidad" data-toggle="tab" role="tab">
+                      7. AUDIENCIA PÚBLICA
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#viabilidad" data-toggle="tab" role="tab">
+                      8. ETAPA DE CIERRE
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#viabilidad" data-toggle="tab" role="tab">
+                      9. REGISTRO DE TITULOS
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="tab-pane active" id="viabilidad">
+                    <div class="row">
+
+
+
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'tieneViabilidadTecnica')">
+                            <mat-select placeholder='¿TIENE VIABILIDAD TÉCNICA?' name='tieneViabilidadTecnica' matInput
+                              id='tieneViabilidadTecnica' formControlName='tieneViabilidadTecnica'>
+                              <mat-option *ngFor='let item of tipoSiNo' [value]='item.id'>
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'estadoInformeTecnicoJuridicoId')">
+                            <mat-select placeholder='ESTADO INFORME TÉCNICO JURÍDICO'
+                              name='estadoInformeTecnicoJuridicoId' matInput id='estadoInformeTecnicoJuridicoId'
+                              formControlName='estadoInformeTecnicoJuridicoId'>
+                              <mat-option *ngFor='let item of tipoEstadoInformeTecnicoJuridico' [value]='item.id'>
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'fechaInformeTecnicoJuridico')">
+                            <input matInput [matDatepicker]='fechaInformeTecnicoJuridicopicker'
+                              placeholder='FECHA INFORME TÉCNICO JURÍDICO' name='fechaInformeTecnicoJuridico'
+                              id='fechaInformeTecnicoJuridico' (click)='fechaInformeTecnicoJuridicopicker.open()'
+                              formControlName='fechaInformeTecnicoJuridico'>
+                            <mat-datepicker-toggle matSuffix [for]='fechaInformeTecnicoJuridicopicker'>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #fechaInformeTecnicoJuridicopicker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'areaDelPredioEnCatastroR1YR2')">
+                            <input type='number' name='areaDelPredioEnCatastroR1YR2' matInput
+                              id='areaDelPredioEnCatastroR1YR2' placeholder='ÁREA DEL PREDIO EN CATASTRO (R1 Y R2)'
+                              formControlName='areaDelPredioEnCatastroR1YR2' />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'areaDelPredioEnFolioDeMatriculaInmobiliaria')">
+                            <input type='number' name='areaDelPredioEnFolioDeMatriculaInmobiliaria' matInput
+                              id='areaDelPredioEnFolioDeMatriculaInmobiliaria'
+                              placeholder='ÁREA DEL PREDIO EN FOLIO DE MATRÍCULA INMOBILIARIA'
+                              formControlName='areaDelPredioEnFolioDeMatriculaInmobiliaria' />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'areaLevantamientoPredial')">
+                            <input type='number' name='areaLevantamientoPredial' matInput id='areaLevantamientoPredial'
+                              placeholder='ÁREA LEVANTAMIENTO PREDIAL' formControlName='areaLevantamientoPredial' />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'ingenieroProyectoItjId')">
+                            <mat-select placeholder='INGENIERO PROYECTÓ ITJ' name='ingenieroProyectoItjId' matInput
+                              id='ingenieroProyectoItjId' formControlName='ingenieroProyectoItjId'>
+                              <mat-option *ngFor='let item of userList' [value]='item.id'>
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'ingenieroRevisoItjId')">
+                            <mat-select placeholder='INGENIERO REVISÓ ITJ' name='ingenieroRevisoItjId' matInput
+                              id='ingenieroRevisoItjId' formControlName='ingenieroRevisoItjId'>
+                              <mat-option *ngFor='let item of userList' [value]='item.id'>
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+
+
+
+
+
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="valoracion">
+
+                    <div class="row">
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'tipoSoporteValoracionId')">
+                            <mat-select placeholder='SOPORTE VALORACIÓN' name='tipoSoporteValoracionId' matInput
+                              id='tipoSoporteValoracionId' formControlName='tipoSoporteValoracionId'>
+                              <mat-option *ngFor='let item of tipoSoporteValoracion' [value]='item.id'>
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'noResolucionOMemorando')">
+                            <input type='text' name='noResolucionOMemorando' matInput id='noResolucionOMemorando'
+                              placeholder='No. RESOLUCIÓN O MEMORANDO' formControlName='noResolucionOMemorando' />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class='col-sm-6'>
+                        <div class='input-group form-control-lg'>
+                          <mat-form-field class='example-full-width has-label'
+                            [ngClass]="displayFieldCss(createSeguimiento902,'fechaResolucionMemorando')">
+                            <input matInput [matDatepicker]='fechaResolucionMemorandopicker'
+                              placeholder='FECHA RESOLUCIÓN/MEMORANDO' name='fechaResolucionMemorando'
+                              id='fechaResolucionMemorando' (click)='fechaResolucionMemorandopicker.open()'
+                              formControlName='fechaResolucionMemorando'>
+                            <mat-datepicker-toggle matSuffix [for]='fechaResolucionMemorandopicker'>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #fechaResolucionMemorandopicker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                      </div>
+
+
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="address">
+                    <div class="row justify-content-center">
+                      <div class="col-sm-12">
+                        <h5 class="info-text">
+                          Are you living in a nice area?
+                        </h5>
+                      </div>
+                      <div class="col-sm-7">
+                        <mat-form-field class="example-full-width">
+                          <input matInput type="text" placeholder="Street Name" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-sm-3">
+                        <mat-form-field class="example-full-width">
+                          <input matInput type="text" placeholder="Street No." />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-sm-5">
+                        <mat-form-field class="example-full-width">
+                          <input matInput type="text" placeholder="City" />
+                        </mat-form-field>
+                      </div>
+                      <div class="col-sm-5">
+                        <mat-form-field>
+                          <mat-select placeholder="Single City" name="city">
+                            <mat-option *ngFor="let city of cities" [value]="city.value">
+                              {{ city.viewValue }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <div class="mr-auto">
+                  <input type="button" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous"
+                    value="Previous" />
+                </div>
+                <div class="ml-auto">
+                  <input type="button" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next" />
+                  <input type="button" class="btn btn-finish btn-fill btn-rose btn-wd" name="finish" value="Finish"
+                    style="display: none;" />
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- wizard container -->
+      </div>
+    </div>
+  </div>
+</div>
