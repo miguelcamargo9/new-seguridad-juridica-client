@@ -82,25 +82,20 @@ export class CrearSolicitudComponent
     this.type = this.formBuilder.group({
       // To add a validator, we must first convert the string value into an array. The first item in the array is the default value if any, then the next item in the array is the validator. Here we are adding a required validator meaning that the firstName attribute must have a value in it.
       expedienteSIT: [null, Validators.required],
-      lastName: [null, Validators.required],
-      email: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")
-        ]
-      ]
+      fiso: [null, Validators.required],
+      email: [null, [Validators.required]]
     });
     // Code for the Validator
     const $validator = $(".card-wizard form").validate({
       rules: {
-        firstname: {
+        expedienteSIT: {
           required: true,
-          minlength: 3
+          minlength: 19,
+          maxlength: 19
         },
-        lastname: {
+        fiso: {
           required: true,
-          minlength: 3
+          minlength: 7
         },
         email: {
           required: true,

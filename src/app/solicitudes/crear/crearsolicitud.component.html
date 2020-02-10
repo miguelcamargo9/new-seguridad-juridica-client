@@ -94,15 +94,15 @@
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'lastName')"
+                            [ngClass]="displayFieldCss(type, 'fiso')"
                           >
                             <input
                               type="text"
-                              name="lastname"
+                              name="fiso"
                               matInput
                               id="text"
                               placeholder="FISO"
-                              formControlName="lastName"
+                              formControlName="fiso"
                             />
                           </mat-form-field>
                         </div>
@@ -319,21 +319,21 @@
                     type="button"
                     class="btn btn-previous btn-fill btn-default btn-wd disabled"
                     name="previous"
-                    value="Previous"
+                    value="Atras"
                   />
                 </div>
                 <div class="ml-auto">
                   <input
                     type="button"
-                    class="btn btn-next btn-fill btn-rose btn-wd"
+                    class="btn btn-next btn-fill btn-success btn-wd"
                     name="next"
-                    value="Next"
+                    value="Siguiente"
                   />
                   <input
                     type="button"
-                    class="btn btn-finish btn-fill btn-rose btn-wd"
+                    class="btn btn-finish btn-fill btn-warning btn-wd"
                     name="finish"
-                    value="Finish"
+                    value="Guardar"
                     style="display: none;"
                   />
                 </div>
