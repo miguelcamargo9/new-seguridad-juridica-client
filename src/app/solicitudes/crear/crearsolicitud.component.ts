@@ -6,6 +6,8 @@ import { ErrorStateMatcher } from "@angular/material/core";
 import { FormBuilder } from "@angular/forms";
 import { DomainService } from "src/app/domains/domain.service";
 import { Departament } from "src/app/models/Deparamento";
+import { Municipio } from "src/app/models/Municipio";
+import { Domain } from "../../domains/domain.model";
 
 declare const $: any;
 interface FileReaderEventTarget extends EventTarget {
@@ -29,23 +31,16 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: "crearsolicitud.component.html"
 })
 export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit {
-  cities = [
-    { value: "paris-0", viewValue: "Paris" },
-    { value: "miami-1", viewValue: "Miami" },
-    { value: "bucharest-2", viewValue: "Bucharest" },
-    { value: "new-york-3", viewValue: "New York" },
-    { value: "london-4", viewValue: "London" },
-    { value: "barcelona-5", viewValue: "Barcelona" },
-    { value: "moscow-6", viewValue: "Moscow" }
-  ];
-
   departamentos: Departament[];
-
-  emailFormControl = new FormControl("", [Validators.required, Validators.email]);
+  municipios: Municipio[];
+  tiposCondicionSolicitante: Domain[];
+  tiposPruebaUnion: Domain[];
+  tiposSexos: Domain[];
+  tiposDocumento: Domain[];
 
   matcher = new MyErrorStateMatcher();
-
   type: FormGroup;
+
   constructor(private formBuilder: FormBuilder, private domainServcie: DomainService) {}
 
   isFieldValid(form: FormGroup, field: string) {
@@ -59,15 +54,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     };
   }
   ngOnInit() {
-    this.domainServcie.getDepartamentos().subscribe(
-      departamentosData => {
-        console.log(departamentosData);
-        this.departamentos = departamentosData;
-      },
-      error => {
-        console.log("There was an error while retrieving Departamentos!" + error);
-      }
-    );
+    this.getDomains();
     const elemMainPanel = <HTMLElement>document.querySelector(".main-panel");
 
     this.type = this.formBuilder.group({
@@ -77,24 +64,46 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
         [Validators.required, Validators.minLength(19), Validators.maxLength(19)]
       ],
       fiso: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
-      email: [null, [Validators.required]]
+      departamento: [null, [Validators.required]],
+      departamentoDane: [{ value: null, disabled: true }, [Validators.required]],
+      municipio: [null, [Validators.required]],
+      municipioDane: [{ value: null, disabled: true }, [Validators.required]],
+      corregimiento: [null],
+      vereda: [null],
+      condicionSolicitante: [null, [Validators.required]],
+      pruebaUnion: [null, [Validators.required]],
+      primerNombreSolicitante: [null, [Validators.required]],
+      segundoNombreSolicitante: [null],
+      primerApellidoSolicitante: [null, [Validators.required]],
+      segundoApellidoSolicitante: [null],
+      sexo: [null, [Validators.required]],
+      tipoDocumento: [null, [Validators.required]],
+      documento: [null, [Validators.required]]
     });
     // Code for the Validator
     const $validator = $(".card-wizard form").validate({
       rules: {
-        expedienteSIT: {
-          required: true,
-          minlength: 19,
-          maxlength: 19
-        },
-        fiso: {
-          required: true,
-          minlength: 7
-        },
-        email: {
-          required: true,
-          minlength: 3
-        }
+        // expedienteSIT: {
+        //   required: true,
+        //   minlength: 19,
+        //   maxlength: 19
+        // },
+        // fiso: {
+        //   required: true,
+        //   minlength: 7
+        // },
+        // departamento: {
+        //   required: true
+        // },
+        // departamentoDane: {
+        //   required: true
+        // },
+        // municipio: {
+        //   required: true
+        // },
+        // municipioDane: {
+        //   required: true
+        // }
       },
 
       highlight: function(element) {
@@ -387,5 +396,57 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
         }, 500);
       });
     });
+  }
+  selectDepartmento(event) {
+    const selectDepartamento = this.departamentos.find(
+      departamento => departamento.id === event.value
+    );
+    this.type.controls["departamentoDane"].setValue(selectDepartamento.dane);
+    this.domainServcie.getMunicipiosPorDepartamento(selectDepartamento.id).subscribe(
+      municipiosData => {
+        this.municipios = municipiosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Municipios!" + error);
+      }
+    );
+  }
+  selectMunicipio(event) {
+    const selectMunicipio = this.municipios.find(municipio => municipio.id === event.value);
+    this.type.controls["municipioDane"].setValue(selectMunicipio.dane);
+  }
+  getDomains() {
+    this.domainServcie.getDepartamentos().subscribe(
+      departamentosData => {
+        this.departamentos = departamentosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Departamentos!" + error);
+      }
+    );
+    this.domainServcie.getTipoCondicionSolicitante().subscribe(
+      tiposCondicionSolicitanteData => {
+        this.tiposCondicionSolicitante = tiposCondicionSolicitanteData;
+      },
+      error => {
+        console.log("There was an error while retrieving Departamentos!" + error);
+      }
+    );
+    this.domainServcie.getTipoSexo().subscribe(
+      tiposSexosData => {
+        this.tiposSexos = tiposSexosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Departamentos!" + error);
+      }
+    );
+    this.domainServcie.getTipoDocumento().subscribe(
+      tiposDocumentosData => {
+        this.tiposDocumento = tiposDocumentosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Departamentos!" + error);
+      }
+    );
   }
 }

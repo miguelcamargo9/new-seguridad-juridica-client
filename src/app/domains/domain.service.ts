@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { Domain } from "./domain.model";
 import { Departament } from "../models/Deparamento";
+import { Municipio } from "../models/Municipio";
 
 @Injectable()
 export class DomainService {
@@ -64,5 +65,8 @@ export class DomainService {
   }
   getDepartamentos(): Observable<Departament[]> {
     return this.http.get<Departament[]>(environment.apiUrl + "/domains/departamentos");
+  }
+  getMunicipiosPorDepartamento(departamentoId): Observable<Municipio[]> {
+    return this.http.get<Municipio[]>(environment.apiUrl + "/domains/municipios/" + departamentoId);
   }
 }

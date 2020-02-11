@@ -18,22 +18,22 @@
               <div class="wizard-navigation">
                 <ul class="nav nav-pills">
                   <li class="nav-item">
-                    <a class="nav-link active" href="#about" data-toggle="tab" role="tab">
+                    <a class="nav-link active" href="#page1" data-toggle="tab" role="tab">
                       DATOS DE RECEPCIÓN DE SOLICITUD
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#account" data-toggle="tab" role="tab">
+                    <a class="nav-link" href="#page2" data-toggle="tab" role="tab">
                       DATOS DEL SOLICITANTE
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#address" data-toggle="tab" role="tab">
+                    <a class="nav-link" href="#page3" data-toggle="tab" role="tab">
                       DATOS DE OTROS SOLICITANTES
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#address" data-toggle="tab" role="tab">
+                    <a class="nav-link" href="#page4" data-toggle="tab" role="tab">
                       DATOS DEL PREDIO A FORMALIZAR
                     </a>
                   </li>
@@ -41,7 +41,7 @@
               </div>
               <div class="card-body">
                 <div class="tab-content">
-                  <div class="tab-pane active" id="about">
+                  <div class="tab-pane active" id="page1">
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="input-group form-control-lg">
@@ -85,7 +85,7 @@
                               type="text"
                               name="fiso"
                               matInput
-                              id="text"
+                              id="fiso"
                               placeholder="FISO"
                               formControlName="fiso"
                             />
@@ -101,11 +101,16 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">account_balance</i>
+                              <i class="material-icons">panorama</i>
                             </span>
                           </div>
                           <mat-form-field>
-                            <mat-select placeholder="Departamentos" name="deparment">
+                            <mat-select
+                              placeholder="DEPARTAMENTOS"
+                              name="departamento"
+                              formControlName="departamento"
+                              (selectionChange)="selectDepartmento($event)"
+                            >
                               <mat-option
                                 *ngFor="let departamento of departamentos"
                                 [value]="departamento.id"
@@ -126,11 +131,331 @@
                           <mat-form-field class="example-full-width">
                             <input
                               matInput
-                              placeholder="DEPARTAMENTO"
-                              [formControl]="emailFormControl"
-                              type="email"
-                              id="exampleemalil"
-                              name="email"
+                              placeholder="CODIGO DEPARTAMENTO DANE"
+                              formControlName="departamentoDane"
+                              type="text"
+                              id="departamentoDane"
+                              name="departamentoDane"
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">receipt</i>
+                            </span>
+                          </div>
+                          <mat-form-field>
+                            <mat-select
+                              placeholder="MUNICIPIOS"
+                              name="municipio"
+                              formControlName="municipio"
+                              (selectionChange)="selectMunicipio($event)"
+                            >
+                              <mat-option
+                                *ngFor="let municipio of municipios"
+                                [value]="municipio.id"
+                              >
+                                {{ municipio.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">receipt</i>
+                            </span>
+                          </div>
+                          <mat-form-field class="example-full-width">
+                            <input
+                              matInput
+                              placeholder="CODIGO MUNUCIPIO DANE"
+                              formControlName="municipioDane"
+                              type="text"
+                              id="municipioDane"
+                              name="municipioDane"
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">store</i>
+                            </span>
+                          </div>
+                          <mat-form-field class="example-full-width has-label">
+                            <input
+                              type="text"
+                              name="corregimiento"
+                              matInput
+                              id="corregimiento"
+                              placeholder="CORREGIMIENTO"
+                              formControlName="corregimiento"
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">business</i>
+                            </span>
+                          </div>
+                          <mat-form-field class="example-full-width has-label">
+                            <input
+                              type="text"
+                              name="vereda"
+                              matInput
+                              id="vereda"
+                              placeholder="VEREDA"
+                              formControlName="vereda"
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="page2">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">accessibility</i>
+                            </span>
+                          </div>
+                          <mat-form-field>
+                            <mat-select
+                              placeholder="CONDICIÓN DEL SOLICITANTE"
+                              name="condicionSolicitante"
+                              formControlName="condicionSolicitante"
+                              (selectionChange)="selectCondicionSolicitante($event)"
+                            >
+                              <mat-option
+                                *ngFor="let tipoCondicionSolicitante of tiposCondicionSolicitante"
+                                [value]="tipoCondicionSolicitante.id"
+                              >
+                                {{ tipoCondicionSolicitante.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">assignment</i>
+                            </span>
+                          </div>
+                          <mat-form-field>
+                            <mat-select
+                              placeholder="PRUEBA UNIÓN"
+                              name="pruebaUnion"
+                              formControlName="pruebaUnion"
+                              (selectionChange)="selectPruebaUnion($event)"
+                            >
+                              <mat-option
+                                *ngFor="let tipoPruebaUnion of tiposPruebaUnion"
+                                [value]="tipoPruebaUnion.id"
+                              >
+                                {{ tipoPruebaUnion.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">extension</i>
+                            </span>
+                          </div>
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="displayFieldCss(type, 'primerNombreSolicitante')"
+                          >
+                            <input
+                              type="text"
+                              name="primerNombreSolicitante"
+                              matInput
+                              id="primerNombreSolicitante"
+                              placeholder="PRIMER NOMBRE SOLICITANTE"
+                              formControlName="primerNombreSolicitante"
+                            />
+                            <app-field-error-display
+                              [displayError]="isFieldValid(type, 'primerNombreSolicitante')"
+                              errorMsg="Deligenciar el campo."
+                            >
+                            </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">receipt</i>
+                            </span>
+                          </div>
+                          <mat-form-field class="example-full-width">
+                            <input
+                              matInput
+                              placeholder="SEGUNDO NOMBRE SOLICITANTE"
+                              formControlName="segundoNombreSolicitante"
+                              type="text"
+                              id="segundoNombreSolicitante"
+                              name="segundoNombreSolicitante"
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">extension</i>
+                            </span>
+                          </div>
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="displayFieldCss(type, 'primerApellidoSolicitante')"
+                          >
+                            <input
+                              type="text"
+                              name="primerApellidoSolicitante"
+                              matInput
+                              id="primerApellidoSolicitante"
+                              placeholder="PRIMER APELLIDO SOLICITANTE"
+                              formControlName="primerApellidoSolicitante"
+                            />
+                            <app-field-error-display
+                              [displayError]="isFieldValid(type, 'primerApellidoSolicitante')"
+                              errorMsg="Deligenciar el campo."
+                            >
+                            </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">receipt</i>
+                            </span>
+                          </div>
+                          <mat-form-field class="example-full-width">
+                            <input
+                              matInput
+                              placeholder="SEGUNDO APELLIDO SOLICITANTE"
+                              formControlName="segundoApellidoSolicitante"
+                              type="text"
+                              id="segundoApellidoSolicitante"
+                              name="segundoApellidoSolicitante"
+                            />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">panorama</i>
+                            </span>
+                          </div>
+                          <mat-form-field>
+                            <mat-select
+                              placeholder="SEXO"
+                              name="sexo"
+                              formControlName="sexo"
+                              (selectionChange)="selectSexo($event)"
+                            >
+                              <mat-option *ngFor="let tipoSexo of tiposSexos" [value]="tipoSexo.id">
+                                {{ tipoSexo.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">panorama</i>
+                            </span>
+                          </div>
+                          <mat-form-field>
+                            <mat-select
+                              placeholder="TIPO DOCUMENTO"
+                              name="tipoDocumento"
+                              formControlName="tipoDocumento"
+                              (selectionChange)="selectTipoDocumento($event)"
+                            >
+                              <mat-option
+                                *ngFor="let tipoDocumento of tiposDocumento"
+                                [value]="tipoDocumento.id"
+                              >
+                                {{ tipoDocumento.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">extension</i>
+                            </span>
+                          </div>
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="displayFieldCss(type, 'documento')"
+                          >
+                            <input
+                              type="text"
+                              name="documento"
+                              matInput
+                              id="documento"
+                              placeholder="DOCUMENTO"
+                              formControlName="documento"
+                            />
+                            <app-field-error-display
+                              [displayError]="isFieldValid(type, 'documento')"
+                              errorMsg="Deligenciar el campo."
+                            >
+                            </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="page3">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">extension</i>
+                            </span>
+                          </div>
+                          <mat-form-field class="example-full-width has-label">
+                            <input
+                              type="text"
+                              name="primerNombreOtroSolicitante"
+                              matInput
+                              id="primerNombreOtroSolicitante"
+                              placeholder="PRIMER NOMBRE OTRO SOLICITANTE"
+                              formControlName="primerNombreOtroSolicitante"
                             />
                           </mat-form-field>
                         </div>
@@ -145,11 +470,11 @@
                           <mat-form-field class="example-full-width">
                             <input
                               matInput
-                              placeholder="COD DANE MUNICIPIO"
-                              [formControl]="emailFormControl"
-                              type="email"
-                              id="exampleemalil"
-                              name="email"
+                              placeholder="SEGUNDO NOMBRE OTRO SOLICITANTE"
+                              formControlName="segundoNombreSolicitante"
+                              type="text"
+                              id="segundoNombreOtroSolicitante"
+                              name="segundoNombreOtroSolicitante"
                             />
                           </mat-form-field>
                         </div>
@@ -158,17 +483,17 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">perm_media</i>
+                              <i class="material-icons">extension</i>
                             </span>
                           </div>
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="example-full-width has-label">
                             <input
+                              type="text"
+                              name="primerApellidoOtroSolicitante"
                               matInput
-                              placeholder="MUNICIPIO"
-                              [formControl]="emailFormControl"
-                              type="email"
-                              id="exampleemalil"
-                              name="email"
+                              id="primerApellidoOtroSolicitante"
+                              placeholder="PRIMER APELLIDO OTRO SOLICITANTE"
+                              formControlName="primerApellidoOtroSolicitante"
                             />
                           </mat-form-field>
                         </div>
@@ -177,17 +502,17 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">store</i>
+                              <i class="material-icons">receipt</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width">
                             <input
                               matInput
-                              placeholder="CORREGIMIENTO"
-                              [formControl]="emailFormControl"
-                              type="email"
-                              id="exampleemalil"
-                              name="email"
+                              placeholder="SEGUNDO APELLIDO OTRO SOLICITANTE"
+                              formControlName="segundoApellidoOtroSolicitante"
+                              type="text"
+                              id="segundoApellidoOtroSolicitante"
+                              name="segundoApellidoOtroSolicitante"
                             />
                           </mat-form-field>
                         </div>
@@ -196,60 +521,69 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">business</i>
+                              <i class="material-icons">panorama</i>
                             </span>
                           </div>
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field>
+                            <mat-select
+                              placeholder="SEXO"
+                              name="sexoOtro"
+                              formControlName="sexoOtro"
+                              (selectionChange)="selectSexoOtro($event)"
+                            >
+                              <mat-option *ngFor="let tipoSexo of tiposSexos" [value]="tipoSexo.id">
+                                {{ tipoSexo.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">panorama</i>
+                            </span>
+                          </div>
+                          <mat-form-field>
+                            <mat-select
+                              placeholder="TIPO DOCUMENTO"
+                              name="tipoDocumentoOtro"
+                              formControlName="tipoDocumentoOtro"
+                              (selectionChange)="selectTipoDocumentoOtro($event)"
+                            >
+                              <mat-option
+                                *ngFor="let tipoDocumento of tiposDocumento"
+                                [value]="tipoDocumento.id"
+                              >
+                                {{ tipoDocumento.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">extension</i>
+                            </span>
+                          </div>
+                          <mat-form-field class="example-full-width has-label">
                             <input
+                              type="text"
+                              name="documentoOtro"
                               matInput
-                              placeholder="VEREDA"
-                              [formControl]="emailFormControl"
-                              type="email"
-                              id="exampleemalil"
-                              name="email"
+                              id="documentoOtro"
+                              placeholder="DOCUMENTO"
+                              formControlName="documentoOtro"
                             />
                           </mat-form-field>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane" id="account">
-                    <h5 class="info-text">What are you doing? (checkboxes)</h5>
-                    <div class="row justify-content-center">
-                      <div class="col-lg-10">
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <div class="choice" data-toggle="wizard-checkbox">
-                              <input type="checkbox" name="jobb" value="Design" />
-                              <div class="icon">
-                                <i class="fa fa-pencil"></i>
-                              </div>
-                              <h6>Design</h6>
-                            </div>
-                          </div>
-                          <div class="col-sm-4">
-                            <div class="choice" data-toggle="wizard-checkbox">
-                              <input type="checkbox" name="jobb" value="Code" />
-                              <div class="icon">
-                                <i class="fa fa-terminal"></i>
-                              </div>
-                              <h6>Code</h6>
-                            </div>
-                          </div>
-                          <div class="col-sm-4">
-                            <div class="choice" data-toggle="wizard-checkbox">
-                              <input type="checkbox" name="jobb" value="Develop" />
-                              <div class="icon">
-                                <i class="fa fa-laptop"></i>
-                              </div>
-                              <h6>Develop</h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane" id="address">
+                  <div class="tab-pane" id="page4">
                     <div class="row justify-content-center">
                       <div class="col-sm-12">
                         <h5 class="info-text">
