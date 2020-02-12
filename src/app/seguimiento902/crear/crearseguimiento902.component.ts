@@ -54,21 +54,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class CrearSeguimiento902Component
   implements OnInit, OnChanges, AfterViewInit {
-  cities = [
-    { value: "paris-0", viewValue: "Paris" },
-    { value: "miami-1", viewValue: "Miami" },
-    { value: "bucharest-2", viewValue: "Bucharest" },
-    { value: "new-york-3", viewValue: "New York" },
-    { value: "london-4", viewValue: "London" },
-    { value: "barcelona-5", viewValue: "Barcelona" },
-    { value: "moscow-6", viewValue: "Moscow" }
-  ];
+
   emailFormControl = new FormControl("", [
     Validators.required,
     Validators.email
   ]);
   routeSub: Subscription;
-  solicitudId: Number;
   tipoSiNo: DomainBoolean[];
   tipoEstadoInformeTecnicoJuridico: Domain[];
   tipoSoporteValoracion: Domain[];
@@ -83,6 +74,8 @@ export class CrearSeguimiento902Component
   tipoRecurso: Domain[];
   tipoEstadoSinegia: Domain[];
 
+  solicitudId: number;
+  idForm: number;
 
   userList: Domain[];
 
@@ -98,6 +91,28 @@ export class CrearSeguimiento902Component
     this.userList = [new Domain(1, "Juan!")];
   }
 
+  onSubmit() {
+    let data = this.createSeguimiento902.value;
+    data.id = this.idForm * 1;
+    data.solicitudId = this.solicitudId * 1;
+    if (this.createSeguimiento902.invalid) {
+      console.log("Invalido");
+      return;
+    }
+    if (this.idForm == null || this.idForm == 0) {
+      console.log("Create");
+      this.seguimiento902Service.postCreateSeguimiento902(data).subscribe(params => {
+        console.log("Result create: ", params);
+      });
+    } else {
+      console.log("Update");
+      this.seguimiento902Service.putUpdateSeguimiento902(data).subscribe(params => {
+        console.log("Result update: ", params);
+      });
+    }
+    // display form values on success
+    console.log('SUCCESS!! :-)', this.createSeguimiento902.value);
+  }
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
   }
@@ -121,18 +136,43 @@ export class CrearSeguimiento902Component
     // Code for the Validator
     const $validator = $(".card-wizard form").validate({
       rules: {
-        firstname: {
-          required: true,
-          minlength: 3
-        },
-        lastname: {
-          required: true,
-          minlength: 3
-        },
-        email: {
-          required: true,
-          minlength: 3
-        }
+        tieneViabilidadTecnica: { required: true },
+        estadoInformeTecnicoJuridicoId: { required: true },
+        areaDelPredioEnCatastroR1YR2: { required: true },
+        areaDelPredioEnFolioDeMatriculaInmobiliaria: { required: true },
+        areaLevantamientoPredial: { required: true },
+        ingenieroProyectoItjId: { required: true },
+        ingenieroRevisoItjId: { required: true },
+        tipoSoporteValoracionId: { required: true },
+        noResolucionOMemorando: { required: true },
+        fechaResolucionMemorando: { required: true },
+        tipoDePruebaAportadaId: { required: true },
+        requierePruebasAdicionales: { required: true },
+        anosDePosesionSegunFiso: { required: true },
+        anosDePosesionSegunPrueba: { required: true },
+        tipoDeRutaId: { required: true },
+        tipoTieneViabilidadJuridicaId: { required: true },
+        tipoMedidaDeProteccionUrtId: { required: true },
+        tipoMedidaCautelarId: { required: true },
+        tipoDeActoId: { required: true },
+        abogadoProyeccionId: { required: true },
+        numeroResolucionInicioArchivo: { required: true },
+        fechaResolucion: { required: true },
+        recursoDeReposicion: { required: true },
+        fechaComunicacionAProcuraduria: { required: true },
+        fechaEnvioAOripResolucionInicio: { required: true },
+        fechaRegistroEnOripResolucionInicio: { required: true },
+        tipoDecisionDeCierreId: { required: true },
+        abogadoProyeccionCierreId: { required: true },
+        oposicion: { required: true },
+        numeroDeResolucionDeCierre: { required: true },
+        fechaResolucionDeCierre: { required: true },
+        recursoResolucionCierre: { required: true },
+        fechaEnvioAOripResolucionFinal: { required: true },
+        fechaAnotacionANombreDelNuevoPropietario: { required: true },
+        fmiConInscripcionANombreDelNuevoPropietario: { required: true },
+        nombreDelPredioFormalizado: { required: true },
+        areaFormalizada: { required: true }
       },
 
       highlight: function (element) {
@@ -471,7 +511,7 @@ export class CrearSeguimiento902Component
     this.createSeguimiento902 = this.formBuilder.group({
       tieneViabilidadTecnica: [null, Validators.required],
       estadoInformeTecnicoJuridicoId: [null, Validators.required],
-      fechaInformeTecnicoJuridico: [null, Validators.required],
+      fechaInformeTecnicoJuridico: [null],
       areaDelPredioEnCatastroR1YR2: [null, Validators.required],
       areaDelPredioEnFolioDeMatriculaInmobiliaria: [null, Validators.required],
       areaLevantamientoPredial: [null, Validators.required],
@@ -482,79 +522,86 @@ export class CrearSeguimiento902Component
       fechaResolucionMemorando: [null, Validators.required],
       tipoDePruebaAportadaId: [null, Validators.required],
       requierePruebasAdicionales: [null, Validators.required],
-      pruebaAdicionalSolicitada: [null, Validators.required],
+      pruebaAdicionalSolicitada: [null],
       anosDePosesionSegunFiso: [null, Validators.required],
       anosDePosesionSegunPrueba: [null, Validators.required],
       tipoDeRutaId: [null, Validators.required],
       tipoTieneViabilidadJuridicaId: [null, Validators.required],
-      tipoDeNoViabilidadId: [null, Validators.required],
+      tipoDeNoViabilidadId: [null],
       tipoMedidaDeProteccionUrtId: [null, Validators.required],
       tipoMedidaCautelarId: [null, Validators.required],
       tipoDeActoId: [null, Validators.required],
       abogadoProyeccionId: [null, Validators.required],
-      fechaEnvioAFirmaDeSubdirectorInicio: [null, Validators.required],
-      fechaRecibidoFirmaInicio: [null, Validators.required],
-      fechaEnvioANumeracionInicio: [null, Validators.required],
+      fechaEnvioAFirmaDeSubdirectorInicio: [null],
+      fechaRecibidoFirmaInicio: [null],
+      fechaEnvioANumeracionInicio: [null],
       numeroResolucionInicioArchivo: [null, Validators.required],
       fechaResolucion: [null, Validators.required],
-      notificacionPersonalInicio: [null, Validators.required],
-      fechaNotificacionPersonalInicio: [null, Validators.required],
-      notificacionPorAvisoInicio: [null, Validators.required],
-      fechaFijacionNotificacionPorAvisoInicio: [null, Validators.required],
-      publicacionWebInicio: [null, Validators.required],
-      fechaPublicacionWebInicio: [null, Validators.required],
-      publicacionEmisora: [null, Validators.required],
-      fechaPublicacionEnEmisora: [null, Validators.required],
-      publicacionAlcaldia: [null, Validators.required],
-      fechaPublicacionAlcaldia: [null, Validators.required],
+      notificacionPersonalInicio: [null],
+      fechaNotificacionPersonalInicio: [null],
+      notificacionPorAvisoInicio: [null],
+      fechaFijacionNotificacionPorAvisoInicio: [null],
+      publicacionWebInicio: [null],
+      fechaPublicacionWebInicio: [null],
+      publicacionEmisora: [null],
+      fechaPublicacionEnEmisora: [null],
+      publicacionAlcaldia: [null],
+      fechaPublicacionAlcaldia: [null],
       recursoDeReposicion: [null, Validators.required],
-      numeroDeResolucionQueResuelveRecurso: [null, Validators.required],
-      fechaResolucionQueResuelveRecurso: [null, Validators.required],
+      numeroDeResolucionQueResuelveRecurso: [null],
+      fechaResolucionQueResuelveRecurso: [null],
       fechaComunicacionAProcuraduria: [null, Validators.required],
       fechaEnvioAOripResolucionInicio: [null, Validators.required],
       fechaRegistroEnOripResolucionInicio: [null, Validators.required],
-      numeroDeResolucionDePruebas: [null, Validators.required],
-      fechaResolucionDePruebas: [null, Validators.required],
-      fechaPublicacionEnRadio: [null, Validators.required],
-      audienciaPublica: [null, Validators.required],
-      fechaAudienciaPublica: [null, Validators.required],
+      numeroDeResolucionDePruebas: [null],
+      fechaResolucionDePruebas: [null],
+      fechaPublicacionEnRadio: [null],
+      audienciaPublica: [null],
+      fechaAudienciaPublica: [null],
       tipoDecisionDeCierreId: [null, Validators.required],
       abogadoProyeccionCierreId: [null, Validators.required],
       oposicion: [null, Validators.required],
-      motivoOposicion: [null, Validators.required],
-      fechaRadicadoOposicion: [null, Validators.required],
-      fechaEnvioAFirmaDeSubdirectorCierre: [null, Validators.required],
-      fechaRecibidoFirmaCierre: [null, Validators.required],
-      fechaEnvioANumeracionCierre: [null, Validators.required],
+      motivoOposicion: [null],
+      fechaRadicadoOposicion: [null],
+      fechaEnvioAFirmaDeSubdirectorCierre: [null],
+      fechaRecibidoFirmaCierre: [null],
+      fechaEnvioANumeracionCierre: [null],
       numeroDeResolucionDeCierre: [null, Validators.required],
       fechaResolucionDeCierre: [null, Validators.required],
-      notificacionPersonalCierre: [null, Validators.required],
-      fechaNotificacionPersonalCierre: [null, Validators.required],
-      notificacionPorAvisoCierre: [null, Validators.required],
-      fechaFijacionNotificacionPorAvisoCierre: [null, Validators.required],
-      publicacionResolucionCierre: [null, Validators.required],
-      fechaPublicacion: [null, Validators.required],
+      notificacionPersonalCierre: [null],
+      fechaNotificacionPersonalCierre: [null],
+      notificacionPorAvisoCierre: [null],
+      fechaFijacionNotificacionPorAvisoCierre: [null],
+      publicacionResolucionCierre: [null],
+      fechaPublicacion: [null],
       recursoResolucionCierre: [null, Validators.required],
-      tipoRecursoId: [null, Validators.required],
-      numeroResolucionResuelveRecurso: [null, Validators.required],
-      fechaResolucionResuelveRecurso: [null, Validators.required],
+      tipoRecursoId: [null],
+      numeroResolucionResuelveRecurso: [null],
+      fechaResolucionResuelveRecurso: [null],
       fechaEnvioAOripResolucionFinal: [null, Validators.required],
       fechaAnotacionANombreDelNuevoPropietario: [null, Validators.required],
       fmiConInscripcionANombreDelNuevoPropietario: [null, Validators.required],
       nombreDelPredioFormalizado: [null, Validators.required],
       areaFormalizada: [null, Validators.required],
-      fechaEntregaTitulo: [null, Validators.required],
-      tipoEstadoSinegiaId: [null, Validators.required],
-      fechaAprobacionSinergia: [null, Validators.required]
+      fechaEntregaTitulo: [null],
+      tipoEstadoSinegiaId: [null],
+      fechaAprobacionSinergia: [null],
+
 
     });
+  }
+  changeDate(d: Date) {
+    if (d == null) return null;
+    return new Date(d);
   }
   getDataForm(idSolicitud) {
     this.seguimiento902Service.getSeguimiento902(idSolicitud).subscribe(
       seguimiento902Data => {
+        console.log("service data", seguimiento902Data);
+        this.idForm = seguimiento902Data.id;
         this.createSeguimiento902.controls["tieneViabilidadTecnica"].setValue(seguimiento902Data.tieneViabilidadTecnica);
         this.createSeguimiento902.controls["estadoInformeTecnicoJuridicoId"].setValue(seguimiento902Data.estadoInformeTecnicoJuridicoId);
-        this.createSeguimiento902.controls["fechaInformeTecnicoJuridico"].setValue(seguimiento902Data.fechaInformeTecnicoJuridico);
+        this.createSeguimiento902.controls["fechaInformeTecnicoJuridico"].setValue(this.changeDate(seguimiento902Data.fechaInformeTecnicoJuridico));
         this.createSeguimiento902.controls["areaDelPredioEnCatastroR1YR2"].setValue(seguimiento902Data.areaDelPredioEnCatastroR1YR2);
         this.createSeguimiento902.controls["areaDelPredioEnFolioDeMatriculaInmobiliaria"].setValue(seguimiento902Data.areaDelPredioEnFolioDeMatriculaInmobiliaria);
         this.createSeguimiento902.controls["areaLevantamientoPredial"].setValue(seguimiento902Data.areaLevantamientoPredial);
@@ -562,7 +609,7 @@ export class CrearSeguimiento902Component
         this.createSeguimiento902.controls["ingenieroRevisoItjId"].setValue(seguimiento902Data.ingenieroRevisoItjId);
         this.createSeguimiento902.controls["tipoSoporteValoracionId"].setValue(seguimiento902Data.tipoSoporteValoracionId);
         this.createSeguimiento902.controls["noResolucionOMemorando"].setValue(seguimiento902Data.noResolucionOMemorando);
-        this.createSeguimiento902.controls["fechaResolucionMemorando"].setValue(seguimiento902Data.fechaResolucionMemorando);
+        this.createSeguimiento902.controls["fechaResolucionMemorando"].setValue(this.changeDate(seguimiento902Data.fechaResolucionMemorando));
         this.createSeguimiento902.controls["tipoDePruebaAportadaId"].setValue(seguimiento902Data.tipoDePruebaAportadaId);
         this.createSeguimiento902.controls["requierePruebasAdicionales"].setValue(seguimiento902Data.requierePruebasAdicionales);
         this.createSeguimiento902.controls["pruebaAdicionalSolicitada"].setValue(seguimiento902Data.pruebaAdicionalSolicitada);
@@ -575,60 +622,60 @@ export class CrearSeguimiento902Component
         this.createSeguimiento902.controls["tipoMedidaCautelarId"].setValue(seguimiento902Data.tipoMedidaCautelarId);
         this.createSeguimiento902.controls["tipoDeActoId"].setValue(seguimiento902Data.tipoDeActoId);
         this.createSeguimiento902.controls["abogadoProyeccionId"].setValue(seguimiento902Data.abogadoProyeccionId);
-        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorInicio"].setValue(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorInicio);
-        this.createSeguimiento902.controls["fechaRecibidoFirmaInicio"].setValue(seguimiento902Data.fechaRecibidoFirmaInicio);
-        this.createSeguimiento902.controls["fechaEnvioANumeracionInicio"].setValue(seguimiento902Data.fechaEnvioANumeracionInicio);
+        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorInicio"].setValue(this.changeDate(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorInicio));
+        this.createSeguimiento902.controls["fechaRecibidoFirmaInicio"].setValue(this.changeDate(seguimiento902Data.fechaRecibidoFirmaInicio));
+        this.createSeguimiento902.controls["fechaEnvioANumeracionInicio"].setValue(this.changeDate(seguimiento902Data.fechaEnvioANumeracionInicio));
         this.createSeguimiento902.controls["numeroResolucionInicioArchivo"].setValue(seguimiento902Data.numeroResolucionInicioArchivo);
-        this.createSeguimiento902.controls["fechaResolucion"].setValue(seguimiento902Data.fechaResolucion);
+        this.createSeguimiento902.controls["fechaResolucion"].setValue(this.changeDate(seguimiento902Data.fechaResolucion));
         this.createSeguimiento902.controls["notificacionPersonalInicio"].setValue(seguimiento902Data.notificacionPersonalInicio);
-        this.createSeguimiento902.controls["fechaNotificacionPersonalInicio"].setValue(seguimiento902Data.fechaNotificacionPersonalInicio);
+        this.createSeguimiento902.controls["fechaNotificacionPersonalInicio"].setValue(this.changeDate(seguimiento902Data.fechaNotificacionPersonalInicio));
         this.createSeguimiento902.controls["notificacionPorAvisoInicio"].setValue(seguimiento902Data.notificacionPorAvisoInicio);
-        this.createSeguimiento902.controls["fechaFijacionNotificacionPorAvisoInicio"].setValue(seguimiento902Data.fechaFijacionNotificacionPorAvisoInicio);
+        this.createSeguimiento902.controls["fechaFijacionNotificacionPorAvisoInicio"].setValue(this.changeDate(seguimiento902Data.fechaFijacionNotificacionPorAvisoInicio));
         this.createSeguimiento902.controls["publicacionWebInicio"].setValue(seguimiento902Data.publicacionWebInicio);
-        this.createSeguimiento902.controls["fechaPublicacionWebInicio"].setValue(seguimiento902Data.fechaPublicacionWebInicio);
+        this.createSeguimiento902.controls["fechaPublicacionWebInicio"].setValue(this.changeDate(seguimiento902Data.fechaPublicacionWebInicio));
         this.createSeguimiento902.controls["publicacionEmisora"].setValue(seguimiento902Data.publicacionEmisora);
-        this.createSeguimiento902.controls["fechaPublicacionEnEmisora"].setValue(seguimiento902Data.fechaPublicacionEnEmisora);
+        this.createSeguimiento902.controls["fechaPublicacionEnEmisora"].setValue(this.changeDate(seguimiento902Data.fechaPublicacionEnEmisora));
         this.createSeguimiento902.controls["publicacionAlcaldia"].setValue(seguimiento902Data.publicacionAlcaldia);
-        this.createSeguimiento902.controls["fechaPublicacionAlcaldia"].setValue(seguimiento902Data.fechaPublicacionAlcaldia);
+        this.createSeguimiento902.controls["fechaPublicacionAlcaldia"].setValue(this.changeDate(seguimiento902Data.fechaPublicacionAlcaldia));
         this.createSeguimiento902.controls["recursoDeReposicion"].setValue(seguimiento902Data.recursoDeReposicion);
         this.createSeguimiento902.controls["numeroDeResolucionQueResuelveRecurso"].setValue(seguimiento902Data.numeroDeResolucionQueResuelveRecurso);
-        this.createSeguimiento902.controls["fechaResolucionQueResuelveRecurso"].setValue(seguimiento902Data.fechaResolucionQueResuelveRecurso);
-        this.createSeguimiento902.controls["fechaComunicacionAProcuraduria"].setValue(seguimiento902Data.fechaComunicacionAProcuraduria);
-        this.createSeguimiento902.controls["fechaEnvioAOripResolucionInicio"].setValue(seguimiento902Data.fechaEnvioAOripResolucionInicio);
-        this.createSeguimiento902.controls["fechaRegistroEnOripResolucionInicio"].setValue(seguimiento902Data.fechaRegistroEnOripResolucionInicio);
+        this.createSeguimiento902.controls["fechaResolucionQueResuelveRecurso"].setValue(this.changeDate(seguimiento902Data.fechaResolucionQueResuelveRecurso));
+        this.createSeguimiento902.controls["fechaComunicacionAProcuraduria"].setValue(this.changeDate(seguimiento902Data.fechaComunicacionAProcuraduria));
+        this.createSeguimiento902.controls["fechaEnvioAOripResolucionInicio"].setValue(this.changeDate(seguimiento902Data.fechaEnvioAOripResolucionInicio));
+        this.createSeguimiento902.controls["fechaRegistroEnOripResolucionInicio"].setValue(this.changeDate(seguimiento902Data.fechaRegistroEnOripResolucionInicio));
         this.createSeguimiento902.controls["numeroDeResolucionDePruebas"].setValue(seguimiento902Data.numeroDeResolucionDePruebas);
-        this.createSeguimiento902.controls["fechaResolucionDePruebas"].setValue(seguimiento902Data.fechaResolucionDePruebas);
-        this.createSeguimiento902.controls["fechaPublicacionEnRadio"].setValue(seguimiento902Data.fechaPublicacionEnRadio);
+        this.createSeguimiento902.controls["fechaResolucionDePruebas"].setValue(this.changeDate(seguimiento902Data.fechaResolucionDePruebas));
+        this.createSeguimiento902.controls["fechaPublicacionEnRadio"].setValue(this.changeDate(seguimiento902Data.fechaPublicacionEnRadio));
         this.createSeguimiento902.controls["audienciaPublica"].setValue(seguimiento902Data.audienciaPublica);
-        this.createSeguimiento902.controls["fechaAudienciaPublica"].setValue(seguimiento902Data.fechaAudienciaPublica);
+        this.createSeguimiento902.controls["fechaAudienciaPublica"].setValue(this.changeDate(seguimiento902Data.fechaAudienciaPublica));
         this.createSeguimiento902.controls["tipoDecisionDeCierreId"].setValue(seguimiento902Data.tipoDecisionDeCierreId);
         this.createSeguimiento902.controls["abogadoProyeccionCierreId"].setValue(seguimiento902Data.abogadoProyeccionCierreId);
         this.createSeguimiento902.controls["oposicion"].setValue(seguimiento902Data.oposicion);
         this.createSeguimiento902.controls["motivoOposicion"].setValue(seguimiento902Data.motivoOposicion);
-        this.createSeguimiento902.controls["fechaRadicadoOposicion"].setValue(seguimiento902Data.fechaRadicadoOposicion);
-        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorCierre"].setValue(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorCierre);
-        this.createSeguimiento902.controls["fechaRecibidoFirmaCierre"].setValue(seguimiento902Data.fechaRecibidoFirmaCierre);
-        this.createSeguimiento902.controls["fechaEnvioANumeracionCierre"].setValue(seguimiento902Data.fechaEnvioANumeracionCierre);
+        this.createSeguimiento902.controls["fechaRadicadoOposicion"].setValue(this.changeDate(seguimiento902Data.fechaRadicadoOposicion));
+        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorCierre"].setValue(this.changeDate(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorCierre));
+        this.createSeguimiento902.controls["fechaRecibidoFirmaCierre"].setValue(this.changeDate(seguimiento902Data.fechaRecibidoFirmaCierre));
+        this.createSeguimiento902.controls["fechaEnvioANumeracionCierre"].setValue(this.changeDate(seguimiento902Data.fechaEnvioANumeracionCierre));
         this.createSeguimiento902.controls["numeroDeResolucionDeCierre"].setValue(seguimiento902Data.numeroDeResolucionDeCierre);
-        this.createSeguimiento902.controls["fechaResolucionDeCierre"].setValue(seguimiento902Data.fechaResolucionDeCierre);
+        this.createSeguimiento902.controls["fechaResolucionDeCierre"].setValue(this.changeDate(seguimiento902Data.fechaResolucionDeCierre));
         this.createSeguimiento902.controls["notificacionPersonalCierre"].setValue(seguimiento902Data.notificacionPersonalCierre);
-        this.createSeguimiento902.controls["fechaNotificacionPersonalCierre"].setValue(seguimiento902Data.fechaNotificacionPersonalCierre);
+        this.createSeguimiento902.controls["fechaNotificacionPersonalCierre"].setValue(this.changeDate(seguimiento902Data.fechaNotificacionPersonalCierre));
         this.createSeguimiento902.controls["notificacionPorAvisoCierre"].setValue(seguimiento902Data.notificacionPorAvisoCierre);
-        this.createSeguimiento902.controls["fechaFijacionNotificacionPorAvisoCierre"].setValue(seguimiento902Data.fechaFijacionNotificacionPorAvisoCierre);
+        this.createSeguimiento902.controls["fechaFijacionNotificacionPorAvisoCierre"].setValue(this.changeDate(seguimiento902Data.fechaFijacionNotificacionPorAvisoCierre));
         this.createSeguimiento902.controls["publicacionResolucionCierre"].setValue(seguimiento902Data.publicacionResolucionCierre);
-        this.createSeguimiento902.controls["fechaPublicacion"].setValue(seguimiento902Data.fechaPublicacion);
+        this.createSeguimiento902.controls["fechaPublicacion"].setValue(this.changeDate(seguimiento902Data.fechaPublicacion));
         this.createSeguimiento902.controls["recursoResolucionCierre"].setValue(seguimiento902Data.recursoResolucionCierre);
         this.createSeguimiento902.controls["tipoRecursoId"].setValue(seguimiento902Data.tipoRecursoId);
         this.createSeguimiento902.controls["numeroResolucionResuelveRecurso"].setValue(seguimiento902Data.numeroResolucionResuelveRecurso);
-        this.createSeguimiento902.controls["fechaResolucionResuelveRecurso"].setValue(seguimiento902Data.fechaResolucionResuelveRecurso);
-        this.createSeguimiento902.controls["fechaEnvioAOripResolucionFinal"].setValue(seguimiento902Data.fechaEnvioAOripResolucionFinal);
-        this.createSeguimiento902.controls["fechaAnotacionANombreDelNuevoPropietario"].setValue(seguimiento902Data.fechaAnotacionANombreDelNuevoPropietario);
+        this.createSeguimiento902.controls["fechaResolucionResuelveRecurso"].setValue(this.changeDate(seguimiento902Data.fechaResolucionResuelveRecurso));
+        this.createSeguimiento902.controls["fechaEnvioAOripResolucionFinal"].setValue(this.changeDate(seguimiento902Data.fechaEnvioAOripResolucionFinal));
+        this.createSeguimiento902.controls["fechaAnotacionANombreDelNuevoPropietario"].setValue(this.changeDate(seguimiento902Data.fechaAnotacionANombreDelNuevoPropietario));
         this.createSeguimiento902.controls["fmiConInscripcionANombreDelNuevoPropietario"].setValue(seguimiento902Data.fmiConInscripcionANombreDelNuevoPropietario);
         this.createSeguimiento902.controls["nombreDelPredioFormalizado"].setValue(seguimiento902Data.nombreDelPredioFormalizado);
         this.createSeguimiento902.controls["areaFormalizada"].setValue(seguimiento902Data.areaFormalizada);
-        this.createSeguimiento902.controls["fechaEntregaTitulo"].setValue(seguimiento902Data.fechaEntregaTitulo);
+        this.createSeguimiento902.controls["fechaEntregaTitulo"].setValue(this.changeDate(seguimiento902Data.fechaEntregaTitulo));
         this.createSeguimiento902.controls["tipoEstadoSinegiaId"].setValue(seguimiento902Data.tipoEstadoSinegiaId);
-        this.createSeguimiento902.controls["fechaAprobacionSinergia"].setValue(seguimiento902Data.fechaAprobacionSinergia);
+        this.createSeguimiento902.controls["fechaAprobacionSinergia"].setValue(this.changeDate(seguimiento902Data.fechaAprobacionSinergia));
 
       },
       error => {

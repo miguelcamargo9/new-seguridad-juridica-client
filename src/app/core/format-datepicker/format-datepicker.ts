@@ -3,8 +3,6 @@ import { MatDateFormats } from '@angular/material/core';
 export class AppDateAdapter extends NativeDateAdapter {
     format(date: Date, displayFormat: Object): string {
         if (displayFormat === 'input') {
-            console.log("fecha", date);
-            // console.log("fecha", date.toLocaleString("en-US", { timeZone: "Europe/Dublin" }));
             let day: string = date.getDate().toString();
             day = +day < 10 ? '0' + day : day;
             let month: string = (date.getMonth() + 1).toString();

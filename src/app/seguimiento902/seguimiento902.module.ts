@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, LOCALE_ID } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
@@ -9,6 +9,9 @@ import { CrearSeguimiento902Component } from "./crear/crearseguimiento902.compon
 import { Seguimiento902Routes } from "./seguimiento902.routing";
 import { Seguimiento902Service } from "./seguimiento902.service";
 import { DomainService } from "../domains/domain.service";
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/format-datepicker";
+import { FieldErrorDisplayComponent } from "../components/field-error-display/field-error-display.component";
 
 @NgModule({
   imports: [
@@ -18,7 +21,10 @@ import { DomainService } from "../domains/domain.service";
     ReactiveFormsModule,
     MaterialModule
   ],
-  declarations: [CrearSeguimiento902Component],
-  providers: [Seguimiento902Service, DomainService]
+  declarations: [CrearSeguimiento902Component, FieldErrorDisplayComponent],
+  providers: [Seguimiento902Service, DomainService,
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  ]
 })
 export class Seguimiento902Module { }
