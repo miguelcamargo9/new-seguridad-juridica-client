@@ -8,6 +8,7 @@ import { DomainService } from "src/app/domains/domain.service";
 import { Departament } from "src/app/models/Deparamento";
 import { Municipio } from "src/app/models/Municipio";
 import { Domain } from "../../domains/domain.model";
+import { Persona } from "src/app/models/Persona";
 
 declare const $: any;
 interface FileReaderEventTarget extends EventTarget {
@@ -37,6 +38,8 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
   tiposPruebaUnion: Domain[];
   tiposSexos: Domain[];
   tiposDocumento: Domain[];
+
+  personas: Persona[] = [new Persona()];
 
   matcher = new MyErrorStateMatcher();
   type: FormGroup;
@@ -78,23 +81,30 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
       segundoApellidoSolicitante: [null],
       sexo: [null, [Validators.required]],
       tipoDocumento: [null, [Validators.required]],
-      documento: [null, [Validators.required]]
+      documento: [null, [Validators.required]],
+      nombrePredio: [null, [Validators.required]],
+      folioMatricula: [null, [Validators.required]],
+      numeroPredial: [null],
+      predioMayorExtension: [null, [Validators.required]],
+      nombrePredioMayor: [null],
+      areaSolicitada: [null, [Validators.required]]
     });
+    this.populateForm();
     // Code for the Validator
     const $validator = $(".card-wizard form").validate({
       rules: {
-        // expedienteSIT: {
-        //   required: true,
-        //   minlength: 19,
-        //   maxlength: 19
-        // },
+        expedienteSIT: {
+          required: true,
+          minlength: 19,
+          maxlength: 19
+        },
         // fiso: {
         //   required: true,
         //   minlength: 7
         // },
-        // departamento: {
-        //   required: true
-        // },
+        departamento: {
+          required: true
+        }
         // departamentoDane: {
         //   required: true
         // },
@@ -131,6 +141,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
 
       onNext: function(tab, navigation, index) {
         var $valid = $(".card-wizard form").valid();
+        console.log("NOOOOOO", $(".card-wizard form"));
         if (!$valid) {
           $validator.focusInvalid();
           return false;
@@ -448,5 +459,37 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
         console.log("There was an error while retrieving Departamentos!" + error);
       }
     );
+  }
+  addPersona() {
+    const persona = new Persona();
+    this.personas.splice(-1, 0, persona);
+    this.populateForm();
+  }
+  deletePersona() {
+    const lastPosition = this.personas.length - 1;
+    this.unPopulateForm(lastPosition);
+    this.personas.pop();
+  }
+  populateForm() {
+    this.personas.forEach((persona, key) => {
+      this.type.addControl(`primerNombreOtroSolicitante${key}`, new FormControl());
+      this.type.addControl(`segundoNombreOtroSolicitante${key}`, new FormControl());
+      this.type.addControl(`primerApellidoOtroSolicitante${key}`, new FormControl());
+      this.type.addControl(`segundoApellidoOtroSolicitante${key}`, new FormControl());
+      this.type.addControl(`sexoOtro${key}`, new FormControl());
+      this.type.addControl(`tipoDocumentoOtro${key}`, new FormControl());
+      this.type.addControl(`documentoOtro${key}`, new FormControl());
+    });
+    console.log(this.type.controls);
+  }
+  unPopulateForm(lastPosition: number) {
+    this.type.removeControl(`primerNombreOtroSolicitante${lastPosition}`);
+    this.type.removeControl(`segundoNombreOtroSolicitante${lastPosition}`);
+    this.type.removeControl(`primerApellidoOtroSolicitante${lastPosition}`);
+    this.type.removeControl(`segundoApellidoOtroSolicitante${lastPosition}`);
+    this.type.removeControl(`sexoOtro${lastPosition}`);
+    this.type.removeControl(`tipoDocumentoOtro${lastPosition}`);
+    this.type.removeControl(`documentoOtro${lastPosition}`);
+    console.log(this.type.controls);
   }
 }
