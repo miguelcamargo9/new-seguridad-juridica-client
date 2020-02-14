@@ -9,6 +9,8 @@ import { Departament } from "src/app/models/Deparamento";
 import { Municipio } from "src/app/models/Municipio";
 import { Domain } from "../../domains/domain.model";
 import { Persona } from "src/app/models/Persona";
+import { ToastrService } from "ngx-toastr";
+import { SolicitudService } from "../solicitudes.service";
 
 declare const $: any;
 interface FileReaderEventTarget extends EventTarget {
@@ -39,12 +41,19 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
   tiposSexos: Domain[];
   tiposDocumento: Domain[];
 
+  showPersonas: Boolean = false;
+
   personas: Persona[] = [new Persona()];
 
   matcher = new MyErrorStateMatcher();
-  type: FormGroup;
+  solicitud: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private domainServcie: DomainService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private domainServcie: DomainService,
+    private toastr: ToastrService,
+    private solicitudService: SolicitudService
+  ) {}
 
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
@@ -60,20 +69,20 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     this.getDomains();
     const elemMainPanel = <HTMLElement>document.querySelector(".main-panel");
 
-    this.type = this.formBuilder.group({
+    this.solicitud = this.formBuilder.group({
       // To add a validator, we must first convert the string value into an array. The first item in the array is the default value if any, then the next item in the array is the validator. Here we are adding a required validator meaning that the firstName attribute must have a value in it.
       expedienteSIT: [
         null,
         [Validators.required, Validators.minLength(19), Validators.maxLength(19)]
       ],
       fiso: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
-      departamento: [null, [Validators.required]],
+      departamentoId: [null, [Validators.required]],
       departamentoDane: [{ value: null, disabled: true }, [Validators.required]],
-      municipio: [null, [Validators.required]],
+      municipioId: [null, [Validators.required]],
       municipioDane: [{ value: null, disabled: true }, [Validators.required]],
       corregimiento: [null],
       vereda: [null],
-      condicionSolicitante: [null, [Validators.required]],
+      condicionDelSolicitante: [null, [Validators.required]],
       pruebaUnion: [null, [Validators.required]],
       primerNombreSolicitante: [null, [Validators.required]],
       segundoNombreSolicitante: [null],
@@ -82,11 +91,11 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
       sexo: [null, [Validators.required]],
       tipoDocumento: [null, [Validators.required]],
       documento: [null, [Validators.required]],
-      nombrePredio: [null, [Validators.required]],
-      folioMatricula: [null, [Validators.required]],
-      numeroPredial: [null],
-      predioMayorExtension: [null, [Validators.required]],
-      nombrePredioMayor: [null],
+      nombreDelPredioAFormalizar: [null, [Validators.required]],
+      folioDeMatriculaInmobiliaria: [null, [Validators.required]],
+      numeroPredialNacional: [null],
+      predioDeMayorExtension: [null, [Validators.required]],
+      nombrePredioMayorExtension: [null],
       areaSolicitada: [null, [Validators.required]]
     });
     this.populateForm();
@@ -98,22 +107,34 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
           minlength: 19,
           maxlength: 19
         },
-        // fiso: {
-        //   required: true,
-        //   minlength: 7
-        // },
-        departamento: {
+        fiso: {
+          required: true,
+          minlength: 7
+        },
+        departamentoId: {
+          required: true
+        },
+        departamentoDane: {
+          required: true
+        },
+        municipioId: {
+          required: true
+        },
+        municipioDane: {
+          required: true
+        },
+        condicionDelSolicitante: {
+          required: true
+        },
+        nombreDelPredioAFormalizar: {
+          required: true
+        },
+        folioDeMatriculaInmobiliaria: {
+          required: true
+        },
+        predioDeMayorExtension: {
           required: true
         }
-        // departamentoDane: {
-        //   required: true
-        // },
-        // municipio: {
-        //   required: true
-        // },
-        // municipioDane: {
-        //   required: true
-        // }
       },
 
       highlight: function(element) {
@@ -141,7 +162,6 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
 
       onNext: function(tab, navigation, index) {
         var $valid = $(".card-wizard form").valid();
-        console.log("NOOOOOO", $(".card-wizard form"));
         if (!$valid) {
           $validator.focusInvalid();
           return false;
@@ -412,7 +432,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     const selectDepartamento = this.departamentos.find(
       departamento => departamento.id === event.value
     );
-    this.type.controls["departamentoDane"].setValue(selectDepartamento.dane);
+    this.solicitud.controls["departamentoDane"].setValue(selectDepartamento.dane);
     this.domainServcie.getMunicipiosPorDepartamento(selectDepartamento.id).subscribe(
       municipiosData => {
         this.municipios = municipiosData;
@@ -424,7 +444,13 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
   }
   selectMunicipio(event) {
     const selectMunicipio = this.municipios.find(municipio => municipio.id === event.value);
-    this.type.controls["municipioDane"].setValue(selectMunicipio.dane);
+    this.solicitud.controls["municipioDane"].setValue(selectMunicipio.dane);
+  }
+  selectCondicionSolicitante(event) {
+    const selectCondicionSolicitante = this.tiposCondicionSolicitante.find(
+      condicionSolicitante => condicionSolicitante.id === event.value
+    );
+    this.showPersonas = selectCondicionSolicitante.id !== 1 ? true : false;
   }
   getDomains() {
     this.domainServcie.getDepartamentos().subscribe(
@@ -440,7 +466,15 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
         this.tiposCondicionSolicitante = tiposCondicionSolicitanteData;
       },
       error => {
-        console.log("There was an error while retrieving Departamentos!" + error);
+        console.log("There was an error while retrieving Condicion Solicitante!" + error);
+      }
+    );
+    this.domainServcie.getTipoPruebaUnion().subscribe(
+      tiposPruebaUnionData => {
+        this.tiposPruebaUnion = tiposPruebaUnionData;
+      },
+      error => {
+        console.log("There was an error while retrieving Prueba Union!" + error);
       }
     );
     this.domainServcie.getTipoSexo().subscribe(
@@ -448,7 +482,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
         this.tiposSexos = tiposSexosData;
       },
       error => {
-        console.log("There was an error while retrieving Departamentos!" + error);
+        console.log("There was an error while retrieving Sexo!" + error);
       }
     );
     this.domainServcie.getTipoDocumento().subscribe(
@@ -456,7 +490,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
         this.tiposDocumento = tiposDocumentosData;
       },
       error => {
-        console.log("There was an error while retrieving Departamentos!" + error);
+        console.log("There was an error while retrieving Tipo Documento!" + error);
       }
     );
   }
@@ -472,24 +506,44 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
   }
   populateForm() {
     this.personas.forEach((persona, key) => {
-      this.type.addControl(`primerNombreOtroSolicitante${key}`, new FormControl());
-      this.type.addControl(`segundoNombreOtroSolicitante${key}`, new FormControl());
-      this.type.addControl(`primerApellidoOtroSolicitante${key}`, new FormControl());
-      this.type.addControl(`segundoApellidoOtroSolicitante${key}`, new FormControl());
-      this.type.addControl(`sexoOtro${key}`, new FormControl());
-      this.type.addControl(`tipoDocumentoOtro${key}`, new FormControl());
-      this.type.addControl(`documentoOtro${key}`, new FormControl());
+      this.solicitud.addControl(`primerNombreOtroSolicitante${key}`, new FormControl());
+      this.solicitud.addControl(`segundoNombreOtroSolicitante${key}`, new FormControl());
+      this.solicitud.addControl(`primerApellidoOtroSolicitante${key}`, new FormControl());
+      this.solicitud.addControl(`segundoApellidoOtroSolicitante${key}`, new FormControl());
+      this.solicitud.addControl(`sexoOtro${key}`, new FormControl());
+      this.solicitud.addControl(`tipoDocumentoOtro${key}`, new FormControl());
+      this.solicitud.addControl(`documentoOtro${key}`, new FormControl());
     });
-    console.log(this.type.controls);
+    console.log(this.solicitud.controls);
   }
   unPopulateForm(lastPosition: number) {
-    this.type.removeControl(`primerNombreOtroSolicitante${lastPosition}`);
-    this.type.removeControl(`segundoNombreOtroSolicitante${lastPosition}`);
-    this.type.removeControl(`primerApellidoOtroSolicitante${lastPosition}`);
-    this.type.removeControl(`segundoApellidoOtroSolicitante${lastPosition}`);
-    this.type.removeControl(`sexoOtro${lastPosition}`);
-    this.type.removeControl(`tipoDocumentoOtro${lastPosition}`);
-    this.type.removeControl(`documentoOtro${lastPosition}`);
-    console.log(this.type.controls);
+    this.solicitud.removeControl(`primerNombreOtroSolicitante${lastPosition}`);
+    this.solicitud.removeControl(`segundoNombreOtroSolicitante${lastPosition}`);
+    this.solicitud.removeControl(`primerApellidoOtroSolicitante${lastPosition}`);
+    this.solicitud.removeControl(`segundoApellidoOtroSolicitante${lastPosition}`);
+    this.solicitud.removeControl(`sexoOtro${lastPosition}`);
+    this.solicitud.removeControl(`tipoDocumentoOtro${lastPosition}`);
+    this.solicitud.removeControl(`documentoOtro${lastPosition}`);
+    console.log(this.solicitud.controls);
+  }
+  onSubmit() {
+    let data = this.solicitud.value;
+    if (this.solicitud.invalid) {
+      console.log("Invalido", this.findInvalidControls());
+      return;
+    }
+    this.solicitudService.postCreateSolicitud(data).subscribe(params => {
+      console.log("Result create: ", params);
+    });
+  }
+  findInvalidControls() {
+    const invalid = [];
+    const controls = this.solicitud.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
   }
 }

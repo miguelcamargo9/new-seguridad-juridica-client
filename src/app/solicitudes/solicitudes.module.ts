@@ -9,6 +9,7 @@ import { CrearSolicitudComponent } from "./crear/crearsolicitud.component";
 import { SolicitudesRoutes } from "./solicitudes.routing";
 import { FieldErrorDisplayComponent } from "../components/field-error-display/field-error-display.component";
 import { DomainService } from "../domains/domain.service";
+import { SolicitudService } from "./solicitudes.service";
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { DomainService } from "../domains/domain.service";
     MaterialModule
   ],
   declarations: [CrearSolicitudComponent, FieldErrorDisplayComponent],
-  providers: [DomainService]
+  providers: [DomainService, SolicitudService]
 })
 export class SolicitudModule {}
