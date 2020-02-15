@@ -5,7 +5,7 @@
         <!--      Wizard container        -->
         <div class="wizard-container">
           <div class="card card-wizard" data-color="green" id="wizardProfile">
-            <form [formGroup]="type" action="" method="">
+            <form [formGroup]="solicitud">
               <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
               <div class="card-header text-center">
                 <h3 class="card-title">
@@ -52,7 +52,7 @@
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'expedienteSIT')"
+                            [ngClass]="displayFieldCss(solicitud, 'expedienteSIT')"
                           >
                             <input
                               type="text"
@@ -63,7 +63,7 @@
                               formControlName="expedienteSIT"
                             />
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'expedienteSIT')"
+                              [displayError]="isFieldValid(solicitud, 'expedienteSIT')"
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -79,7 +79,7 @@
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'fiso')"
+                            [ngClass]="displayFieldCss(solicitud, 'fiso')"
                           >
                             <input
                               type="text"
@@ -90,7 +90,7 @@
                               formControlName="fiso"
                             />
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'fiso')"
+                              [displayError]="isFieldValid(solicitud, 'fiso')"
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -106,13 +106,13 @@
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'departamento')"
+                            [ngClass]="displayFieldCss(solicitud, 'departamentoId')"
                           >
                             <mat-select
                               placeholder="DEPARTAMENTOS"
-                              name="departamento"
-                              id="departamento"
-                              formControlName="departamento"
+                              name="departamentoId"
+                              id="departamentoId"
+                              formControlName="departamentoId"
                               (selectionChange)="selectDepartmento($event)"
                             >
                               <mat-option
@@ -154,8 +154,8 @@
                           <mat-form-field>
                             <mat-select
                               placeholder="MUNICIPIOS"
-                              name="municipio"
-                              formControlName="municipio"
+                              name="municipioId"
+                              formControlName="municipioId"
                               (selectionChange)="selectMunicipio($event)"
                             >
                               <mat-option
@@ -239,8 +239,8 @@
                           <mat-form-field>
                             <mat-select
                               placeholder="CONDICIÓN DEL SOLICITANTE"
-                              name="condicionSolicitante"
-                              formControlName="condicionSolicitante"
+                              name="condicionDelSolicitante"
+                              formControlName="condicionDelSolicitante"
                               (selectionChange)="selectCondicionSolicitante($event)"
                             >
                               <mat-option
@@ -257,7 +257,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">assignment</i>
+                              <i class="material-icons">subject</i>
                             </span>
                           </div>
                           <mat-form-field>
@@ -265,7 +265,6 @@
                               placeholder="PRUEBA UNIÓN"
                               name="pruebaUnion"
                               formControlName="pruebaUnion"
-                              (selectionChange)="selectPruebaUnion($event)"
                             >
                               <mat-option
                                 *ngFor="let tipoPruebaUnion of tiposPruebaUnion"
@@ -281,12 +280,12 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'primerNombreSolicitante')"
+                            [ngClass]="displayFieldCss(solicitud, 'primerNombreSolicitante')"
                           >
                             <input
                               type="text"
@@ -297,7 +296,7 @@
                               formControlName="primerNombreSolicitante"
                             />
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'primerNombreSolicitante')"
+                              [displayError]="isFieldValid(solicitud, 'primerNombreSolicitante')"
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -308,7 +307,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">receipt</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width">
@@ -327,12 +326,12 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'primerApellidoSolicitante')"
+                            [ngClass]="displayFieldCss(solicitud, 'primerApellidoSolicitante')"
                           >
                             <input
                               type="text"
@@ -343,7 +342,7 @@
                               formControlName="primerApellidoSolicitante"
                             />
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'primerApellidoSolicitante')"
+                              [displayError]="isFieldValid(solicitud, 'primerApellidoSolicitante')"
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -354,7 +353,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">receipt</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width">
@@ -373,16 +372,11 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">panorama</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field>
-                            <mat-select
-                              placeholder="SEXO"
-                              name="sexo"
-                              formControlName="sexo"
-                              (selectionChange)="selectSexo($event)"
-                            >
+                            <mat-select placeholder="SEXO" name="sexo" formControlName="sexo">
                               <mat-option *ngFor="let tipoSexo of tiposSexos" [value]="tipoSexo.id">
                                 {{ tipoSexo.nombre }}
                               </mat-option>
@@ -394,7 +388,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">panorama</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field>
@@ -402,7 +396,6 @@
                               placeholder="TIPO DOCUMENTO"
                               name="tipoDocumento"
                               formControlName="tipoDocumento"
-                              (selectionChange)="selectTipoDocumento($event)"
                             >
                               <mat-option
                                 *ngFor="let tipoDocumento of tiposDocumento"
@@ -418,12 +411,12 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'documento')"
+                            [ngClass]="displayFieldCss(solicitud, 'documento')"
                           >
                             <input
                               type="text"
@@ -434,7 +427,7 @@
                               formControlName="documento"
                             />
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'documento')"
+                              [displayError]="isFieldValid(solicitud, 'documento')"
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -443,7 +436,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane" id="page3">
+                  <div class="tab-pane" id="page3" [hidden]="!showPersonas">
                     <div class="row" *ngFor="let persona of personas | keyvalue">
                       <div class="col-sm-6">
                         <div class="input-group form-control-lg">
@@ -467,7 +460,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">receipt</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width">
@@ -485,7 +478,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width has-label">
@@ -503,7 +496,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">receipt</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width">
@@ -521,7 +514,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">panorama</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field>
@@ -542,7 +535,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">panorama</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field>
@@ -566,7 +559,7 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">person</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width has-label">
@@ -607,23 +600,23 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">public</i>
                             </span>
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'nombrePredio')"
+                            [ngClass]="displayFieldCss(solicitud, 'nombreDelPredioAFormalizar')"
                           >
                             <input
                               type="text"
-                              name="nombrePredio"
+                              name="nombreDelPredioAFormalizar"
                               matInput
-                              id="nombrePredio"
+                              id="nombreDelPredioAFormalizar"
                               placeholder="NOMBRE DEL PREDIO A FORMALIZAR"
-                              formControlName="nombrePredio"
+                              formControlName="nombreDelPredioAFormalizar"
                             />
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'nombrePredio')"
+                              [displayError]="isFieldValid(solicitud, 'nombreDelPredioAFormalizar')"
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -634,23 +627,25 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">style</i>
                             </span>
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'folioMatricula')"
+                            [ngClass]="displayFieldCss(solicitud, 'folioDeMatriculaInmobiliaria')"
                           >
                             <input
                               type="text"
-                              name="folioMatricula"
+                              name="folioDeMatriculaInmobiliaria"
                               matInput
-                              id="folioMatricula"
+                              id="folioDeMatriculaInmobiliaria"
                               placeholder="FOLIO DE MATRÍCULA INMOBILIARIA"
-                              formControlName="folioMatricula"
+                              formControlName="folioDeMatriculaInmobiliaria"
                             />
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'folioMatricula')"
+                              [displayError]="
+                                isFieldValid(solicitud, 'folioDeMatriculaInmobiliaria')
+                              "
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -661,15 +656,15 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">description</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width has-label">
                             <input
                               type="text"
-                              name="numeroPredial"
+                              name="numeroPredialNacional"
                               matInput
-                              formControlName="numeroPredial"
+                              formControlName="numeroPredialNacional"
                               placeholder="NÚMERO PREDIAL NACIONAL"
                             />
                           </mat-form-field>
@@ -679,19 +674,19 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i> PREDIO DE MAYOR EXTENSIÓN
+                              <i class="material-icons">launch</i> PREDIO DE MAYOR EXTENSIÓN
                             </span>
                           </div>
                           <mat-radio-group
-                            formControlName="predioMayorExtension"
+                            formControlName="predioDeMayorExtension"
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'predioMayorExtension')"
+                            [ngClass]="displayFieldCss(solicitud, 'predioDeMayorExtension')"
                           >
                             <mat-radio-button value="1">Sí </mat-radio-button>
                             <br />
                             <mat-radio-button value="2">No </mat-radio-button>
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'predioMayorExtension')"
+                              [displayError]="isFieldValid(solicitud, 'predioDeMayorExtension')"
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -702,15 +697,15 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">style</i>
                             </span>
                           </div>
                           <mat-form-field class="example-full-width has-label">
                             <input
                               type="text"
-                              name="nombrePredioMayor"
+                              name="nombrePredioMayorExtension"
                               matInput
-                              formControlName="nombrePredioMayor"
+                              formControlName="nombrePredioMayorExtension"
                               placeholder="NOMBRE PREDIO MAYOR EXTENSIÓN"
                             />
                           </mat-form-field>
@@ -720,12 +715,12 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
-                              <i class="material-icons">extension</i>
+                              <i class="material-icons">straighten</i>
                             </span>
                           </div>
                           <mat-form-field
                             class="example-full-width has-label"
-                            [ngClass]="displayFieldCss(type, 'areaSolicitada')"
+                            [ngClass]="displayFieldCss(solicitud, 'areaSolicitada')"
                           >
                             <input
                               type="text"
@@ -736,7 +731,7 @@
                               formControlName="areaSolicitada"
                             />
                             <app-field-error-display
-                              [displayError]="isFieldValid(type, 'areaSolicitada')"
+                              [displayError]="isFieldValid(solicitud, 'areaSolicitada')"
                               errorMsg="Deligenciar el campo."
                             >
                             </app-field-error-display>
@@ -769,6 +764,7 @@
                     name="finish"
                     value="Guardar"
                     style="display: none;"
+                    (click)="onSubmit()"
                   />
                 </div>
                 <div class="clearfix"></div>
