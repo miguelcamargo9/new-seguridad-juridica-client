@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "../app.module";
 import { CrearSolicitudComponent } from "./crear/crearsolicitud.component";
 import { SolicitudesRoutes } from "./solicitudes.routing";
-import { FieldErrorDisplayComponent } from "../components/field-error-display/field-error-display.component";
 import { DomainService } from "../domains/domain.service";
 
 @NgModule({
@@ -18,7 +17,7 @@ import { DomainService } from "../domains/domain.service";
     ReactiveFormsModule,
     MaterialModule
   ],
-  declarations: [CrearSolicitudComponent, FieldErrorDisplayComponent],
+  declarations: [CrearSolicitudComponent],
   providers: [DomainService]
 })
-export class SolicitudModule {}
+export class SolicitudModule { }

@@ -55,6 +55,7 @@ import { AuthGuard } from "./core/security/guard";
 import { CheckInterfaceDirective } from "./directives/checkinterface.directive";
 
 import { AppRoutes } from "./app.routing";
+import { FieldErrorDisplayComponent } from "./components/field-error-display/field-error-display.component";
 
 @NgModule({
   exports: [
@@ -89,9 +90,12 @@ import { AppRoutes } from "./app.routing";
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule
+  ],
+  declarations: [
+    FieldErrorDisplayComponent
   ]
 })
-export class MaterialModule {}
+export class MaterialModule { }
 
 @NgModule({
   imports: [
@@ -123,8 +127,8 @@ export class MaterialModule {}
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    CheckInterfaceDirective
+    CheckInterfaceDirective,
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

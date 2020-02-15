@@ -11,7 +11,6 @@ import { Seguimiento902Service } from "./seguimiento902.service";
 import { DomainService } from "../domains/domain.service";
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/format-datepicker";
-import { FieldErrorDisplayComponent } from "../components/field-error-display/field-error-display.component";
 
 @NgModule({
   imports: [
@@ -21,7 +20,7 @@ import { FieldErrorDisplayComponent } from "../components/field-error-display/fi
     ReactiveFormsModule,
     MaterialModule
   ],
-  declarations: [CrearSeguimiento902Component, FieldErrorDisplayComponent],
+  declarations: [CrearSeguimiento902Component],
   providers: [Seguimiento902Service, DomainService,
     { provide: DateAdapter, useClass: AppDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
