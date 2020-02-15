@@ -91,11 +91,22 @@ import { FieldErrorDisplayComponent } from "./components/field-error-display/fie
     MatToolbarModule,
     MatTooltipModule
   ],
+})
+export class MaterialModule { }
+
+
+@NgModule({
+  imports: [
+    CommonModule
+  ],
   declarations: [
+    FieldErrorDisplayComponent
+  ],
+  exports: [
     FieldErrorDisplayComponent
   ]
 })
-export class MaterialModule { }
+export class FieldErrorModule { }
 
 @NgModule({
   imports: [
