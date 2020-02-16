@@ -11,7 +11,6 @@ import { Seguimiento902Service } from "./seguimiento902.service";
 import { DomainService } from "../domains/domain.service";
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/format-datepicker";
-import { FieldErrorDisplayComponent } from "../components/field-error-display/field-error-display.component";
 
 
 @NgModule({

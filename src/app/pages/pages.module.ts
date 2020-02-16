@@ -12,6 +12,7 @@ import { PricingComponent } from "./pricing/pricing.component";
 import { LockComponent } from "./lock/lock.component";
 import { LoginComponent } from "./login/login.component";
 import { LoginService } from "./login/login.service";
+import { ClosesesionComponent } from "./closeSesion/closesesion.component";
 
 @NgModule({
   imports: [
@@ -25,8 +26,9 @@ import { LoginService } from "./login/login.service";
     LoginComponent,
     RegisterComponent,
     PricingComponent,
-    LockComponent
+    LockComponent,
+    ClosesesionComponent
   ],
   providers: [LoginService]
 })
-export class PagesModule {}
+export class PagesModule { }

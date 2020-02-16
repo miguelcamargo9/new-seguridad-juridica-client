@@ -36,6 +36,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterViewInit {
   emailFormControl = new FormControl("", [Validators.required, Validators.email]);
   routeSub: Subscription;
+
+  usersAbodago: Domain[];
+  usersIngeniero: Domain[];
+  usersTransversal: Domain[];
+
   tipoSiNo: DomainBoolean[];
   tipoEstadoInformeTecnicoJuridico: Domain[];
   tipoSoporteValoracion: Domain[];
@@ -155,19 +160,19 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         areaFormalizada: { required: true }
       },
 
-      highlight: function(element) {
+      highlight: function (element) {
         $(element)
           .closest(".form-group")
           .removeClass("has-success")
           .addClass("has-danger");
       },
-      success: function(element) {
+      success: function (element) {
         $(element)
           .closest(".form-group")
           .removeClass("has-danger")
           .addClass("has-success");
       },
-      errorPlacement: function(error, element) {
+      errorPlacement: function (error, element) {
         $(element).append(error);
       }
     });
@@ -178,7 +183,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       nextSelector: ".btn-next",
       previousSelector: ".btn-previous",
 
-      onNext: function(tab, navigation, index) {
+      onNext: function (tab, navigation, index) {
         var $valid = $(".card-wizard form").valid();
         if (!$valid) {
           $validator.focusInvalid();
@@ -186,7 +191,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         }
       },
 
-      onInit: function(tab: any, navigation: any, index: any) {
+      onInit: function (tab: any, navigation: any, index: any) {
         // check number of tabs and fill the entire row
         let $total = navigation.find("li").length;
         let $wizard = navigation.closest(".card-wizard");
@@ -238,7 +243,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         $(".moving-tab").css("transition", "transform 0s");
       },
 
-      onTabClick: function(tab: any, navigation: any, index: any) {
+      onTabClick: function (tab: any, navigation: any, index: any) {
         const $valid = $(".card-wizard form").valid();
 
         if (!$valid) {
@@ -248,7 +253,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         }
       },
 
-      onTabShow: function(tab: any, navigation: any, index: any) {
+      onTabShow: function (tab: any, navigation: any, index: any) {
         let $total = navigation.find("li").length;
         let $current = index + 1;
         elemMainPanel.scrollTop = 0;
@@ -273,7 +278,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
 
         const button_text = navigation.find("li:nth-child(" + $current + ") a").html();
 
-        setTimeout(function() {
+        setTimeout(function () {
           $(".moving-tab").text(button_text);
         }, 150);
 
@@ -335,13 +340,13 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     });
 
     // Prepare the preview for profile picture
-    $("#wizard-picture").change(function() {
+    $("#wizard-picture").change(function () {
       const input = $(this);
 
       if (input[0].files && input[0].files[0]) {
         const reader = new FileReader();
 
-        reader.onload = function(e: any) {
+        reader.onload = function (e: any) {
           $("#wizardPicturePreview")
             .attr("src", e.target.result)
             .fadeIn("slow");
@@ -350,7 +355,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       }
     });
 
-    $('[data-toggle="wizard-radio"]').click(function() {
+    $('[data-toggle="wizard-radio"]').click(function () {
       const wizard = $(this).closest(".card-wizard");
       wizard.find('[data-toggle="wizard-radio"]').removeClass("active");
       $(this).addClass("active");
@@ -362,7 +367,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         .attr("checked", "true");
     });
 
-    $('[data-toggle="wizard-checkbox"]').click(function() {
+    $('[data-toggle="wizard-checkbox"]').click(function () {
       if ($(this).hasClass("active")) {
         $(this).removeClass("active");
         $(this)
@@ -379,6 +384,32 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     $(".set-full-height").css("height", "auto");
   }
   getDomains() {
+    this.domainService.getUsersByRol("Abogado").subscribe(
+      data => {
+        this.usersAbodago = data;
+      },
+      error => {
+        console.log("It don't getDomain!" + error);
+      }
+    );
+
+    this.domainService.getUsersByRol("Ingeniero").subscribe(
+      data => {
+        this.usersIngeniero = data;
+      },
+      error => {
+        console.log("It don't getDomain!" + error);
+      }
+    );
+
+    this.domainService.getUsersByRol("Transversal").subscribe(
+      data => {
+        this.usersTransversal = data;
+      },
+      error => {
+        console.log("It don't getDomain!" + error);
+      }
+    );
     this.domainService.getTipoCondicionSolicitante().subscribe(
       data => {
         this.tipoEstadoInformeTecnicoJuridico = data;
@@ -807,7 +838,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     if (input[0].files && input[0].files[0]) {
       const reader: any = new FileReader();
 
-      reader.onload = function(e: any) {
+      reader.onload = function (e: any) {
         $("#wizardPicturePreview")
           .attr("src", e.target.result)
           .fadeIn("slow");
@@ -817,7 +848,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
   }
   ngAfterViewInit() {
     $(window).resize(() => {
-      $(".card-wizard").each(function() {
+      $(".card-wizard").each(function () {
         setTimeout(() => {
           const $wizard = $(this);
           const index = $wizard.bootstrapWizard("currentIndex");

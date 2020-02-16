@@ -90,7 +90,14 @@ export const ROUTES: RouteInfo[] = [
         ab: "CS"
       }
     ]
-  }
+  },
+  {
+    path: "/pages/login/closeSession",
+    title: "Cerrar Sesión",
+    type: "link",
+    icontype: "close"
+  },
+
   //   {
   //     path: "/components",
   //     title: "Components",

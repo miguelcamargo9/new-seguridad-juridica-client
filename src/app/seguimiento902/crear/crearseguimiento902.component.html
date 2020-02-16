@@ -172,7 +172,7 @@
                             [ngClass]="displayFieldCss(createSeguimiento902,'ingenieroProyectoItjId')">
                             <mat-select placeholder='INGENIERO PROYECTÓ ITJ*' name='ingenieroProyectoItjId' matInput
                               id='ingenieroProyectoItjId' formControlName='ingenieroProyectoItjId'>
-                              <mat-option *ngFor='let item of userList' [value]='item.id'>
+                              <mat-option *ngFor='let item of usersIngeniero' [value]='item.id'>
                                 {{ item.nombre }}
                               </mat-option>
                             </mat-select>
@@ -189,7 +189,7 @@
                             [ngClass]="displayFieldCss(createSeguimiento902,'ingenieroRevisoItjId')">
                             <mat-select placeholder='INGENIERO REVISÓ ITJ*' name='ingenieroRevisoItjId' matInput
                               id='ingenieroRevisoItjId' formControlName='ingenieroRevisoItjId'>
-                              <mat-option *ngFor='let item of userList' [value]='item.id'>
+                              <mat-option *ngFor='let item of usersIngeniero' [value]='item.id'>
                                 {{ item.nombre }}
                               </mat-option>
                             </mat-select>
@@ -471,7 +471,7 @@
                             [ngClass]="displayFieldCss(createSeguimiento902,'abogadoProyeccionId')">
                             <mat-select placeholder='ABOGADO PROYECCIÓN*' name='abogadoProyeccionId' matInput
                               id='abogadoProyeccionId' formControlName='abogadoProyeccionId'>
-                              <mat-option *ngFor='let item of userList' [value]='item.id'>
+                              <mat-option *ngFor='let item of usersAbodago' [value]='item.id'>
                                 {{ item.nombre }}
                               </mat-option>
                             </mat-select>
@@ -983,7 +983,7 @@
                             [ngClass]="displayFieldCss(createSeguimiento902,'abogadoProyeccionCierreId')">
                             <mat-select placeholder='ABOGADO PROYECCIÓN CIERRE*' name='abogadoProyeccionCierreId'
                               matInput id='abogadoProyeccionCierreId' formControlName='abogadoProyeccionCierreId'>
-                              <mat-option *ngFor='let item of userList' [value]='item.id'>
+                              <mat-option *ngFor='let item of usersAbodago' [value]='item.id'>
                                 {{ item.nombre }}
                               </mat-option>
                             </mat-select>
