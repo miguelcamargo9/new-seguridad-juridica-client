@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { MaterialModule } from "../app.module";
+import { MaterialModule, FieldErrorModule } from "../app.module";
 import { CrearSolicitudComponent } from "./crear/crearsolicitud.component";
 import { SolicitudesRoutes } from "./solicitudes.routing";
 import { DomainService } from "../domains/domain.service";
@@ -16,9 +16,10 @@ import { SolicitudService } from "./solicitudes.service";
     RouterModule.forChild(SolicitudesRoutes),
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    FieldErrorModule
   ],
   declarations: [CrearSolicitudComponent],
   providers: [DomainService, SolicitudService]
 })
-export class SolicitudModule { }
+export class SolicitudModule {}

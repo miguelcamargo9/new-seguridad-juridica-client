@@ -527,7 +527,58 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     console.log(this.solicitud.controls);
   }
   onSubmit() {
-    let data = this.solicitud.value;
+    const formData = this.solicitud.value;
+
+    const personas = this.personas.map((value, key) => {
+      return {
+        tipoPersonaId: 2,
+        primerNombreSolicitante: formData[`primerNombreOtroSolicitante${key}`],
+        segundoNombreSolicitante: formData[`segundoNombreOtroSolicitante${key}`],
+        primerApellidoSolicitante: formData[`primerApellidoOtroSolicitante${key}`],
+        segundoApellidoSolicitante: formData[`segundoApellidoOtroSolicitante${key}`],
+        sexoId: formData[`sexoOtro${key}`],
+        tipoDocumentoId: formData[`tipoDocumentoOtro${key}`],
+        noDocumento: formData[`documentoOtro${key}`]
+      };
+    });
+
+    const solicitante = {
+      tipoPersonaId: 1,
+      primerNombreSolicitante: formData.primerNombreSolicitante,
+      segundoNombreSolicitante: formData.segundoNombreSolicitante,
+      primerApellidoSolicitante: formData.primerApellidoSolicitante,
+      segundoApellidoSolicitante: formData.segundoApellidoSolicitante,
+      sexoId: formData.sexo,
+      tipoDocumentoId: formData.tipoDocumento,
+      noDocumento: formData.documento
+    };
+
+    personas.splice(0, 0, solicitante);
+
+    if (formData.condicionDelSolicitante === 1) {
+      personas.pop();
+    }
+
+    console.log(personas);
+
+    const data = {
+      expedienteSIT: formData.expedienteSIT,
+      fiso: formData.fiso,
+      departamentoId: formData.departamentoId,
+      municipioId: formData.municipioId,
+      corregimiento: formData.corregimiento,
+      vereda: formData.vereda,
+      condicionDelSolicitante: formData.condicionDelSolicitante,
+      pruebaUnion: formData.pruebaUnion,
+      nombreDelPredioAFormalizar: formData.nombreDelPredioAFormalizar,
+      folioDeMatriculaInmobiliaria: formData.folioDeMatriculaInmobiliaria,
+      numeroPredialNacional: formData.numeroPredialNacional,
+      predioDeMayorExtension: formData.predioDeMayorExtension ? true : false,
+      nombrePredioMayorExtension: formData.nombrePredioMayorExtension,
+      areaSolicitada: formData.areaSolicitada,
+      personas: personas
+    };
+
     if (this.solicitud.invalid) {
       console.log("Invalido", this.findInvalidControls());
       return;
