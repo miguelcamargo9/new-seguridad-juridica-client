@@ -581,6 +581,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
 
     if (this.solicitud.invalid) {
       console.log("Invalido", this.findInvalidControls());
+      this.toastr.error("Formulario Invalido", "Solicitud");
       return;
     }
     this.solicitudService.postCreateSolicitud(data).subscribe(params => {

@@ -9,6 +9,7 @@ import { CrearSolicitudComponent } from "./crear/crearsolicitud.component";
 import { SolicitudesRoutes } from "./solicitudes.routing";
 import { DomainService } from "../domains/domain.service";
 import { SolicitudService } from "./solicitudes.service";
+import { BuscarSolicitudComponent } from "./buscar/buscarsolicitud.component";
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { SolicitudService } from "./solicitudes.service";
     MaterialModule,
     FieldErrorModule
   ],
-  declarations: [CrearSolicitudComponent],
+  declarations: [CrearSolicitudComponent, BuscarSolicitudComponent],
   providers: [DomainService, SolicitudService]
 })
 export class SolicitudModule {}

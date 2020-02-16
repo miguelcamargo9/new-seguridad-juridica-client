@@ -80,7 +80,7 @@ export const ROUTES: RouteInfo[] = [
     collapse: "request",
     children: [
       {
-        path: "all",
+        path: "buscar",
         title: "Buscar Solicitud",
         ab: "SO"
       },
@@ -123,9 +123,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-      const elemSidebar = <HTMLElement>(
-        document.querySelector(".sidebar .sidebar-wrapper")
-      );
+      const elemSidebar = <HTMLElement>document.querySelector(".sidebar .sidebar-wrapper");
       this.ps = new PerfectScrollbar(elemSidebar);
     }
   }
