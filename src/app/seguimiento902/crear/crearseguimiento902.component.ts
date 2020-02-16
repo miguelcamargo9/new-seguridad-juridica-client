@@ -1,19 +1,7 @@
 // IMPORTANT: this is a plugin which requires jQuery for initialisation and data manipulation
 
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  AfterViewInit,
-  SimpleChanges
-} from "@angular/core";
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-  FormGroup
-} from "@angular/forms";
+import { Component, OnInit, OnChanges, AfterViewInit, SimpleChanges } from "@angular/core";
+import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 import { FormBuilder } from "@angular/forms";
 import { Subscription } from "rxjs";
@@ -35,16 +23,9 @@ interface FileReaderEvent extends Event {
 }
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
 
@@ -52,13 +33,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   selector: "app-crearseguimiento902-cmp",
   templateUrl: "crearseguimiento902.component.html"
 })
-export class CrearSeguimiento902Component
-  implements OnInit, OnChanges, AfterViewInit {
-
-  emailFormControl = new FormControl("", [
-    Validators.required,
-    Validators.email
-  ]);
+export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterViewInit {
+  emailFormControl = new FormControl("", [Validators.required, Validators.email]);
   routeSub: Subscription;
   tipoSiNo: DomainBoolean[];
   tipoEstadoInformeTecnicoJuridico: Domain[];
@@ -82,11 +58,14 @@ export class CrearSeguimiento902Component
   matcher = new MyErrorStateMatcher();
 
   createSeguimiento902: FormGroup;
-  constructor(private formBuilder: FormBuilder, private toastr: ToastrService,
+  constructor(
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
     private route: ActivatedRoute,
     private router: Router,
     private seguimiento902Service: Seguimiento902Service,
-    private domainService: DomainService) {
+    private domainService: DomainService
+  ) {
     this.tipoSiNo = [new DomainBoolean(false, "No"), new DomainBoolean(true, "Si")];
     this.userList = [new Domain(1, "Juan!")];
   }
@@ -97,6 +76,7 @@ export class CrearSeguimiento902Component
     data.solicitudId = this.solicitudId * 1;
     if (this.createSeguimiento902.invalid) {
       console.log("Invalido");
+      this.toastr.error("Formulario Invalido", "Seguimiento 902");
       return;
     }
     if (this.idForm == null || this.idForm == 0) {
@@ -111,7 +91,7 @@ export class CrearSeguimiento902Component
       });
     }
     // display form values on success
-    console.log('SUCCESS!! :-)', this.createSeguimiento902.value);
+    console.log("SUCCESS!! :-)", this.createSeguimiento902.value);
   }
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
@@ -175,19 +155,19 @@ export class CrearSeguimiento902Component
         areaFormalizada: { required: true }
       },
 
-      highlight: function (element) {
+      highlight: function(element) {
         $(element)
           .closest(".form-group")
           .removeClass("has-success")
           .addClass("has-danger");
       },
-      success: function (element) {
+      success: function(element) {
         $(element)
           .closest(".form-group")
           .removeClass("has-danger")
           .addClass("has-success");
       },
-      errorPlacement: function (error, element) {
+      errorPlacement: function(error, element) {
         $(element).append(error);
       }
     });
@@ -198,7 +178,7 @@ export class CrearSeguimiento902Component
       nextSelector: ".btn-next",
       previousSelector: ".btn-previous",
 
-      onNext: function (tab, navigation, index) {
+      onNext: function(tab, navigation, index) {
         var $valid = $(".card-wizard form").valid();
         if (!$valid) {
           $validator.focusInvalid();
@@ -206,7 +186,7 @@ export class CrearSeguimiento902Component
         }
       },
 
-      onInit: function (tab: any, navigation: any, index: any) {
+      onInit: function(tab: any, navigation: any, index: any) {
         // check number of tabs and fill the entire row
         let $total = navigation.find("li").length;
         let $wizard = navigation.closest(".card-wizard");
@@ -240,10 +220,7 @@ export class CrearSeguimiento902Component
 
         if ($current == 1 || (mobile_device == true && index % 2 == 0)) {
           move_distance -= 8;
-        } else if (
-          $current == total_steps ||
-          (mobile_device == true && index % 2 == 1)
-        ) {
+        } else if ($current == total_steps || (mobile_device == true && index % 2 == 1)) {
           move_distance += 8;
         }
 
@@ -255,14 +232,13 @@ export class CrearSeguimiento902Component
 
         $wizard.find(".moving-tab").css("width", step_width);
         $(".moving-tab").css({
-          transform:
-            "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
+          transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
           transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
         });
         $(".moving-tab").css("transition", "transform 0s");
       },
 
-      onTabClick: function (tab: any, navigation: any, index: any) {
+      onTabClick: function(tab: any, navigation: any, index: any) {
         const $valid = $(".card-wizard form").valid();
 
         if (!$valid) {
@@ -272,7 +248,7 @@ export class CrearSeguimiento902Component
         }
       },
 
-      onTabShow: function (tab: any, navigation: any, index: any) {
+      onTabShow: function(tab: any, navigation: any, index: any) {
         let $total = navigation.find("li").length;
         let $current = index + 1;
         elemMainPanel.scrollTop = 0;
@@ -295,11 +271,9 @@ export class CrearSeguimiento902Component
             .hide();
         }
 
-        const button_text = navigation
-          .find("li:nth-child(" + $current + ") a")
-          .html();
+        const button_text = navigation.find("li:nth-child(" + $current + ") a").html();
 
-        setTimeout(function () {
+        setTimeout(function() {
           $(".moving-tab").text(button_text);
         }, 150);
 
@@ -342,10 +316,7 @@ export class CrearSeguimiento902Component
 
         if ($current == 1 || (mobile_device == true && index % 2 == 0)) {
           move_distance -= 8;
-        } else if (
-          $current == total_steps ||
-          (mobile_device == true && index % 2 == 1)
-        ) {
+        } else if ($current == total_steps || (mobile_device == true && index % 2 == 1)) {
           move_distance += 8;
         }
 
@@ -357,21 +328,20 @@ export class CrearSeguimiento902Component
 
         $wizard.find(".moving-tab").css("width", step_width);
         $(".moving-tab").css({
-          transform:
-            "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
+          transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
           transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
         });
       }
     });
 
     // Prepare the preview for profile picture
-    $("#wizard-picture").change(function () {
+    $("#wizard-picture").change(function() {
       const input = $(this);
 
       if (input[0].files && input[0].files[0]) {
         const reader = new FileReader();
 
-        reader.onload = function (e: any) {
+        reader.onload = function(e: any) {
           $("#wizardPicturePreview")
             .attr("src", e.target.result)
             .fadeIn("slow");
@@ -380,7 +350,7 @@ export class CrearSeguimiento902Component
       }
     });
 
-    $('[data-toggle="wizard-radio"]').click(function () {
+    $('[data-toggle="wizard-radio"]').click(function() {
       const wizard = $(this).closest(".card-wizard");
       wizard.find('[data-toggle="wizard-radio"]').removeClass("active");
       $(this).addClass("active");
@@ -392,7 +362,7 @@ export class CrearSeguimiento902Component
         .attr("checked", "true");
     });
 
-    $('[data-toggle="wizard-checkbox"]').click(function () {
+    $('[data-toggle="wizard-checkbox"]').click(function() {
       if ($(this).hasClass("active")) {
         $(this).removeClass("active");
         $(this)
@@ -411,7 +381,7 @@ export class CrearSeguimiento902Component
   getDomains() {
     this.domainService.getTipoCondicionSolicitante().subscribe(
       data => {
-        this.tipoEstadoInformeTecnicoJuridico = data
+        this.tipoEstadoInformeTecnicoJuridico = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -419,7 +389,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoSoporteValoracion().subscribe(
       data => {
-        this.tipoSoporteValoracion = data
+        this.tipoSoporteValoracion = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -427,7 +397,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoPruebaAportada().subscribe(
       data => {
-        this.tipoPruebaAportada = data
+        this.tipoPruebaAportada = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -435,7 +405,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoRuta().subscribe(
       data => {
-        this.tipoRuta = data
+        this.tipoRuta = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -443,7 +413,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoTieneViabilidadJuridica().subscribe(
       data => {
-        this.tipoTieneViabilidadJuridica = data
+        this.tipoTieneViabilidadJuridica = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -451,7 +421,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoDeNoViabilidad().subscribe(
       data => {
-        this.tipoDeNoViabilidad = data
+        this.tipoDeNoViabilidad = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -459,7 +429,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoMedidaDeProteccionUrt().subscribe(
       data => {
-        this.tipoMedidaDeProteccionUrt = data
+        this.tipoMedidaDeProteccionUrt = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -467,7 +437,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoMedidaCautelar().subscribe(
       data => {
-        this.tipoMedidaCautelar = data
+        this.tipoMedidaCautelar = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -475,7 +445,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoDeActo().subscribe(
       data => {
-        this.tipoDeActo = data
+        this.tipoDeActo = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -483,7 +453,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoDeDecisionDeCierre().subscribe(
       data => {
-        this.tipoDecisionDeCierre = data
+        this.tipoDecisionDeCierre = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -491,7 +461,7 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoRecurso().subscribe(
       data => {
-        this.tipoRecurso = data
+        this.tipoRecurso = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
@@ -499,13 +469,12 @@ export class CrearSeguimiento902Component
     );
     this.domainService.getTipoEstadoSinegia().subscribe(
       data => {
-        this.tipoEstadoSinegia = data
+        this.tipoEstadoSinegia = data;
       },
       error => {
         console.log("It don't getDomain!" + error);
       }
     );
-
   }
   initForm() {
     this.createSeguimiento902 = this.formBuilder.group({
@@ -585,9 +554,7 @@ export class CrearSeguimiento902Component
       areaFormalizada: [null, Validators.required],
       fechaEntregaTitulo: [null],
       tipoEstadoSinegiaId: [null],
-      fechaAprobacionSinergia: [null],
-
-
+      fechaAprobacionSinergia: [null]
     });
   }
   changeDate(d: Date) {
@@ -599,84 +566,235 @@ export class CrearSeguimiento902Component
       seguimiento902Data => {
         console.log("service data", seguimiento902Data);
         this.idForm = seguimiento902Data.id;
-        this.createSeguimiento902.controls["tieneViabilidadTecnica"].setValue(seguimiento902Data.tieneViabilidadTecnica);
-        this.createSeguimiento902.controls["estadoInformeTecnicoJuridicoId"].setValue(seguimiento902Data.estadoInformeTecnicoJuridicoId);
-        this.createSeguimiento902.controls["fechaInformeTecnicoJuridico"].setValue(this.changeDate(seguimiento902Data.fechaInformeTecnicoJuridico));
-        this.createSeguimiento902.controls["areaDelPredioEnCatastroR1YR2"].setValue(seguimiento902Data.areaDelPredioEnCatastroR1YR2);
-        this.createSeguimiento902.controls["areaDelPredioEnFolioDeMatriculaInmobiliaria"].setValue(seguimiento902Data.areaDelPredioEnFolioDeMatriculaInmobiliaria);
-        this.createSeguimiento902.controls["areaLevantamientoPredial"].setValue(seguimiento902Data.areaLevantamientoPredial);
-        this.createSeguimiento902.controls["ingenieroProyectoItjId"].setValue(seguimiento902Data.ingenieroProyectoItjId);
-        this.createSeguimiento902.controls["ingenieroRevisoItjId"].setValue(seguimiento902Data.ingenieroRevisoItjId);
-        this.createSeguimiento902.controls["tipoSoporteValoracionId"].setValue(seguimiento902Data.tipoSoporteValoracionId);
-        this.createSeguimiento902.controls["noResolucionOMemorando"].setValue(seguimiento902Data.noResolucionOMemorando);
-        this.createSeguimiento902.controls["fechaResolucionMemorando"].setValue(this.changeDate(seguimiento902Data.fechaResolucionMemorando));
-        this.createSeguimiento902.controls["tipoDePruebaAportadaId"].setValue(seguimiento902Data.tipoDePruebaAportadaId);
-        this.createSeguimiento902.controls["requierePruebasAdicionales"].setValue(seguimiento902Data.requierePruebasAdicionales);
-        this.createSeguimiento902.controls["pruebaAdicionalSolicitada"].setValue(seguimiento902Data.pruebaAdicionalSolicitada);
-        this.createSeguimiento902.controls["anosDePosesionSegunFiso"].setValue(seguimiento902Data.anosDePosesionSegunFiso);
-        this.createSeguimiento902.controls["anosDePosesionSegunPrueba"].setValue(seguimiento902Data.anosDePosesionSegunPrueba);
-        this.createSeguimiento902.controls["tipoDeRutaId"].setValue(seguimiento902Data.tipoDeRutaId);
-        this.createSeguimiento902.controls["tipoTieneViabilidadJuridicaId"].setValue(seguimiento902Data.tipoTieneViabilidadJuridicaId);
-        this.createSeguimiento902.controls["tipoDeNoViabilidadId"].setValue(seguimiento902Data.tipoDeNoViabilidadId);
-        this.createSeguimiento902.controls["tipoMedidaDeProteccionUrtId"].setValue(seguimiento902Data.tipoMedidaDeProteccionUrtId);
-        this.createSeguimiento902.controls["tipoMedidaCautelarId"].setValue(seguimiento902Data.tipoMedidaCautelarId);
-        this.createSeguimiento902.controls["tipoDeActoId"].setValue(seguimiento902Data.tipoDeActoId);
-        this.createSeguimiento902.controls["abogadoProyeccionId"].setValue(seguimiento902Data.abogadoProyeccionId);
-        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorInicio"].setValue(this.changeDate(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorInicio));
-        this.createSeguimiento902.controls["fechaRecibidoFirmaInicio"].setValue(this.changeDate(seguimiento902Data.fechaRecibidoFirmaInicio));
-        this.createSeguimiento902.controls["fechaEnvioANumeracionInicio"].setValue(this.changeDate(seguimiento902Data.fechaEnvioANumeracionInicio));
-        this.createSeguimiento902.controls["numeroResolucionInicioArchivo"].setValue(seguimiento902Data.numeroResolucionInicioArchivo);
-        this.createSeguimiento902.controls["fechaResolucion"].setValue(this.changeDate(seguimiento902Data.fechaResolucion));
-        this.createSeguimiento902.controls["notificacionPersonalInicio"].setValue(seguimiento902Data.notificacionPersonalInicio);
-        this.createSeguimiento902.controls["fechaNotificacionPersonalInicio"].setValue(this.changeDate(seguimiento902Data.fechaNotificacionPersonalInicio));
-        this.createSeguimiento902.controls["notificacionPorAvisoInicio"].setValue(seguimiento902Data.notificacionPorAvisoInicio);
-        this.createSeguimiento902.controls["fechaFijacionNotificacionPorAvisoInicio"].setValue(this.changeDate(seguimiento902Data.fechaFijacionNotificacionPorAvisoInicio));
-        this.createSeguimiento902.controls["publicacionWebInicio"].setValue(seguimiento902Data.publicacionWebInicio);
-        this.createSeguimiento902.controls["fechaPublicacionWebInicio"].setValue(this.changeDate(seguimiento902Data.fechaPublicacionWebInicio));
-        this.createSeguimiento902.controls["publicacionEmisora"].setValue(seguimiento902Data.publicacionEmisora);
-        this.createSeguimiento902.controls["fechaPublicacionEnEmisora"].setValue(this.changeDate(seguimiento902Data.fechaPublicacionEnEmisora));
-        this.createSeguimiento902.controls["publicacionAlcaldia"].setValue(seguimiento902Data.publicacionAlcaldia);
-        this.createSeguimiento902.controls["fechaPublicacionAlcaldia"].setValue(this.changeDate(seguimiento902Data.fechaPublicacionAlcaldia));
-        this.createSeguimiento902.controls["recursoDeReposicion"].setValue(seguimiento902Data.recursoDeReposicion);
-        this.createSeguimiento902.controls["numeroDeResolucionQueResuelveRecurso"].setValue(seguimiento902Data.numeroDeResolucionQueResuelveRecurso);
-        this.createSeguimiento902.controls["fechaResolucionQueResuelveRecurso"].setValue(this.changeDate(seguimiento902Data.fechaResolucionQueResuelveRecurso));
-        this.createSeguimiento902.controls["fechaComunicacionAProcuraduria"].setValue(this.changeDate(seguimiento902Data.fechaComunicacionAProcuraduria));
-        this.createSeguimiento902.controls["fechaEnvioAOripResolucionInicio"].setValue(this.changeDate(seguimiento902Data.fechaEnvioAOripResolucionInicio));
-        this.createSeguimiento902.controls["fechaRegistroEnOripResolucionInicio"].setValue(this.changeDate(seguimiento902Data.fechaRegistroEnOripResolucionInicio));
-        this.createSeguimiento902.controls["numeroDeResolucionDePruebas"].setValue(seguimiento902Data.numeroDeResolucionDePruebas);
-        this.createSeguimiento902.controls["fechaResolucionDePruebas"].setValue(this.changeDate(seguimiento902Data.fechaResolucionDePruebas));
-        this.createSeguimiento902.controls["fechaPublicacionEnRadio"].setValue(this.changeDate(seguimiento902Data.fechaPublicacionEnRadio));
-        this.createSeguimiento902.controls["audienciaPublica"].setValue(seguimiento902Data.audienciaPublica);
-        this.createSeguimiento902.controls["fechaAudienciaPublica"].setValue(this.changeDate(seguimiento902Data.fechaAudienciaPublica));
-        this.createSeguimiento902.controls["tipoDecisionDeCierreId"].setValue(seguimiento902Data.tipoDecisionDeCierreId);
-        this.createSeguimiento902.controls["abogadoProyeccionCierreId"].setValue(seguimiento902Data.abogadoProyeccionCierreId);
+        this.createSeguimiento902.controls["tieneViabilidadTecnica"].setValue(
+          seguimiento902Data.tieneViabilidadTecnica
+        );
+        this.createSeguimiento902.controls["estadoInformeTecnicoJuridicoId"].setValue(
+          seguimiento902Data.estadoInformeTecnicoJuridicoId
+        );
+        this.createSeguimiento902.controls["fechaInformeTecnicoJuridico"].setValue(
+          this.changeDate(seguimiento902Data.fechaInformeTecnicoJuridico)
+        );
+        this.createSeguimiento902.controls["areaDelPredioEnCatastroR1YR2"].setValue(
+          seguimiento902Data.areaDelPredioEnCatastroR1YR2
+        );
+        this.createSeguimiento902.controls["areaDelPredioEnFolioDeMatriculaInmobiliaria"].setValue(
+          seguimiento902Data.areaDelPredioEnFolioDeMatriculaInmobiliaria
+        );
+        this.createSeguimiento902.controls["areaLevantamientoPredial"].setValue(
+          seguimiento902Data.areaLevantamientoPredial
+        );
+        this.createSeguimiento902.controls["ingenieroProyectoItjId"].setValue(
+          seguimiento902Data.ingenieroProyectoItjId
+        );
+        this.createSeguimiento902.controls["ingenieroRevisoItjId"].setValue(
+          seguimiento902Data.ingenieroRevisoItjId
+        );
+        this.createSeguimiento902.controls["tipoSoporteValoracionId"].setValue(
+          seguimiento902Data.tipoSoporteValoracionId
+        );
+        this.createSeguimiento902.controls["noResolucionOMemorando"].setValue(
+          seguimiento902Data.noResolucionOMemorando
+        );
+        this.createSeguimiento902.controls["fechaResolucionMemorando"].setValue(
+          this.changeDate(seguimiento902Data.fechaResolucionMemorando)
+        );
+        this.createSeguimiento902.controls["tipoDePruebaAportadaId"].setValue(
+          seguimiento902Data.tipoDePruebaAportadaId
+        );
+        this.createSeguimiento902.controls["requierePruebasAdicionales"].setValue(
+          seguimiento902Data.requierePruebasAdicionales
+        );
+        this.createSeguimiento902.controls["pruebaAdicionalSolicitada"].setValue(
+          seguimiento902Data.pruebaAdicionalSolicitada
+        );
+        this.createSeguimiento902.controls["anosDePosesionSegunFiso"].setValue(
+          seguimiento902Data.anosDePosesionSegunFiso
+        );
+        this.createSeguimiento902.controls["anosDePosesionSegunPrueba"].setValue(
+          seguimiento902Data.anosDePosesionSegunPrueba
+        );
+        this.createSeguimiento902.controls["tipoDeRutaId"].setValue(
+          seguimiento902Data.tipoDeRutaId
+        );
+        this.createSeguimiento902.controls["tipoTieneViabilidadJuridicaId"].setValue(
+          seguimiento902Data.tipoTieneViabilidadJuridicaId
+        );
+        this.createSeguimiento902.controls["tipoDeNoViabilidadId"].setValue(
+          seguimiento902Data.tipoDeNoViabilidadId
+        );
+        this.createSeguimiento902.controls["tipoMedidaDeProteccionUrtId"].setValue(
+          seguimiento902Data.tipoMedidaDeProteccionUrtId
+        );
+        this.createSeguimiento902.controls["tipoMedidaCautelarId"].setValue(
+          seguimiento902Data.tipoMedidaCautelarId
+        );
+        this.createSeguimiento902.controls["tipoDeActoId"].setValue(
+          seguimiento902Data.tipoDeActoId
+        );
+        this.createSeguimiento902.controls["abogadoProyeccionId"].setValue(
+          seguimiento902Data.abogadoProyeccionId
+        );
+        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorInicio"].setValue(
+          this.changeDate(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorInicio)
+        );
+        this.createSeguimiento902.controls["fechaRecibidoFirmaInicio"].setValue(
+          this.changeDate(seguimiento902Data.fechaRecibidoFirmaInicio)
+        );
+        this.createSeguimiento902.controls["fechaEnvioANumeracionInicio"].setValue(
+          this.changeDate(seguimiento902Data.fechaEnvioANumeracionInicio)
+        );
+        this.createSeguimiento902.controls["numeroResolucionInicioArchivo"].setValue(
+          seguimiento902Data.numeroResolucionInicioArchivo
+        );
+        this.createSeguimiento902.controls["fechaResolucion"].setValue(
+          this.changeDate(seguimiento902Data.fechaResolucion)
+        );
+        this.createSeguimiento902.controls["notificacionPersonalInicio"].setValue(
+          seguimiento902Data.notificacionPersonalInicio
+        );
+        this.createSeguimiento902.controls["fechaNotificacionPersonalInicio"].setValue(
+          this.changeDate(seguimiento902Data.fechaNotificacionPersonalInicio)
+        );
+        this.createSeguimiento902.controls["notificacionPorAvisoInicio"].setValue(
+          seguimiento902Data.notificacionPorAvisoInicio
+        );
+        this.createSeguimiento902.controls["fechaFijacionNotificacionPorAvisoInicio"].setValue(
+          this.changeDate(seguimiento902Data.fechaFijacionNotificacionPorAvisoInicio)
+        );
+        this.createSeguimiento902.controls["publicacionWebInicio"].setValue(
+          seguimiento902Data.publicacionWebInicio
+        );
+        this.createSeguimiento902.controls["fechaPublicacionWebInicio"].setValue(
+          this.changeDate(seguimiento902Data.fechaPublicacionWebInicio)
+        );
+        this.createSeguimiento902.controls["publicacionEmisora"].setValue(
+          seguimiento902Data.publicacionEmisora
+        );
+        this.createSeguimiento902.controls["fechaPublicacionEnEmisora"].setValue(
+          this.changeDate(seguimiento902Data.fechaPublicacionEnEmisora)
+        );
+        this.createSeguimiento902.controls["publicacionAlcaldia"].setValue(
+          seguimiento902Data.publicacionAlcaldia
+        );
+        this.createSeguimiento902.controls["fechaPublicacionAlcaldia"].setValue(
+          this.changeDate(seguimiento902Data.fechaPublicacionAlcaldia)
+        );
+        this.createSeguimiento902.controls["recursoDeReposicion"].setValue(
+          seguimiento902Data.recursoDeReposicion
+        );
+        this.createSeguimiento902.controls["numeroDeResolucionQueResuelveRecurso"].setValue(
+          seguimiento902Data.numeroDeResolucionQueResuelveRecurso
+        );
+        this.createSeguimiento902.controls["fechaResolucionQueResuelveRecurso"].setValue(
+          this.changeDate(seguimiento902Data.fechaResolucionQueResuelveRecurso)
+        );
+        this.createSeguimiento902.controls["fechaComunicacionAProcuraduria"].setValue(
+          this.changeDate(seguimiento902Data.fechaComunicacionAProcuraduria)
+        );
+        this.createSeguimiento902.controls["fechaEnvioAOripResolucionInicio"].setValue(
+          this.changeDate(seguimiento902Data.fechaEnvioAOripResolucionInicio)
+        );
+        this.createSeguimiento902.controls["fechaRegistroEnOripResolucionInicio"].setValue(
+          this.changeDate(seguimiento902Data.fechaRegistroEnOripResolucionInicio)
+        );
+        this.createSeguimiento902.controls["numeroDeResolucionDePruebas"].setValue(
+          seguimiento902Data.numeroDeResolucionDePruebas
+        );
+        this.createSeguimiento902.controls["fechaResolucionDePruebas"].setValue(
+          this.changeDate(seguimiento902Data.fechaResolucionDePruebas)
+        );
+        this.createSeguimiento902.controls["fechaPublicacionEnRadio"].setValue(
+          this.changeDate(seguimiento902Data.fechaPublicacionEnRadio)
+        );
+        this.createSeguimiento902.controls["audienciaPublica"].setValue(
+          seguimiento902Data.audienciaPublica
+        );
+        this.createSeguimiento902.controls["fechaAudienciaPublica"].setValue(
+          this.changeDate(seguimiento902Data.fechaAudienciaPublica)
+        );
+        this.createSeguimiento902.controls["tipoDecisionDeCierreId"].setValue(
+          seguimiento902Data.tipoDecisionDeCierreId
+        );
+        this.createSeguimiento902.controls["abogadoProyeccionCierreId"].setValue(
+          seguimiento902Data.abogadoProyeccionCierreId
+        );
         this.createSeguimiento902.controls["oposicion"].setValue(seguimiento902Data.oposicion);
-        this.createSeguimiento902.controls["motivoOposicion"].setValue(seguimiento902Data.motivoOposicion);
-        this.createSeguimiento902.controls["fechaRadicadoOposicion"].setValue(this.changeDate(seguimiento902Data.fechaRadicadoOposicion));
-        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorCierre"].setValue(this.changeDate(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorCierre));
-        this.createSeguimiento902.controls["fechaRecibidoFirmaCierre"].setValue(this.changeDate(seguimiento902Data.fechaRecibidoFirmaCierre));
-        this.createSeguimiento902.controls["fechaEnvioANumeracionCierre"].setValue(this.changeDate(seguimiento902Data.fechaEnvioANumeracionCierre));
-        this.createSeguimiento902.controls["numeroDeResolucionDeCierre"].setValue(seguimiento902Data.numeroDeResolucionDeCierre);
-        this.createSeguimiento902.controls["fechaResolucionDeCierre"].setValue(this.changeDate(seguimiento902Data.fechaResolucionDeCierre));
-        this.createSeguimiento902.controls["notificacionPersonalCierre"].setValue(seguimiento902Data.notificacionPersonalCierre);
-        this.createSeguimiento902.controls["fechaNotificacionPersonalCierre"].setValue(this.changeDate(seguimiento902Data.fechaNotificacionPersonalCierre));
-        this.createSeguimiento902.controls["notificacionPorAvisoCierre"].setValue(seguimiento902Data.notificacionPorAvisoCierre);
-        this.createSeguimiento902.controls["fechaFijacionNotificacionPorAvisoCierre"].setValue(this.changeDate(seguimiento902Data.fechaFijacionNotificacionPorAvisoCierre));
-        this.createSeguimiento902.controls["publicacionResolucionCierre"].setValue(seguimiento902Data.publicacionResolucionCierre);
-        this.createSeguimiento902.controls["fechaPublicacion"].setValue(this.changeDate(seguimiento902Data.fechaPublicacion));
-        this.createSeguimiento902.controls["recursoResolucionCierre"].setValue(seguimiento902Data.recursoResolucionCierre);
-        this.createSeguimiento902.controls["tipoRecursoId"].setValue(seguimiento902Data.tipoRecursoId);
-        this.createSeguimiento902.controls["numeroResolucionResuelveRecurso"].setValue(seguimiento902Data.numeroResolucionResuelveRecurso);
-        this.createSeguimiento902.controls["fechaResolucionResuelveRecurso"].setValue(this.changeDate(seguimiento902Data.fechaResolucionResuelveRecurso));
-        this.createSeguimiento902.controls["fechaEnvioAOripResolucionFinal"].setValue(this.changeDate(seguimiento902Data.fechaEnvioAOripResolucionFinal));
-        this.createSeguimiento902.controls["fechaAnotacionANombreDelNuevoPropietario"].setValue(this.changeDate(seguimiento902Data.fechaAnotacionANombreDelNuevoPropietario));
-        this.createSeguimiento902.controls["fmiConInscripcionANombreDelNuevoPropietario"].setValue(seguimiento902Data.fmiConInscripcionANombreDelNuevoPropietario);
-        this.createSeguimiento902.controls["nombreDelPredioFormalizado"].setValue(seguimiento902Data.nombreDelPredioFormalizado);
-        this.createSeguimiento902.controls["areaFormalizada"].setValue(seguimiento902Data.areaFormalizada);
-        this.createSeguimiento902.controls["fechaEntregaTitulo"].setValue(this.changeDate(seguimiento902Data.fechaEntregaTitulo));
-        this.createSeguimiento902.controls["tipoEstadoSinegiaId"].setValue(seguimiento902Data.tipoEstadoSinegiaId);
-        this.createSeguimiento902.controls["fechaAprobacionSinergia"].setValue(this.changeDate(seguimiento902Data.fechaAprobacionSinergia));
-
+        this.createSeguimiento902.controls["motivoOposicion"].setValue(
+          seguimiento902Data.motivoOposicion
+        );
+        this.createSeguimiento902.controls["fechaRadicadoOposicion"].setValue(
+          this.changeDate(seguimiento902Data.fechaRadicadoOposicion)
+        );
+        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorCierre"].setValue(
+          this.changeDate(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorCierre)
+        );
+        this.createSeguimiento902.controls["fechaRecibidoFirmaCierre"].setValue(
+          this.changeDate(seguimiento902Data.fechaRecibidoFirmaCierre)
+        );
+        this.createSeguimiento902.controls["fechaEnvioANumeracionCierre"].setValue(
+          this.changeDate(seguimiento902Data.fechaEnvioANumeracionCierre)
+        );
+        this.createSeguimiento902.controls["numeroDeResolucionDeCierre"].setValue(
+          seguimiento902Data.numeroDeResolucionDeCierre
+        );
+        this.createSeguimiento902.controls["fechaResolucionDeCierre"].setValue(
+          this.changeDate(seguimiento902Data.fechaResolucionDeCierre)
+        );
+        this.createSeguimiento902.controls["notificacionPersonalCierre"].setValue(
+          seguimiento902Data.notificacionPersonalCierre
+        );
+        this.createSeguimiento902.controls["fechaNotificacionPersonalCierre"].setValue(
+          this.changeDate(seguimiento902Data.fechaNotificacionPersonalCierre)
+        );
+        this.createSeguimiento902.controls["notificacionPorAvisoCierre"].setValue(
+          seguimiento902Data.notificacionPorAvisoCierre
+        );
+        this.createSeguimiento902.controls["fechaFijacionNotificacionPorAvisoCierre"].setValue(
+          this.changeDate(seguimiento902Data.fechaFijacionNotificacionPorAvisoCierre)
+        );
+        this.createSeguimiento902.controls["publicacionResolucionCierre"].setValue(
+          seguimiento902Data.publicacionResolucionCierre
+        );
+        this.createSeguimiento902.controls["fechaPublicacion"].setValue(
+          this.changeDate(seguimiento902Data.fechaPublicacion)
+        );
+        this.createSeguimiento902.controls["recursoResolucionCierre"].setValue(
+          seguimiento902Data.recursoResolucionCierre
+        );
+        this.createSeguimiento902.controls["tipoRecursoId"].setValue(
+          seguimiento902Data.tipoRecursoId
+        );
+        this.createSeguimiento902.controls["numeroResolucionResuelveRecurso"].setValue(
+          seguimiento902Data.numeroResolucionResuelveRecurso
+        );
+        this.createSeguimiento902.controls["fechaResolucionResuelveRecurso"].setValue(
+          this.changeDate(seguimiento902Data.fechaResolucionResuelveRecurso)
+        );
+        this.createSeguimiento902.controls["fechaEnvioAOripResolucionFinal"].setValue(
+          this.changeDate(seguimiento902Data.fechaEnvioAOripResolucionFinal)
+        );
+        this.createSeguimiento902.controls["fechaAnotacionANombreDelNuevoPropietario"].setValue(
+          this.changeDate(seguimiento902Data.fechaAnotacionANombreDelNuevoPropietario)
+        );
+        this.createSeguimiento902.controls["fmiConInscripcionANombreDelNuevoPropietario"].setValue(
+          seguimiento902Data.fmiConInscripcionANombreDelNuevoPropietario
+        );
+        this.createSeguimiento902.controls["nombreDelPredioFormalizado"].setValue(
+          seguimiento902Data.nombreDelPredioFormalizado
+        );
+        this.createSeguimiento902.controls["areaFormalizada"].setValue(
+          seguimiento902Data.areaFormalizada
+        );
+        this.createSeguimiento902.controls["fechaEntregaTitulo"].setValue(
+          this.changeDate(seguimiento902Data.fechaEntregaTitulo)
+        );
+        this.createSeguimiento902.controls["tipoEstadoSinegiaId"].setValue(
+          seguimiento902Data.tipoEstadoSinegiaId
+        );
+        this.createSeguimiento902.controls["fechaAprobacionSinergia"].setValue(
+          this.changeDate(seguimiento902Data.fechaAprobacionSinergia)
+        );
       },
       error => {
         console.log("Error Obteniendo el Objeto!" + error);
@@ -689,7 +807,7 @@ export class CrearSeguimiento902Component
     if (input[0].files && input[0].files[0]) {
       const reader: any = new FileReader();
 
-      reader.onload = function (e: any) {
+      reader.onload = function(e: any) {
         $("#wizardPicturePreview")
           .attr("src", e.target.result)
           .fadeIn("slow");
@@ -699,7 +817,7 @@ export class CrearSeguimiento902Component
   }
   ngAfterViewInit() {
     $(window).resize(() => {
-      $(".card-wizard").each(function () {
+      $(".card-wizard").each(function() {
         setTimeout(() => {
           const $wizard = $(this);
           const index = $wizard.bootstrapWizard("currentIndex");
@@ -727,10 +845,7 @@ export class CrearSeguimiento902Component
 
           if ($current == 1 || (mobile_device == true && index % 2 == 0)) {
             move_distance -= 8;
-          } else if (
-            $current == total_steps ||
-            (mobile_device == true && index % 2 == 1)
-          ) {
+          } else if ($current == total_steps || (mobile_device == true && index % 2 == 1)) {
             move_distance += 8;
           }
 
@@ -742,12 +857,7 @@ export class CrearSeguimiento902Component
 
           $wizard.find(".moving-tab").css("width", step_width);
           $(".moving-tab").css({
-            transform:
-              "translate3d(" +
-              move_distance +
-              "px, " +
-              vertical_level +
-              "px, 0)",
+            transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
             transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
           });
 
