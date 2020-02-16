@@ -97,8 +97,8 @@ export const ROUTES: RouteInfo[] = [
     path: "/pages/login/closeSession",
     title: "Cerrar Sesión",
     type: "link",
-    icontype: "close"
-  },
+    icontype: "exit_to_app"
+  }
 
   //   {
   //     path: "/components",

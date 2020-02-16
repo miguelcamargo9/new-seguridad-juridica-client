@@ -5,7 +5,8 @@ import {
   ViewContainerRef,
   ElementRef,
   OnInit,
-  Attribute
+  Attribute,
+  Renderer
 } from "@angular/core";
 import { JwtHelper } from "angular2-jwt";
 import { environment } from "src/environments/environment";
@@ -17,11 +18,10 @@ export class HasPermissionDirective implements OnInit {
   private currentUser;
   private permissions = [];
   private logicalOp = "AND";
-  private isHidden = true;
 
   constructor(
     private element: ElementRef,
-    private templateRef: TemplateRef<any>,
+    private renderer: Renderer,
     private viewContainer: ViewContainerRef
   ) {}
 
@@ -51,28 +51,26 @@ export class HasPermissionDirective implements OnInit {
   }
 
   private updateView() {
-    if (this.checkPermission()) {
-      if (this.isHidden) {
-        this.viewContainer.createEmbeddedView(this.templateRef);
-        this.isHidden = false;
-      }
-    } else {
-      this.isHidden = true;
-      this.viewContainer.clear();
+    if (!this.checkPermission()) {
+      console.log("PAILA");
+      this.renderer.setElementStyle(this.element.nativeElement, "display", "none");
     }
+    this.viewContainer.clear();
   }
 
   private checkPermission() {
     let hasPermission = false;
-
     if (this.currentUser && this.currentUser.permissions) {
+      console.log("CURRENT USER", this.currentUser);
+      console.log("PERMISSIONS", this.permissions);
+      console.log("PERMISSIONS", this.permissions.length);
       for (const checkPermission of this.permissions) {
         if (checkPermission === undefined) {
-          hasPermission = true;
+          console.log("PERMISO UNDE");
+          return true;
         } else {
           const permissionFound = this.currentUser.permissions.find(
-            x =>
-              String(x).toUpperCase() === String(checkPermission).toUpperCase()
+            x => String(x).toUpperCase() === String(checkPermission).toUpperCase()
           );
           if (permissionFound) {
             hasPermission = true;

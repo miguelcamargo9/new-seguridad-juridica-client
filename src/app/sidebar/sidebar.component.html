@@ -100,9 +100,13 @@
   </div> -->
   <ul class="nav">
     <li routerLinkActive="active" *ngFor="let menuitem of menuItems" class="nav-item">
-      <!-- <div *hasPermission="[menuitem.permission]"> -->
       <!--If is a single link-->
-      <a [routerLink]="[menuitem.path]" *ngIf="menuitem.type === 'link'" class="nav-link">
+      <a
+        [routerLink]="[menuitem.path]"
+        *ngIf="menuitem.type === 'link'"
+        class="nav-link"
+        [hasPermission]="[menuitem.permission]"
+      >
         <i class="material-icons">{{ menuitem.icontype }}</i>
         <p>{{ menuitem.title }}</p>
       </a>
@@ -126,16 +130,17 @@
             *ngFor="let childitem of menuitem.children"
             class="nav-item"
           >
-            <!-- <div *hasPermission="[childitem.permission]"> -->
-            <a [routerLink]="[menuitem.path, childitem.path]" class="nav-link">
+            <a
+              [routerLink]="[menuitem.path, childitem.path]"
+              class="nav-link"
+              [hasPermission]="[childitem.permission]"
+            >
               <span class="sidebar-mini">{{ childitem.ab }}</span>
               <span class="sidebar-normal">{{ childitem.title }}</span>
             </a>
-            <!-- </div> -->
           </li>
         </ul>
       </div>
-      <!-- </div> -->
     </li>
   </ul>
 </div>
