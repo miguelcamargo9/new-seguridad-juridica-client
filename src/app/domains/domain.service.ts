@@ -8,7 +8,7 @@ import { Municipio } from "../models/Municipio";
 
 @Injectable()
 export class DomainService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTipoCondicionSolicitante(): Observable<Domain[]> {
     return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoCondicionSolicitante");
@@ -68,5 +68,8 @@ export class DomainService {
   }
   getMunicipiosPorDepartamento(departamentoId): Observable<Municipio[]> {
     return this.http.get<Municipio[]>(environment.apiUrl + "/domains/municipios/" + departamentoId);
+  }
+  getUsersByRol(idRol): Observable<Domain[]> {
+    return this.http.get<Domain[]>(environment.apiUrl + "/users/usersByRol/" + idRol);
   }
 }
