@@ -1,11 +1,6 @@
 import { Injectable } from "@angular/core";
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot
-} from "@angular/router";
 import { Observable } from "rxjs/Observable";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { environment } from "../../environments/environment";
 import { User } from "./user.model";
@@ -25,5 +20,17 @@ export class UserService {
    */
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(environment.apiUrl + "/users/all");
+  }
+
+  postCreateUser(data: any) {
+    return this.http.post(environment.apiUrl + "/users/create", data);
+  }
+
+  getUserById(userId): Observable<User> {
+    return this.http.get<User>(environment.apiUrl + "/users/" + userId);
+  }
+
+  putUpdateUser(data): Observable<any> {
+    return this.http.put(environment.apiUrl + `/user/update/${data.userId}`, data);
   }
 }

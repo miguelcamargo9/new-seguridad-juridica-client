@@ -25,9 +25,7 @@ export class AuthGuard implements CanActivate {
       const roles = next.data["roles"] as Array<string>;
       if (roles !== undefined) {
         const permissions = jwtHelper.decodeToken(token).permissions;
-        console.log("PERMISSIONS", permissions);
         for (let i = 0; i < roles.length; i++) {
-          console.log("ROLES", roles[i]);
           if (permissions.indexOf(roles[i]) !== -1) {
             result = true;
             break;

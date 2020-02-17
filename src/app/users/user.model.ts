@@ -6,4 +6,7 @@ export class User {
   active: boolean;
   documentNumber: number;
   documentTypeId: number;
+  email: string;
+  roleId: number;
+  companyId: number;
 }

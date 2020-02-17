@@ -2,24 +2,26 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "../user.services";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { DomainService } from "src/app/domains/domain.service";
 import { Domain } from "src/app/domains/domain.model";
 import { RolesService } from "src/app/roles/roles.services";
 import { Roles } from "src/app/roles/roles.model";
 import { CompanyService } from "src/app/companies/companies.service";
 import { Company } from "src/app/companies/company.model";
-import { PasswordValidationUser } from "./password-validator.component";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: "app-create-user",
-  templateUrl: "createuser.component.html"
+  selector: "app-edit-user",
+  templateUrl: "edituser.component.html"
 })
-export class CreateUserComponent implements OnInit {
-  createUser: FormGroup;
+export class EditUserComponent implements OnInit {
+  editUser: FormGroup;
   tiposDocumento: Domain[];
   roles: Roles[];
   companies: Company[];
+  routeSub: Subscription;
+  userId: Number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,31 +30,43 @@ export class CreateUserComponent implements OnInit {
     private domainServcie: DomainService,
     private companiesService: CompanyService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.getDomains();
-    this.createUser = this.formBuilder.group(
-      {
-        firstName: [null, [Validators.required]],
-        lastName: [null, [Validators.required]],
-        nickName: [null, [Validators.required]],
-        email: [
-          null,
-          [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")]
-        ],
-        typeDocument: [null, [Validators.required]],
-        documentNumber: [null, [Validators.required]],
-        role: [null, [Validators.required]],
-        company: [null, [Validators.required]],
-        password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
-        passwordConfirm: ["", [Validators.required]]
-      },
-      {
-        validator: PasswordValidationUser.MatchPassword // your validation method
-      }
-    );
+    this.editUser = this.formBuilder.group({
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
+      nickName: [null, [Validators.required]],
+      email: [
+        null,
+        [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")]
+      ],
+      typeDocument: [null, [Validators.required]],
+      documentNumber: [null, [Validators.required]],
+      role: [null, [Validators.required]],
+      company: [null, [Validators.required]]
+    });
+    this.routeSub = this.route.params.subscribe(params => {
+      this.userId = params["id"];
+      this.userService.getUserById(this.userId).subscribe(
+        userData => {
+          this.editUser.controls["firstName"].setValue(userData.firstName);
+          this.editUser.controls["lastName"].setValue(userData.lastName);
+          this.editUser.controls["nickName"].setValue(userData.username);
+          this.editUser.controls["email"].setValue(userData.email);
+          this.editUser.controls["typeDocument"].setValue(userData.documentTypeId);
+          this.editUser.controls["documentNumber"].setValue(userData.documentNumber);
+          this.editUser.controls["role"].setValue(userData.roleId);
+          this.editUser.controls["company"].setValue(userData.companyId);
+        },
+        error => {
+          console.log("Error Obteniendo el Objeto!" + error);
+        }
+      );
+    });
   }
 
   displayFieldCss(form: FormGroup, field: string) {
@@ -94,22 +108,22 @@ export class CreateUserComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.createUser.valid) {
-      const formData = this.createUser.value;
+    if (this.editUser.valid) {
+      const formData = this.editUser.value;
       const data = {
+        userId: this.userId,
         companyId: formData.company,
         documentNumber: formData.documentNumber,
         documentTypeId: formData.typeDocument,
         email: formData.email,
         firstname: formData.firstName,
         lastname: formData.lastName,
-        password: formData.password,
         username: formData.nickName,
         roleId: formData.role
       };
-      this.userService.postCreateUser(data).subscribe(params => {
-        console.log("Result create: ", params);
-        this.toastr.success("Usuario creado con exito", "Usuario");
+      this.userService.putUpdateUser(data).subscribe(params => {
+        console.log("Result update: ", params);
+        this.toastr.success("Usuario editado con exito", "Usuario");
         this.router.navigate(["/users/all"]);
       });
     } else {

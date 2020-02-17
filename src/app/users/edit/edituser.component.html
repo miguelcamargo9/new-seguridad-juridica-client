@@ -3,12 +3,12 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <form [formGroup]="createUser">
-            <div class="card-header card-header-success card-header-icon">
+          <form [formGroup]="editUser">
+            <div class="card-header card-header-warning card-header-icon">
               <div class="card-icon">
                 <i class="material-icons">person</i>
               </div>
-              <h4 class="card-title">Crear Usuario</h4>
+              <h4 class="card-title">Editar Usuario</h4>
             </div>
             <div class="card-body">
               <br />
@@ -16,7 +16,7 @@
                 <div class="col-md-6">
                   <mat-form-field
                     class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'firstName')"
+                    [ngClass]="displayFieldCss(editUser, 'firstName')"
                   >
                     <input
                       type="text"
@@ -26,7 +26,7 @@
                       formControlName="firstName"
                     />
                     <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'firstName')"
+                      [displayError]="isFieldValid(editUser, 'firstName')"
                       errorMsg="Deligenciar el campo."
                     >
                     </app-field-error-display>
@@ -35,7 +35,7 @@
                 <div class="col-md-6">
                   <mat-form-field
                     class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'lastName')"
+                    [ngClass]="displayFieldCss(editUser, 'lastName')"
                   >
                     <input
                       type="text"
@@ -45,7 +45,7 @@
                       formControlName="lastName"
                     />
                     <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'lastName')"
+                      [displayError]="isFieldValid(editUser, 'lastName')"
                       errorMsg="Deligenciar el campo."
                     >
                     </app-field-error-display>
@@ -56,7 +56,7 @@
                 <div class="col-md-6">
                   <mat-form-field
                     class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'nickName')"
+                    [ngClass]="displayFieldCss(editUser, 'nickName')"
                   >
                     <input
                       type="text"
@@ -66,7 +66,7 @@
                       formControlName="nickName"
                     />
                     <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'nickName')"
+                      [displayError]="isFieldValid(editUser, 'nickName')"
                       errorMsg="Deligenciar el campo."
                     >
                     </app-field-error-display>
@@ -75,7 +75,7 @@
                 <div class="col-md-6">
                   <mat-form-field
                     class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'email')"
+                    [ngClass]="displayFieldCss(editUser, 'email')"
                   >
                     <input
                       type="email"
@@ -85,7 +85,7 @@
                       formControlName="email"
                     />
                     <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'email')"
+                      [displayError]="isFieldValid(editUser, 'email')"
                       errorMsg="Deligenciar el campo."
                     >
                     </app-field-error-display>
@@ -96,7 +96,7 @@
                 <div class="col-md-6">
                   <mat-form-field
                     class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'typeDocument')"
+                    [ngClass]="displayFieldCss(editUser, 'typeDocument')"
                   >
                     <mat-select
                       placeholder="Tipo de Documento"
@@ -112,7 +112,7 @@
                       </mat-option>
                     </mat-select>
                     <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'typeDocument')"
+                      [displayError]="isFieldValid(editUser, 'typeDocument')"
                       errorMsg="Deligenciar el campo."
                     >
                     </app-field-error-display>
@@ -121,7 +121,7 @@
                 <div class="col-md-6">
                   <mat-form-field
                     class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'documentNumber')"
+                    [ngClass]="displayFieldCss(editUser, 'documentNumber')"
                   >
                     <input
                       type="text"
@@ -131,7 +131,7 @@
                       formControlName="documentNumber"
                     />
                     <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'documentNumber')"
+                      [displayError]="isFieldValid(editUser, 'documentNumber')"
                       errorMsg="Deligenciar el campo."
                     >
                     </app-field-error-display>
@@ -142,7 +142,7 @@
                 <div class="col-md-6">
                   <mat-form-field
                     class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'role')"
+                    [ngClass]="displayFieldCss(editUser, 'role')"
                   >
                     <mat-select placeholder="Rol" name="role" id="role" formControlName="role">
                       <mat-option *ngFor="let role of roles" [value]="role.id">
@@ -150,7 +150,7 @@
                       </mat-option>
                     </mat-select>
                     <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'role')"
+                      [displayError]="isFieldValid(editUser, 'role')"
                       errorMsg="Deligenciar el campo."
                     >
                     </app-field-error-display>
@@ -159,7 +159,7 @@
                 <div class="col-md-6">
                   <mat-form-field
                     class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'company')"
+                    [ngClass]="displayFieldCss(editUser, 'company')"
                   >
                     <mat-select
                       placeholder="Compañia"
@@ -172,47 +172,7 @@
                       </mat-option>
                     </mat-select>
                     <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'company')"
-                      errorMsg="Deligenciar el campo."
-                    >
-                    </app-field-error-display>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <mat-form-field
-                    class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'password')"
-                  >
-                    <input
-                      type="password"
-                      matInput
-                      id="password"
-                      placeholder="Contraseña *"
-                      formControlName="password"
-                    />
-                    <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'password')"
-                      errorMsg="Deligenciar el campo."
-                    >
-                    </app-field-error-display>
-                  </mat-form-field>
-                </div>
-                <div class="col-md-6">
-                  <mat-form-field
-                    class="example-full-width"
-                    [ngClass]="displayFieldCss(createUser, 'passwordConfirm')"
-                  >
-                    <input
-                      type="password"
-                      matInput
-                      id="passwordConfirm"
-                      placeholder="Confirmar Contraseña *"
-                      formControlName="passwordConfirm"
-                    />
-                    <app-field-error-display
-                      [displayError]="isFieldValid(createUser, 'passwordConfirm')"
+                      [displayError]="isFieldValid(editUser, 'company')"
                       errorMsg="Deligenciar el campo."
                     >
                     </app-field-error-display>

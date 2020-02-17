@@ -1,52 +1,27 @@
 // IMPORTANT: this is a plugin which requires jQuery for initialisation and data manipulation
 
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { UserService } from "../user.services";
 import { User } from "../user.model";
-
-declare interface DataTable {
-  headerRow: string[];
-  footerRow: string[];
-  dataRows: User[];
-}
-
-declare const $: any;
+import { Subject } from "rxjs";
 
 @Component({
   selector: "app-user-list-cmp",
   templateUrl: "userlist.component.html"
 })
-export class UserListComponent implements OnInit, AfterViewInit {
-  public dataTable: DataTable;
+export class UserListComponent implements OnInit {
+  dtOptions: DataTables.Settings = {};
+  users: User[];
+  dtTrigger: Subject<any> = new Subject();
 
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.dataTable = {
-      headerRow: [
-        "Nombre",
-        "Nickname",
-        "Correo",
-        "Documento",
-        "Compañia",
-        "Rol",
-        "Actions"
-      ],
-      footerRow: [
-        "Nombre",
-        "Nickname",
-        "Correo",
-        "Documento",
-        "Compañia",
-        "Rol",
-        "Actions"
-      ],
-      dataRows: []
-    };
     this.userService.getUsers().subscribe(
-      x => {
-        console.log(x);
-        this.dataTable.dataRows = x;
+      dataUsers => {
+        this.users = dataUsers;
+        // Calling the DT trigger to manually render the table
+        this.dtTrigger.next();
       },
       error => {
         // this.toastr.error('Error al iniciar sesión', 'Login');
@@ -55,58 +30,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit() {
-    $("#datatables").DataTable({
-      pagingType: "full_numbers",
-      lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Buscar"
-      }
-    });
-
-    const table = $("#datatables").DataTable();
-
-    // Edit record
-    table.on("click", ".edit", function(e) {
-      let $tr = $(this).closest("tr");
-      if ($($tr).hasClass("child")) {
-        $tr = $tr.prev(".parent");
-      }
-
-      var data = table.row($tr).data();
-      alert(
-        "You press on Row: " +
-          data[0] +
-          " " +
-          data[1] +
-          " " +
-          data[2] +
-          "'s row."
-      );
-      e.preventDefault();
-    });
-
-    // Delete a record
-    table.on("click", ".remove", function(e) {
-      const $tr = $(this).closest("tr");
-      table
-        .row($tr)
-        .remove()
-        .draw();
-      e.preventDefault();
-    });
-
-    //Like record
-    table.on("click", ".like", function(e) {
-      alert("You clicked on Like button");
-      e.preventDefault();
-    });
-
-    $(".card .material-datatables label").addClass("form-group");
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 }

@@ -1,13 +1,4 @@
-import {
-  Directive,
-  Input,
-  TemplateRef,
-  ViewContainerRef,
-  ElementRef,
-  OnInit,
-  Attribute,
-  Renderer
-} from "@angular/core";
+import { Directive, Input, ViewContainerRef, ElementRef, OnInit, Renderer } from "@angular/core";
 import { JwtHelper } from "angular2-jwt";
 import { environment } from "src/environments/environment";
 
@@ -41,18 +32,15 @@ export class HasPermissionDirective implements OnInit {
   @Input()
   set hasPermission(val) {
     this.permissions = val;
-    this.updateView();
   }
 
   @Input()
   set hasPermissionOp(permop) {
     this.logicalOp = permop;
-    this.updateView();
   }
 
   private updateView() {
     if (!this.checkPermission()) {
-      console.log("PAILA");
       this.renderer.setElementStyle(this.element.nativeElement, "display", "none");
     }
     this.viewContainer.clear();
@@ -61,12 +49,8 @@ export class HasPermissionDirective implements OnInit {
   private checkPermission() {
     let hasPermission = false;
     if (this.currentUser && this.currentUser.permissions) {
-      console.log("CURRENT USER", this.currentUser);
-      console.log("PERMISSIONS", this.permissions);
-      console.log("PERMISSIONS", this.permissions.length);
       for (const checkPermission of this.permissions) {
         if (checkPermission === undefined) {
-          console.log("PERMISO UNDE");
           return true;
         } else {
           const permissionFound = this.currentUser.permissions.find(
