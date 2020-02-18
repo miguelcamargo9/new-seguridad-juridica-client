@@ -4,8 +4,8 @@
       <img src="/assets/img/logo_ant.png" />
     </div>
   </a>
-  <a href="#" class="simple-text logo-normal">
-    Agencia de Tierras
+  <a href="#" class="simple-text logo-normal" style="font-size: 11px;">
+    Agencia Nacional de Tierras
   </a>
 </div>
 
@@ -101,23 +101,14 @@
   <ul class="nav">
     <li routerLinkActive="active" *ngFor="let menuitem of menuItems" class="nav-item">
       <!--If is a single link-->
-      <a
-        [routerLink]="[menuitem.path]"
-        *ngIf="menuitem.type === 'link'"
-        class="nav-link"
-        [hasPermission]="[menuitem.permission]"
-      >
+      <a [routerLink]="[menuitem.path]" *ngIf="menuitem.type === 'link'" class="nav-link"
+        [hasPermission]="[menuitem.permission]">
         <i class="material-icons">{{ menuitem.icontype }}</i>
         <p>{{ menuitem.title }}</p>
       </a>
       <!--If it have a submenu-->
-      <a
-        data-toggle="collapse"
-        href="#{{ menuitem.collapse }}"
-        *ngIf="menuitem.type === 'sub'"
-        (click)="updatePS()"
-        class="nav-link"
-      >
+      <a data-toggle="collapse" href="#{{ menuitem.collapse }}" *ngIf="menuitem.type === 'sub'" (click)="updatePS()"
+        class="nav-link">
         <i class="material-icons">{{ menuitem.icontype }}</i>
         <p>{{ menuitem.title }}<b class="caret"></b></p>
       </a>
@@ -125,16 +116,8 @@
       <!--Display the submenu items-->
       <div id="{{ menuitem.collapse }}" class="collapse" *ngIf="menuitem.type === 'sub'">
         <ul class="nav">
-          <li
-            routerLinkActive="active"
-            *ngFor="let childitem of menuitem.children"
-            class="nav-item"
-          >
-            <a
-              [routerLink]="[menuitem.path, childitem.path]"
-              class="nav-link"
-              [hasPermission]="[childitem.permission]"
-            >
+          <li routerLinkActive="active" *ngFor="let childitem of menuitem.children" class="nav-item">
+            <a [routerLink]="[menuitem.path, childitem.path]" class="nav-link" [hasPermission]="[childitem.permission]">
               <span class="sidebar-mini">{{ childitem.ab }}</span>
               <span class="sidebar-normal">{{ childitem.title }}</span>
             </a>
