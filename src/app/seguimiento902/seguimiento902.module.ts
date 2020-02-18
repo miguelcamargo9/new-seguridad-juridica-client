@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { MaterialModule, FieldErrorModule } from "../app.module";
+import { MaterialModule, UtilsModule } from "../app.module";
 import { CrearSeguimiento902Component } from "./crear/crearseguimiento902.component";
 import { Seguimiento902Routes } from "./seguimiento902.routing";
 import { Seguimiento902Service } from "./seguimiento902.service";
@@ -20,7 +20,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/form
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FieldErrorModule
+    UtilsModule
   ],
   declarations: [CrearSeguimiento902Component],
   providers: [Seguimiento902Service, DomainService,

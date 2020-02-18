@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { MaterialModule, FieldErrorModule } from "../app.module";
+import { MaterialModule, UtilsModule } from "../app.module";
 import { CrearSolicitudComponent } from "./crear/crearsolicitud.component";
 import { SolicitudesRoutes } from "./solicitudes.routing";
 import { DomainService } from "../domains/domain.service";
@@ -18,9 +18,9 @@ import { BuscarSolicitudComponent } from "./buscar/buscarsolicitud.component";
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FieldErrorModule
+    UtilsModule
   ],
   declarations: [CrearSolicitudComponent, BuscarSolicitudComponent],
   providers: [DomainService, SolicitudService]
 })
-export class SolicitudModule {}
+export class SolicitudModule { }
