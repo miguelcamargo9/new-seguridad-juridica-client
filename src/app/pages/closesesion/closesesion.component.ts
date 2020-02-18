@@ -1,7 +1,5 @@
-import { Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { ToastrService } from "ngx-toastr";
 
 import { environment } from "../../../environments/environment";
 

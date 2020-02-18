@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: "http://localhost:8080",
+  apiUrl: "http://vps235362.vps.ovh.ca:8080",
   keyToken: "token",
   pathInit: "/dashboard",
   pathLogin: "/pages/login"

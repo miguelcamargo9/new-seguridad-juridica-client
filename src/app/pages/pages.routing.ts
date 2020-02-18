@@ -4,7 +4,7 @@ import { RegisterComponent } from './register/register.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { LockComponent } from './lock/lock.component';
 import { LoginComponent } from './login/login.component';
-import { ClosesesionComponent } from './closeSesion/closesesion.component';
+import { ClosesesionComponent } from './closesesion/closesesion.component';
 
 export const PagesRoutes: Routes = [
 
