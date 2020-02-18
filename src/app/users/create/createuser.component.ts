@@ -29,7 +29,7 @@ export class CreateUserComponent implements OnInit {
     private companiesService: CompanyService,
     private toastr: ToastrService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getDomains();
@@ -105,12 +105,17 @@ export class CreateUserComponent implements OnInit {
         lastname: formData.lastName,
         password: formData.password,
         username: formData.nickName,
-        roleId: formData.role
+        roleId: formData.role,
+        active: true
       };
       this.userService.postCreateUser(data).subscribe(params => {
-        console.log("Result create: ", params);
-        this.toastr.success("Usuario creado con exito", "Usuario");
-        this.router.navigate(["/users/all"]);
+        // console.log("Result create: ", params);
+        if (params == true) {
+          this.toastr.success("Usuario creado con exito", "Usuario");
+          this.router.navigate(["/users/list"]);
+        } else {
+          this.toastr.error("Error creando el usuario!", "Usuario");
+        }
       });
     } else {
       this.toastr.error("Formulario Invalido", "Usuarios");

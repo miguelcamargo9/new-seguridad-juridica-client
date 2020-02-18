@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MaterialModule, FieldErrorModule } from "../app.module";
+import { MaterialModule, UtilsModule } from "../app.module";
 
 import { UsersRoutes } from "./users.routing";
 
@@ -23,10 +23,10 @@ import { EditUserComponent } from "./edit/edituser.component";
     FormsModule,
     MaterialModule,
     DataTablesModule,
-    FieldErrorModule,
+    UtilsModule,
     ReactiveFormsModule
   ],
   declarations: [CreateUserComponent, UserListComponent, EditUserComponent],
   providers: [UserService, DomainService, RolesService, CompanyService]
 })
-export class UsersModule {}
+export class UsersModule { }

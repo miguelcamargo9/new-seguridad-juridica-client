@@ -32,7 +32,7 @@ export class EditUserComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getDomains();
@@ -53,8 +53,8 @@ export class EditUserComponent implements OnInit {
       this.userId = params["id"];
       this.userService.getUserById(this.userId).subscribe(
         userData => {
-          this.editUser.controls["firstName"].setValue(userData.firstName);
-          this.editUser.controls["lastName"].setValue(userData.lastName);
+          this.editUser.controls["firstName"].setValue(userData.firstname);
+          this.editUser.controls["lastName"].setValue(userData.lastname);
           this.editUser.controls["nickName"].setValue(userData.username);
           this.editUser.controls["email"].setValue(userData.email);
           this.editUser.controls["typeDocument"].setValue(userData.documentTypeId);
@@ -119,12 +119,17 @@ export class EditUserComponent implements OnInit {
         firstname: formData.firstName,
         lastname: formData.lastName,
         username: formData.nickName,
+        active: true,
         roleId: formData.role
       };
       this.userService.putUpdateUser(data).subscribe(params => {
         console.log("Result update: ", params);
-        this.toastr.success("Usuario editado con exito", "Usuario");
-        this.router.navigate(["/users/all"]);
+        if (params == true) {
+          this.toastr.success("Usuario editado con exito", "Usuario");
+          this.router.navigate(["/users/list"]);
+        } else {
+          this.toastr.error("Error editando el usuario!", "Usuario");
+        }
       });
     } else {
       this.toastr.error("Formulario Invalido", "Usuarios");

@@ -1,8 +1,8 @@
 export class User {
-  id: number;
+  id: number = 0;
   username: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   active: boolean;
   documentNumber: number;
   documentTypeId: number;

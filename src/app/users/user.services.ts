@@ -12,7 +12,7 @@ export class UserService {
   countContacts: number;
   onContactListChanged: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   /**
    * Obtiene los usuarios activos del sistema
@@ -31,6 +31,6 @@ export class UserService {
   }
 
   putUpdateUser(data): Observable<any> {
-    return this.http.put(environment.apiUrl + `/user/update/${data.userId}`, data);
+    return this.http.put(environment.apiUrl + `/users/update/${data.userId}`, data);
   }
 }
