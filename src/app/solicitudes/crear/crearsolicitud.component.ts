@@ -11,6 +11,7 @@ import { Domain } from "../../domains/domain.model";
 import { Persona } from "src/app/models/Persona";
 import { ToastrService } from "ngx-toastr";
 import { SolicitudService } from "../solicitudes.service";
+import { Router } from "@angular/router";
 
 declare const $: any;
 interface FileReaderEventTarget extends EventTarget {
@@ -52,7 +53,8 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     private formBuilder: FormBuilder,
     private domainServcie: DomainService,
     private toastr: ToastrService,
-    private solicitudService: SolicitudService
+    private solicitudService: SolicitudService,
+    private router: Router
   ) {}
 
   isFieldValid(form: FormGroup, field: string) {
@@ -562,7 +564,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     console.log(personas);
 
     const data = {
-      expedienteSIT: formData.expedienteSIT,
+      expedienteSit: formData.expedienteSIT,
       fiso: formData.fiso,
       departamentoId: formData.departamentoId,
       municipioId: formData.municipioId,
@@ -584,8 +586,10 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
       this.toastr.error("Formulario Invalido", "Solicitud");
       return;
     }
-    this.solicitudService.postCreateSolicitud(data).subscribe(params => {
-      console.log("Result create: ", params);
+    this.solicitudService.postCreateSolicitud(data).subscribe(solicituId => {
+      this.toastr.success("Solicitud creada con exito", "Solicitud");
+      this.router.navigate([`/solicitudes/ver/${solicituId}`]);
+      console.log("Result create: ", solicituId);
     });
   }
   findInvalidControls() {
