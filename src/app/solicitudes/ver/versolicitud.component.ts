@@ -3,6 +3,7 @@ import { SolicitudService } from "../solicitudes.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Solicitud } from "../solicitudes.model";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-versolicitud-cmp",
@@ -16,20 +17,16 @@ export class VerSolicitudComponent implements OnInit {
   constructor(
     private solicitudService: SolicitudService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private toastr: ToastrService
+  ) { }
   ngOnInit() {
-    this.routeSub = this.route.params.subscribe(params => {
-      this.solicitudId = params["id"];
-      this.solicitudService.getSolicitudById(params["id"]).subscribe(
-        SolicitudData => {
-          console.log(SolicitudData);
-          this.solicitud = SolicitudData;
-        },
-        error => {
-          console.log("Error Obteniendo el Objeto!" + error);
-        }
-      );
-    });
+    this.solicitudService.onSolicitudChanged.subscribe(
+      solicitudData => {
+        this.solicitud = solicitudData;
+      }, error => {
+        this.toastr.error("Solicitud no encontrada", "Solicitud");
+      }
+    );
   }
 }

@@ -87,16 +87,18 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     if (this.idForm == null || this.idForm == 0) {
       console.log("Create");
       this.seguimiento902Service.postCreateSeguimiento902(data).subscribe(params => {
-        console.log("Result create: ", params);
+        this.toastr.success("Formulario Creado Correctamente", "Seguimiento 902");
+        this.router.navigate(["/solicitudes/ver/" + data.solicitudId]);
       });
     } else {
       console.log("Update");
       this.seguimiento902Service.putUpdateSeguimiento902(data).subscribe(params => {
-        console.log("Result update: ", params);
+        this.toastr.success("Formulario Actualizado Correctamente", "Seguimiento 902");
+        this.router.navigate(["/solicitudes/ver/" + data.solicitudId]);
       });
     }
     // display form values on success
-    console.log("SUCCESS!! :-)", this.createSeguimiento902.value);
+    // console.log("SUCCESS!! :-)", this.createSeguimiento902.value);
   }
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
