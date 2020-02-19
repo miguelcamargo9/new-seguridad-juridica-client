@@ -10,6 +10,8 @@ import { SolicitudesRoutes } from "./solicitudes.routing";
 import { DomainService } from "../domains/domain.service";
 import { SolicitudService } from "./solicitudes.service";
 import { BuscarSolicitudComponent } from "./buscar/buscarsolicitud.component";
+import { DataTablesModule } from "angular-datatables";
+import { VerSolicitudComponent } from "./ver/versolicitud.component";
 
 @NgModule({
   imports: [
@@ -18,9 +20,10 @@ import { BuscarSolicitudComponent } from "./buscar/buscarsolicitud.component";
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    UtilsModule
+    UtilsModule,
+    DataTablesModule
   ],
-  declarations: [CrearSolicitudComponent, BuscarSolicitudComponent],
+  declarations: [CrearSolicitudComponent, BuscarSolicitudComponent, VerSolicitudComponent],
   providers: [DomainService, SolicitudService]
 })
-export class SolicitudModule { }
+export class SolicitudModule {}

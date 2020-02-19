@@ -1,0 +1,53 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">info</i>
+            </div>
+            <h4 class="card-title">Expediente #{{ solicitud.expdienteSIT }}</h4>
+          </div>
+          <div class="card-body ">
+            <h4>FISO: {{ solicitud.fiso }}</h4>
+            <h4>Predio: {{ solicitud.nombreDelPredioAFormalizar }}</h4>
+            <h4>Folio: {{ solicitud.folioDeMatriculaInmobiliaria }}</h4>
+            <h4>Area: {{ solicitud.areaSolicitada }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">bookmarks</i>
+            </div>
+            <h4 class="card-title">Opciones</h4>
+          </div>
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-md-12">
+                <a [routerLink]="['/seguimiento902/editar/', solicitud.id]" class="btn btn-info"
+                  >Seguimiento 902</a
+                >
+              </div>
+              <div class="col-md-12">
+                <a [routerLink]="['/solicitudes/editar/', solicitud.id]" class="btn btn-info"
+                  >Editar Solicitud</a
+                >
+              </div>
+              <div class="col-md-12">
+                <a [routerLink]="['/solicitudes/ver/', solicitud.id]" class="btn btn-info"
+                  >Repositorio Documental</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

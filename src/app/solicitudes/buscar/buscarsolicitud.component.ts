@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
+import { SolicitudService } from "../solicitudes.service";
+import { Solicitud } from "../solicitudes.model";
+import { Subject } from "rxjs";
 
 interface TypeSeach {
   value: string;
@@ -14,11 +18,19 @@ export class BuscarSolicitudComponent implements OnInit {
   typesSearch: TypeSeach[] = [
     { value: "expedienteSIT", viewValue: "Expediente SIT" },
     { value: "fiso", viewValue: "FISO" },
-    { value: "cedulaCatastral", viewValue: "Cedula Catastral" }
+    { value: "cedulaSolicitante", viewValue: "Cedula Solicitante" },
+    { value: "nombreSolicitante", viewValue: "Nombre Solicitante" }
   ];
   buscarSolicitud: FormGroup;
+  dtOptions: DataTables.Settings = {};
+  solicitudes: Solicitud[];
+  dtTrigger: Subject<any> = new Subject();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private solicitudService: SolicitudService
+  ) {}
 
   ngOnInit() {
     this.buscarSolicitud = this.formBuilder.group({
@@ -36,5 +48,18 @@ export class BuscarSolicitudComponent implements OnInit {
       "has-error": this.isFieldValid(form, field),
       "has-feedback": this.isFieldValid(form, field)
     };
+  }
+
+  onSubmit() {
+    if (this.buscarSolicitud.valid) {
+      this.solicitudService
+        .postBuscarSolicitud(this.buscarSolicitud.value)
+        .subscribe(resultSolicitudes => {
+          this.solicitudes = resultSolicitudes;
+          this.dtTrigger.next();
+        });
+    } else {
+      this.toastr.error("Formulario Invalido", "Buscar Solicitud");
+    }
   }
 }
