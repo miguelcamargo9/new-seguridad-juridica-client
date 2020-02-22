@@ -12,6 +12,7 @@ import { SolicitudService } from "./solicitudes.service";
 import { BuscarSolicitudComponent } from "./buscar/buscarsolicitud.component";
 import { DataTablesModule } from "angular-datatables";
 import { VerSolicitudComponent } from "./ver/versolicitud.component";
+import { EditarSolicitudComponent } from "./editar/editarsolicitud.component";
 
 @NgModule({
   imports: [
@@ -23,7 +24,12 @@ import { VerSolicitudComponent } from "./ver/versolicitud.component";
     UtilsModule,
     DataTablesModule
   ],
-  declarations: [CrearSolicitudComponent, BuscarSolicitudComponent, VerSolicitudComponent],
+  declarations: [
+    CrearSolicitudComponent,
+    BuscarSolicitudComponent,
+    VerSolicitudComponent,
+    EditarSolicitudComponent
+  ],
   providers: [DomainService, SolicitudService]
 })
 export class SolicitudModule {}

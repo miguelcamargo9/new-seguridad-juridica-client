@@ -1,3 +1,5 @@
+import { Persona } from "../models/Persona";
+
 export class Solicitud {
   id: number;
   expedienteSit: string;
@@ -14,4 +16,5 @@ export class Solicitud {
   predioDeMayorExtension: boolean;
   nombrePredioMayorExtension: string;
   areaSolicitada: number;
+  personas: Persona[];
 }
