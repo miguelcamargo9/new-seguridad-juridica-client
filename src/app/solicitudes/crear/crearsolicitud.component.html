@@ -437,7 +437,7 @@
                     </div>
                   </div>
                   <div class="tab-pane" id="page3" [hidden]="!showPersonas">
-                    <div class="row" *ngFor="let persona of personas | keyvalue">
+                    <div class="row" *ngFor="let persona of personas">
                       <div class="col-sm-6">
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
@@ -451,7 +451,7 @@
                               name="primerNombreOtroSolicitante"
                               matInput
                               placeholder="PRIMER NOMBRE OTRO SOLICITANTE"
-                              [formControlName]="'primerNombreOtroSolicitante' + persona.key"
+                              [formControlName]="'primerNombreOtroSolicitante' + persona.index"
                             />
                           </mat-form-field>
                         </div>
@@ -467,7 +467,7 @@
                             <input
                               matInput
                               placeholder="SEGUNDO NOMBRE OTRO SOLICITANTE"
-                              [formControlName]="'segundoNombreOtroSolicitante' + persona.key"
+                              [formControlName]="'segundoNombreOtroSolicitante' + persona.index"
                               type="text"
                               name="segundoNombreOtroSolicitante"
                             />
@@ -487,7 +487,7 @@
                               name="primerApellidoOtroSolicitante"
                               matInput
                               placeholder="PRIMER APELLIDO OTRO SOLICITANTE"
-                              [formControlName]="'primerApellidoOtroSolicitante' + persona.key"
+                              [formControlName]="'primerApellidoOtroSolicitante' + persona.index"
                             />
                           </mat-form-field>
                         </div>
@@ -503,7 +503,7 @@
                             <input
                               matInput
                               placeholder="SEGUNDO APELLIDO OTRO SOLICITANTE"
-                              [formControlName]="'segundoApellidoOtroSolicitante' + persona.key"
+                              [formControlName]="'segundoApellidoOtroSolicitante' + persona.index"
                               type="text"
                               name="segundoApellidoOtroSolicitante"
                             />
@@ -521,8 +521,7 @@
                             <mat-select
                               placeholder="SEXO"
                               name="sexoOtro"
-                              [formControlName]="'sexoOtro' + persona.key"
-                              (selectionChange)="selectSexoOtro($event)"
+                              [formControlName]="'sexoOtro' + persona.index"
                             >
                               <mat-option *ngFor="let tipoSexo of tiposSexos" [value]="tipoSexo.id">
                                 {{ tipoSexo.nombre }}
@@ -542,8 +541,7 @@
                             <mat-select
                               placeholder="TIPO DOCUMENTO"
                               name="tipoDocumentoOtro"
-                              [formControlName]="'tipoDocumentoOtro' + persona.key"
-                              (selectionChange)="selectTipoDocumentoOtro($event)"
+                              [formControlName]="'tipoDocumentoOtro' + persona.index"
                             >
                               <mat-option
                                 *ngFor="let tipoDocumento of tiposDocumento"
@@ -567,11 +565,22 @@
                               type="text"
                               name="documentoOtro"
                               matInput
-                              [formControlName]="'documentoOtro' + persona.key"
+                              [formControlName]="'documentoOtro' + persona.index"
                               placeholder="DOCUMENTO"
                             />
                           </mat-form-field>
                         </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <button
+                          mat-raised-button
+                          [hidden]="personas.length < 2"
+                          class="btn btn-danger btn-sm"
+                          (click)="deletePersona(persona.index)"
+                        >
+                          Eliminar
+                        </button>
+                        <hr />
                       </div>
                     </div>
                     <div class="row">
@@ -582,14 +591,6 @@
                           (click)="addPersona()"
                         >
                           Agregar
-                        </button>
-                        <button
-                          mat-raised-button
-                          [hidden]="personas.length < 2"
-                          class="btn btn-danger btn-sm"
-                          (click)="deletePersona()"
-                        >
-                          Eliminar
                         </button>
                       </div>
                     </div>

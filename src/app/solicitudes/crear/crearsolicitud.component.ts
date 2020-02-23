@@ -45,6 +45,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
   showPersonas: Boolean = false;
 
   personas: Persona[] = [new Persona()];
+  indexPersonas: number = 0;
 
   matcher = new MyErrorStateMatcher();
   solicitud: FormGroup;
@@ -498,25 +499,33 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
   }
   addPersona() {
     const persona = new Persona();
-    this.personas.splice(-1, 0, persona);
+    persona.index = this.indexPersonas;
+    this.personas.splice(this.personas.length, 0, persona);
+    this.indexPersonas++;
     this.populateForm();
   }
-  deletePersona() {
-    const lastPosition = this.personas.length - 1;
-    this.unPopulateForm(lastPosition);
-    this.personas.pop();
+  deletePersona(index) {
+    this.unPopulateForm(index);
+    this.personas.splice(index, 1);
   }
   populateForm() {
-    this.personas.forEach((persona, key) => {
-      this.solicitud.addControl(`primerNombreOtroSolicitante${key}`, new FormControl());
-      this.solicitud.addControl(`segundoNombreOtroSolicitante${key}`, new FormControl());
-      this.solicitud.addControl(`primerApellidoOtroSolicitante${key}`, new FormControl());
-      this.solicitud.addControl(`segundoApellidoOtroSolicitante${key}`, new FormControl());
-      this.solicitud.addControl(`sexoOtro${key}`, new FormControl());
-      this.solicitud.addControl(`tipoDocumentoOtro${key}`, new FormControl());
-      this.solicitud.addControl(`documentoOtro${key}`, new FormControl());
+    this.personas.forEach(persona => {
+      if (persona.index === undefined) {
+        persona.index = this.indexPersonas;
+        this.indexPersonas++;
+      }
+      this.solicitud.addControl(`primerNombreOtroSolicitante${persona.index}`, new FormControl());
+      this.solicitud.addControl(`segundoNombreOtroSolicitante${persona.index}`, new FormControl());
+      this.solicitud.addControl(`primerApellidoOtroSolicitante${persona.index}`, new FormControl());
+      this.solicitud.addControl(
+        `segundoApellidoOtroSolicitante${persona.index}`,
+        new FormControl()
+      );
+      this.solicitud.addControl(`sexoOtro${persona.index}`, new FormControl());
+      this.solicitud.addControl(`tipoDocumentoOtro${persona.index}`, new FormControl());
+      this.solicitud.addControl(`documentoOtro${persona.index}`, new FormControl());
     });
-    console.log(this.solicitud.controls);
+    // console.log(this.solicitud.controls);
   }
   unPopulateForm(lastPosition: number) {
     this.solicitud.removeControl(`primerNombreOtroSolicitante${lastPosition}`);
@@ -526,21 +535,21 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     this.solicitud.removeControl(`sexoOtro${lastPosition}`);
     this.solicitud.removeControl(`tipoDocumentoOtro${lastPosition}`);
     this.solicitud.removeControl(`documentoOtro${lastPosition}`);
-    console.log(this.solicitud.controls);
+    // console.log(this.solicitud.controls);
   }
   onSubmit() {
     const formData = this.solicitud.value;
 
-    const personas = this.personas.map((value, key) => {
+    const personas = this.personas.map(persona => {
       return {
         tipoPersonaId: 2,
-        primerNombreSolicitante: formData[`primerNombreOtroSolicitante${key}`],
-        segundoNombreSolicitante: formData[`segundoNombreOtroSolicitante${key}`],
-        primerApellidoSolicitante: formData[`primerApellidoOtroSolicitante${key}`],
-        segundoApellidoSolicitante: formData[`segundoApellidoOtroSolicitante${key}`],
-        sexoId: formData[`sexoOtro${key}`],
-        tipoDocumentoId: formData[`tipoDocumentoOtro${key}`],
-        noDocumento: formData[`documentoOtro${key}`]
+        primerNombreSolicitante: formData[`primerNombreOtroSolicitante${persona.index}`],
+        segundoNombreSolicitante: formData[`segundoNombreOtroSolicitante${persona.index}`],
+        primerApellidoSolicitante: formData[`primerApellidoOtroSolicitante${persona.index}`],
+        segundoApellidoSolicitante: formData[`segundoApellidoOtroSolicitante${persona.index}`],
+        sexoId: formData[`sexoOtro${persona.index}`],
+        tipoDocumentoId: formData[`tipoDocumentoOtro${persona.index}`],
+        noDocumento: formData[`documentoOtro${persona.index}`]
       };
     });
 
@@ -561,7 +570,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
       personas.pop();
     }
 
-    console.log(personas);
+    // console.log(personas);
 
     const data = {
       expedienteSit: formData.expedienteSIT,

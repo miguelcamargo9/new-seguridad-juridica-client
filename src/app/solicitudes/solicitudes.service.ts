@@ -30,7 +30,7 @@ export class SolicitudService implements Resolve<any> {
   }
 
   putUpdateSolicitud(data: any): Observable<any> {
-    return this.http.put(environment.apiUrl + "/solicitud/", data);
+    return this.http.put(environment.apiUrl + "/solicitud/" + data.id, data);
   }
 
   postBuscarSolicitud(data: any): Observable<Solicitud[]> {

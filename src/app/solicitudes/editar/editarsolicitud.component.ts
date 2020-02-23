@@ -45,7 +45,10 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
 
   showPersonas: Boolean = false;
 
-  personas: Persona[] = [new Persona()];
+  personas: Persona[];
+  solicitante: Persona = new Persona();
+  idsDeletedPersonas: number[] = [];
+  indexPersonas: number = 0;
 
   matcher = new MyErrorStateMatcher();
   solicitud: FormGroup;
@@ -104,7 +107,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       nombrePredioMayorExtension: [null],
       areaSolicitada: [null, [Validators.required]]
     });
-    this.populateForm();
+    // this.populateForm();
     // Code for the Validator
     const $validator = $(".card-wizard form").validate({
       rules: {
@@ -162,12 +165,14 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
 
     this.routeSub = this.route.params.subscribe(params => {
       this.solicitudId = params["id"];
+      this.solicitante = new Persona();
       this.solicitudService.getSolicitudById(this.solicitudId).subscribe(
         solicitudData => {
           //Page1
           this.solicitud.controls["expedienteSIT"].setValue(solicitudData.expedienteSit);
           this.solicitud.controls["fiso"].setValue(solicitudData.fiso);
           this.solicitud.controls["departamentoId"].setValue(solicitudData.departamentoId);
+          this.setDepartamento(solicitudData.departamentoId, solicitudData.municipioId);
           this.solicitud.controls["municipioId"].setValue(solicitudData.municipioId);
           this.solicitud.controls["corregimiento"].setValue(solicitudData.corregimiento);
           this.solicitud.controls["vereda"].setValue(solicitudData.vereda);
@@ -177,31 +182,44 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
           );
           this.solicitud.controls["pruebaUnion"].setValue(solicitudData.pruebaUnion);
 
-          const solicitante = solicitudData.personas.find(persona => {
-            persona.tipo_persona_id === 1;
-          });
+          this.solicitante = solicitudData.personas.filter(persona => {
+            return persona.tipoPersonaId === 1;
+          })[0];
 
-          this.solicitud.controls["primerNombreSolicitante"].setValue(
-            solicitante.primer_nombre_solicitante
-          );
-          this.solicitud.controls["segundoNombreSolicitante"].setValue(
-            solicitante.segundo_nombre_solicitante
-          );
-          this.solicitud.controls["primerApellidoSolicitante"].setValue(
-            solicitante.primer_apellido_solicitante
-          );
-          this.solicitud.controls["segundoApellidoSolicitante"].setValue(
-            solicitante.segundo_apellido_solicitante
-          );
-          this.solicitud.controls["sexo"].setValue(solicitante.sexo_id);
-          this.solicitud.controls["tipoDocumento"].setValue(solicitante.tipo_documento_id);
-          this.solicitud.controls["documento"].setValue(solicitante.no_documento);
+          if (this.solicitante) {
+            this.solicitud.controls["primerNombreSolicitante"].setValue(
+              this.solicitante.primerNombreSolicitante
+            );
+            this.solicitud.controls["segundoNombreSolicitante"].setValue(
+              this.solicitante.segundoNombreSolicitante
+            );
+            this.solicitud.controls["primerApellidoSolicitante"].setValue(
+              this.solicitante.primerApellidoSolicitante
+            );
+            this.solicitud.controls["segundoApellidoSolicitante"].setValue(
+              this.solicitante.segundoApellidoSolicitante
+            );
+            this.solicitud.controls["sexo"].setValue(this.solicitante.sexoId);
+            this.solicitud.controls["tipoDocumento"].setValue(this.solicitante.tipoDocumentoId);
+            this.solicitud.controls["documento"].setValue(this.solicitante.noDocumento);
+          } else {
+            this.solicitud.controls["primerNombreSolicitante"].setValue(null);
+            this.solicitud.controls["segundoNombreSolicitante"].setValue(null);
+            this.solicitud.controls["primerApellidoSolicitante"].setValue(null);
+            this.solicitud.controls["segundoApellidoSolicitante"].setValue(null);
+            this.solicitud.controls["sexo"].setValue(null);
+            this.solicitud.controls["tipoDocumento"].setValue(null);
+            this.solicitud.controls["documento"].setValue(null);
+          }
 
           //Page3
           this.personas = solicitudData.personas.filter(persona => {
-            persona.tipo_persona_id === 2;
+            return persona.tipoPersonaId === 2;
           });
-          this.populateForm();
+          if (this.personas.length > 0) {
+            this.populateForm();
+            this.showPersonas = true;
+          }
 
           //Page 4
           this.solicitud.controls["nombreDelPredioAFormalizar"].setValue(
@@ -213,9 +231,8 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
           this.solicitud.controls["numeroPredialNacional"].setValue(
             solicitudData.numeroPredialNacional
           );
-          this.solicitud.controls["predioDeMayorExtension"].setValue(
-            solicitudData.predioDeMayorExtension
-          );
+          const predioDeMayorExtension = solicitudData.predioDeMayorExtension ? "1" : "2";
+          this.solicitud.controls["predioDeMayorExtension"].setValue(predioDeMayorExtension);
           this.solicitud.controls["nombrePredioMayorExtension"].setValue(
             solicitudData.nombrePredioMayorExtension
           );
@@ -502,13 +519,19 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     });
   }
   selectDepartmento(event) {
+    this.setDepartamento(event.value);
+  }
+  setDepartamento(departamentoId, municipioId = null) {
     const selectDepartamento = this.departamentos.find(
-      departamento => departamento.id === event.value
+      departamento => departamento.id === departamentoId
     );
     this.solicitud.controls["departamentoDane"].setValue(selectDepartamento.dane);
     this.domainServcie.getMunicipiosPorDepartamento(selectDepartamento.id).subscribe(
       municipiosData => {
         this.municipios = municipiosData;
+        if (municipioId) {
+          this.setMunicipio(municipioId);
+        }
       },
       error => {
         console.log("There was an error while retrieving Municipios!" + error);
@@ -516,7 +539,10 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     );
   }
   selectMunicipio(event) {
-    const selectMunicipio = this.municipios.find(municipio => municipio.id === event.value);
+    this.setMunicipio(event.value);
+  }
+  setMunicipio(municipioId) {
+    const selectMunicipio = this.municipios.find(municipio => municipio.id === municipioId);
     this.solicitud.controls["municipioDane"].setValue(selectMunicipio.dane);
   }
   selectCondicionSolicitante(event) {
@@ -569,42 +595,55 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   }
   addPersona() {
     const persona = new Persona();
-    this.personas.splice(-1, 0, persona);
+    persona.index = this.indexPersonas;
+    this.personas.splice(this.personas.length, 0, persona);
+    this.indexPersonas++;
     this.populateForm();
   }
-  deletePersona() {
-    const lastPosition = this.personas.length - 1;
-    this.unPopulateForm(lastPosition);
-    this.personas.pop();
+  deletePersona(index) {
+    if (this.personas[index].id) {
+      this.idsDeletedPersonas.splice(-1, 0, this.personas[index].id);
+    }
+    this.unPopulateForm(index);
+    this.personas.splice(index, 1);
   }
   populateForm() {
-    this.personas.forEach((persona, key) => {
+    // console.log("POPULATE", this.personas);
+    this.personas.forEach(persona => {
+      if (persona.index === undefined) {
+        persona.index = this.indexPersonas;
+        this.indexPersonas++;
+      }
       this.solicitud.addControl(
-        `primerNombreOtroSolicitante${key}`,
-        new FormControl(persona.primer_nombre_solicitante)
+        `primerNombreOtroSolicitante${persona.index}`,
+        new FormControl(persona.primerNombreSolicitante)
       );
       this.solicitud.addControl(
-        `segundoNombreOtroSolicitante${key}`,
-        new FormControl(persona.segundo_apellido_solicitante)
+        `segundoNombreOtroSolicitante${persona.index}`,
+        new FormControl(persona.segundoNombreSolicitante)
       );
       this.solicitud.addControl(
-        `primerApellidoOtroSolicitante${key}`,
-        new FormControl(persona.primer_apellido_solicitante)
+        `primerApellidoOtroSolicitante${persona.index}`,
+        new FormControl(persona.primerApellidoSolicitante)
       );
       this.solicitud.addControl(
-        `segundoApellidoOtroSolicitante${key}`,
-        new FormControl(persona.segundo_apellido_solicitante)
+        `segundoApellidoOtroSolicitante${persona.index}`,
+        new FormControl(persona.segundoApellidoSolicitante)
       );
-      this.solicitud.addControl(`sexoOtro${key}`, new FormControl(persona.sexo_id));
+      this.solicitud.addControl(`sexoOtro${persona.index}`, new FormControl(persona.sexoId));
       this.solicitud.addControl(
-        `tipoDocumentoOtro${key}`,
-        new FormControl(persona.tipo_documento_id)
+        `tipoDocumentoOtro${persona.index}`,
+        new FormControl(persona.tipoDocumentoId)
       );
-      this.solicitud.addControl(`documentoOtro${key}`, new FormControl(persona.no_documento));
+      this.solicitud.addControl(
+        `documentoOtro${persona.index}`,
+        new FormControl(persona.noDocumento)
+      );
     });
-    console.log(this.solicitud.controls);
+    // console.log(this.solicitud.controls);
   }
   unPopulateForm(lastPosition: number) {
+    // console.log("UNPOPULATE", this.personas);
     this.solicitud.removeControl(`primerNombreOtroSolicitante${lastPosition}`);
     this.solicitud.removeControl(`segundoNombreOtroSolicitante${lastPosition}`);
     this.solicitud.removeControl(`primerApellidoOtroSolicitante${lastPosition}`);
@@ -612,25 +651,28 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     this.solicitud.removeControl(`sexoOtro${lastPosition}`);
     this.solicitud.removeControl(`tipoDocumentoOtro${lastPosition}`);
     this.solicitud.removeControl(`documentoOtro${lastPosition}`);
-    console.log(this.solicitud.controls);
+    // console.log(this.solicitud.controls);
   }
   onSubmit() {
     const formData = this.solicitud.value;
 
-    const personas = this.personas.map((value, key) => {
+    const personas = this.personas.map(persona => {
       return {
+        id: persona.id,
         tipoPersonaId: 2,
-        primerNombreSolicitante: formData[`primerNombreOtroSolicitante${key}`],
-        segundoNombreSolicitante: formData[`segundoNombreOtroSolicitante${key}`],
-        primerApellidoSolicitante: formData[`primerApellidoOtroSolicitante${key}`],
-        segundoApellidoSolicitante: formData[`segundoApellidoOtroSolicitante${key}`],
-        sexoId: formData[`sexoOtro${key}`],
-        tipoDocumentoId: formData[`tipoDocumentoOtro${key}`],
-        noDocumento: formData[`documentoOtro${key}`]
+        primerNombreSolicitante: formData[`primerNombreOtroSolicitante${persona.index}`],
+        segundoNombreSolicitante: formData[`segundoNombreOtroSolicitante${persona.index}`],
+        primerApellidoSolicitante: formData[`primerApellidoOtroSolicitante${persona.index}`],
+        segundoApellidoSolicitante: formData[`segundoApellidoOtroSolicitante${persona.index}`],
+        sexoId: formData[`sexoOtro${persona.index}`],
+        tipoDocumentoId: formData[`tipoDocumentoOtro${persona.index}`],
+        noDocumento: formData[`documentoOtro${persona.index}`],
+        solicitudId: this.solicitudId
       };
     });
 
     const solicitante = {
+      id: this.solicitante.id,
       tipoPersonaId: 1,
       primerNombreSolicitante: formData.primerNombreSolicitante,
       segundoNombreSolicitante: formData.segundoNombreSolicitante,
@@ -638,7 +680,8 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       segundoApellidoSolicitante: formData.segundoApellidoSolicitante,
       sexoId: formData.sexo,
       tipoDocumentoId: formData.tipoDocumento,
-      noDocumento: formData.documento
+      noDocumento: formData.documento,
+      solicitudId: this.solicitudId
     };
 
     personas.splice(0, 0, solicitante);
@@ -647,10 +690,8 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       personas.pop();
     }
 
-    console.log(personas);
-
     const data = {
-      id: this.solicitud,
+      id: this.solicitudId,
       expedienteSit: formData.expedienteSIT,
       fiso: formData.fiso,
       departamentoId: formData.departamentoId,
@@ -665,7 +706,8 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       predioDeMayorExtension: formData.predioDeMayorExtension ? true : false,
       nombrePredioMayorExtension: formData.nombrePredioMayorExtension,
       areaSolicitada: formData.areaSolicitada,
-      personas: personas
+      personas: personas,
+      idsDeletedPersonas: this.idsDeletedPersonas
     };
 
     if (this.solicitud.invalid) {
@@ -673,10 +715,15 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       this.toastr.error("Formulario Invalido", "Solicitud");
       return;
     }
-    this.solicitudService.postCreateSolicitud(data).subscribe(solicituId => {
-      this.toastr.success("Solicitud creada con exito", "Solicitud");
-      this.router.navigate([`/solicitudes/ver/${solicituId}`]);
-      console.log("Result create: ", solicituId);
+    // console.log("DATA", data);
+    this.solicitudService.putUpdateSolicitud(data).subscribe(solicitudResult => {
+      console.log("Result update: ", solicitudResult);
+      if (solicitudResult) {
+        this.toastr.success("Solicitud actualizada con exito", "Solicitud");
+        this.router.navigate([`/solicitudes/ver/${this.solicitudId}`]);
+      } else {
+        this.toastr.error("Error actualizando la solicitud", "Solicitud");
+      }
     });
   }
   findInvalidControls() {
