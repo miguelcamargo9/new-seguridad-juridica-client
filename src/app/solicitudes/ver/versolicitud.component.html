@@ -1,0 +1,66 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">info</i>
+            </div>
+            <h4 class="card-title">Expediente #{{ solicitud.expedienteSit }}</h4>
+          </div>
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-md-6">
+                <h4>FISO:</h4>
+                <p>{{ solicitud.fiso }}</p>
+              </div>
+              <div class="col-md-6">
+                <h4>Predio:</h4>
+                <p>{{ solicitud.nombreDelPredioAFormalizar }}</p>
+              </div>
+              <div class="col-md-6">
+                <h4>Folio:</h4>
+                <p>{{ solicitud.folioDeMatriculaInmobiliaria }}</p>
+              </div>
+              <div class="col-md-6">
+                <h4>Area:</h4>
+                <p>{{ solicitud.areaSolicitada }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">bookmarks</i>
+            </div>
+            <h4 class="card-title">Productos</h4>
+          </div>
+          <div class="card-body ">
+            <div class="row">
+              <div class="col-md-12">
+                <a [routerLink]="['/seguimiento902/editar/', solicitud.id]"
+                  class="btn btn-info col-md-4 text-left">Seguimiento
+                  902</a>
+              </div>
+              <div class="col-md-12">
+                <a [routerLink]="['/solicitudes/editar/', solicitud.id]" class="btn btn-info col-md-4 text-left">Editar
+                  Solicitud</a>
+              </div>
+              <!-- <div class="col-md-12">
+                <a [routerLink]="['/solicitudes/ver/', solicitud.id]"
+                  class="btn btn-info col-md-4 text-left">Repositorio
+                  Documental</a>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

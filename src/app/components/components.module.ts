@@ -21,14 +21,14 @@ import { TypographyComponent } from './typography/typography.component';
     MaterialModule
   ],
   declarations: [
-      ButtonsComponent,
-      GridSystemComponent,
-      IconsComponent,
-      NotificationsComponent,
-      PanelsComponent,
-      SweetAlertComponent,
-      TypographyComponent
+    ButtonsComponent,
+    GridSystemComponent,
+    IconsComponent,
+    NotificationsComponent,
+    PanelsComponent,
+    SweetAlertComponent,
+    TypographyComponent
   ]
 })
 
-export class ComponentsModule {}
+export class ComponentsModule { }

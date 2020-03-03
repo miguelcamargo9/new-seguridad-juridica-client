@@ -1,0 +1,72 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <form [formGroup]="createComany">
+            <div class="card-header card-header-danger card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">work</i>
+              </div>
+              <h4 class="card-title">Eliminar Compañia</h4>
+            </div>
+            <div class="card-body">
+              <br />
+              <mat-form-field
+                class="example-full-width"
+                [ngClass]="{ 'has-success': validBusinessName === true }"
+              >
+                <input
+                  type="text"
+                  matInput
+                  id="text"
+                  placeholder="Nombre de Compañia *"
+                  [errorStateMatcher]="matcher"
+                  formControlName="businessName"
+                />
+              </mat-form-field>
+              <mat-form-field
+                class="example-full-width has-label"
+                [ngClass]="{ 'has-success': validDocumentNumber === true }"
+              >
+                <input
+                  type="text"
+                  matInput
+                  id="documentNumber"
+                  placeholder="Número de Documento *"
+                  [errorStateMatcher]="matcher"
+                  formControlName="documentNumber"
+                />
+              </mat-form-field>
+              <mat-form-field
+                class="example-full-width has-label"
+                [ngClass]="{
+                  'has-success': validRut === true
+                }"
+              >
+                <input
+                  type="text"
+                  matInput
+                  id="rut"
+                  placeholder="RUT *"
+                  formControlName="rut"
+                />
+              </mat-form-field>
+            </div>
+            <div class="card-footer text-right">
+              <div class="form-check mr-auto"></div>
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-danger"
+                (click)="onSubmit()"
+              >
+                Eliminar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

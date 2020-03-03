@@ -1,0 +1,90 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <form [formGroup]="createComany">
+            <div class="card-header card-header-success card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">work</i>
+              </div>
+              <h4 class="card-title">Editar Compañia</h4>
+            </div>
+            <div class="card-body">
+              <br />
+              <mat-form-field
+                class="example-full-width"
+                [ngClass]="{ 'has-success': validBusinessName === true }"
+              >
+                <input
+                  type="text"
+                  matInput
+                  id="text"
+                  placeholder="Nombre de Compañia *"
+                  [errorStateMatcher]="matcher"
+                  formControlName="businessName"
+                  (ngModelChange)="textValidationType($event)"
+                />
+                <mat-error *ngIf="businessNameFormControl.hasError('required')">
+                  Ingrese el nombre de la compañia <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field
+                class="example-full-width has-label"
+                [ngClass]="{ 'has-success': validDocumentNumber === true }"
+              >
+                <input
+                  type="text"
+                  matInput
+                  id="documentNumber"
+                  placeholder="Número de Documento *"
+                  [errorStateMatcher]="matcher"
+                  formControlName="documentNumber"
+                  (ngModelChange)="textValidationType($event)"
+                />
+                <app-field-error-display
+                  [displayError]="isFieldValid(createComany, 'documentNumber')"
+                  errorMsg="Ingrese el número de documento."
+                >
+                </app-field-error-display>
+              </mat-form-field>
+
+              <mat-form-field
+                class="example-full-width has-label"
+                [ngClass]="{
+                  'has-success': validRut === true
+                }"
+              >
+                <input
+                  type="text"
+                  matInput
+                  id="rut"
+                  placeholder="RUT *"
+                  (ngModelChange)="textValidationType($event)"
+                  formControlName="rut"
+                />
+                <app-field-error-display
+                  [displayError]="isFieldValid(createComany, 'rut')"
+                  errorMsg="Ingrese el RUT"
+                >
+                </app-field-error-display>
+              </mat-form-field>
+              <div class="category form-category">* Campos Requeridos</div>
+            </div>
+            <div class="card-footer text-right">
+              <div class="form-check mr-auto"></div>
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-success"
+                (click)="onSubmit()"
+              >
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

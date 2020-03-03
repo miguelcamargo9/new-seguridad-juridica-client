@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
-import { APP_BASE_HREF } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
+import { HttpModule } from "@angular/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { APP_BASE_HREF } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -35,20 +36,27 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatStepperModule,
-} from '@angular/material';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+  MatStepperModule
+} from "@angular/material";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { ToastrModule } from "ngx-toastr";
 
-import { AppComponent } from './app.component';
+import { AppComponent } from "./app.component";
 
-import { SidebarModule } from './sidebar/sidebar.module';
-import { FooterModule } from './shared/footer/footer.module';
-import { NavbarModule} from './shared/navbar/navbar.module';
-import { FixedpluginModule} from './shared/fixedplugin/fixedplugin.module';
-import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
-import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
+import { SidebarModule } from "./sidebar/sidebar.module";
+import { FooterModule } from "./shared/footer/footer.module";
+import { NavbarModule } from "./shared/navbar/navbar.module";
+import { FixedpluginModule } from "./shared/fixedplugin/fixedplugin.module";
+import { AdminLayoutComponent } from "./layouts/admin/admin-layout.component";
+import { AuthLayoutComponent } from "./layouts/auth/auth-layout.component";
 
-import { AppRoutes } from './app.routing';
+import { AuthInterceptor } from "./core/security/authInterceptor";
+import { AuthGuard } from "./core/security/guard";
+import { CheckInterfaceDirective } from "./directives/checkinterface.directive";
+
+import { AppRoutes } from "./app.routing";
+import { FieldErrorDisplayComponent } from "./components/field-error-display/field-error-display.component";
+import { ReplaceId } from "./pipes/replaceId";
 
 @NgModule({
   exports: [
@@ -83,31 +91,58 @@ import { AppRoutes } from './app.routing';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule
-  ]
+  ],
 })
-export class MaterialModule {}
+export class MaterialModule { }
+
 
 @NgModule({
-    imports:      [
-        CommonModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        RouterModule.forRoot(AppRoutes,{
-          useHash: true
-        }),
-        HttpModule,
-        MaterialModule,
-        MatNativeDateModule,
-        SidebarModule,
-        NavbarModule,
-        FooterModule,
-        FixedpluginModule
-    ],
-    declarations: [
-        AppComponent,
-        AdminLayoutComponent,
-        AuthLayoutComponent
-    ],
-    bootstrap:    [ AppComponent ]
+  imports: [
+    CommonModule
+  ],
+  declarations: [
+    FieldErrorDisplayComponent,
+    ReplaceId
+  ],
+  exports: [
+    FieldErrorDisplayComponent,
+    ReplaceId
+  ]
+})
+export class UtilsModule { }
+
+@NgModule({
+  imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    RouterModule.forRoot(AppRoutes, {
+      useHash: true
+    }),
+    HttpModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    MaterialModule,
+    MatNativeDateModule,
+    SidebarModule,
+    NavbarModule,
+    FooterModule,
+    FixedpluginModule
+  ],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
+  declarations: [
+    AppComponent,
+    AdminLayoutComponent,
+    AuthLayoutComponent,
+    CheckInterfaceDirective,
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
