@@ -1,0 +1,111 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">search</i>
+            </div>
+            <h4 class="card-title">Buscar Solicitud</h4>
+          </div>
+          <div class="card-body ">
+            <form [formGroup]="buscarSolicitud">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field>
+                    <mat-select
+                      placeholder="Tipo de Busqueda"
+                      name="typeSearch"
+                      formControlName="typeSearch"
+                    >
+                      <mat-option *ngFor="let type of typesSearch" [value]="type.value">
+                        {{ type.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-6">
+                  <mat-form-field
+                    class="example-full-width has-label"
+                    [ngClass]="displayFieldCss(buscarSolicitud, 'searchValue')"
+                  >
+                    <input
+                      type="text"
+                      name="searchValue"
+                      matInput
+                      id="text"
+                      placeholder="Valor a Buscar"
+                      formControlName="searchValue"
+                    />
+                    <app-field-error-display
+                      [displayError]="isFieldValid(buscarSolicitud, 'searchValue')"
+                      errorMsg="Deligenciar el campo."
+                    >
+                    </app-field-error-display>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer ">
+            <button
+              mat-raised-button
+              type="submit"
+              class="btn btn-fill btn-success"
+              (click)="onSubmit()"
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" [hidden]="solicitudes === undefined">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">list</i>
+            </div>
+            <h4 class="card-title">Lista de Solicitudes</h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar"></div>
+            <div class="material-datatables">
+              <table
+                datatable
+                [dtOptions]="dtOptions"
+                [dtTrigger]="dtTrigger"
+                class="table table-striped table-no-bordered table-hove"
+              >
+                <thead>
+                  <tr>
+                    <th>Expediente SIT</th>
+                    <th>Solicitante</th>
+                    <th>Municipio</th>
+                    <th class="text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let solicitud of solicitudes">
+                    <td>{{ solicitud.expedienteSit }}</td>
+                    <td>{{ solicitud.nombreDelPredioAFormalizar }}</td>
+                    <td>{{ solicitud.municipioId }}</td>
+                    <td class="text-right">
+                      <a
+                        [routerLink]="['/solicitudes/ver/', solicitud.id]"
+                        class="btn btn-link btn-info btn-just-icon edit"
+                        ><i class="material-icons">search</i></a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

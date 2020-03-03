@@ -1,10 +1,5 @@
 import { Injectable } from "@angular/core";
-import {
-  Router,
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot
-} from "@angular/router";
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 import { environment } from "./../../../environments/environment";
 import { JwtHelper } from "angular2-jwt";
@@ -22,7 +17,6 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    console.log("alg2o");
     const jwtHelper: JwtHelper = new JwtHelper();
     const token = localStorage.getItem(environment.keyToken);
     let result = false;
@@ -31,9 +25,7 @@ export class AuthGuard implements CanActivate {
       const roles = next.data["roles"] as Array<string>;
       if (roles !== undefined) {
         const permissions = jwtHelper.decodeToken(token).permissions;
-        console.log("PERMISSIONS", permissions);
         for (let i = 0; i < roles.length; i++) {
-          console.log("ROLES", roles[i]);
           if (permissions.indexOf(roles[i]) !== -1) {
             result = true;
             break;
@@ -56,7 +48,6 @@ export class AuthGuard implements CanActivate {
         result = true;
       }
     } else {
-      console.log("algo");
       localStorage.removeItem(environment.keyToken);
       this.router.navigate([environment.pathLogin]);
       result = false;

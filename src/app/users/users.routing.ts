@@ -3,6 +3,7 @@ import { Routes } from "@angular/router";
 import { CreateUserComponent } from "./create/createuser.component";
 import { UserListComponent } from "./list/userlist.component";
 import { AuthGuard } from "../core/security/guard";
+import { EditUserComponent } from "./edit/edituser.component";
 
 export const UsersRoutes: Routes = [
   {
@@ -23,6 +24,10 @@ export const UsersRoutes: Routes = [
         data: {
           roles: ["UserListComponent"]
         }
+      },
+      {
+        path: "edit/:id",
+        component: EditUserComponent
       }
     ]
   }

@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DataTablesModule } from "angular-datatables";
 
-import { MaterialModule } from "../app.module";
+import { MaterialModule, UtilsModule } from "../app.module";
 import { CompaniesRoutes } from "./companies.routing";
 
 import { CreateCompaniesComponent } from "./create/createcompanies.component";
@@ -21,15 +21,15 @@ import { DeleteCompaniesComponent } from "./delete/deletecompanies.component";
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    DataTablesModule
+    DataTablesModule,
+    UtilsModule
   ],
   declarations: [
     CreateCompaniesComponent,
     EditCompaniesComponent,
     DeleteCompaniesComponent,
     CompaniesListComponent,
-    FieldErrorDisplayComponent
   ],
   providers: [CompanyService]
 })
-export class CompaniesModule {}
+export class CompaniesModule { }

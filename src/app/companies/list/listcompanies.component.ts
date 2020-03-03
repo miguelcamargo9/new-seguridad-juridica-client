@@ -1,5 +1,4 @@
-import { Component, OnInit, ɵConsole } from "@angular/core";
-import { HttpClient, HttpResponse } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
 import { CompanyService } from "../companies.service";
 import { Company } from "../company.model";
 import { Subject } from "rxjs/Subject";

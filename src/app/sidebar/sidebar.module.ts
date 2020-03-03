@@ -7,6 +7,6 @@ import { HasPermissionDirective } from "../directives/hasPermssions.directive";
 @NgModule({
   imports: [RouterModule, CommonModule],
   declarations: [SidebarComponent, HasPermissionDirective],
-  exports: [SidebarComponent]
+  exports: [SidebarComponent, HasPermissionDirective]
 })
 export class SidebarModule {}

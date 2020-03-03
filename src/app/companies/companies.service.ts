@@ -6,7 +6,7 @@ import { Company } from "./company.model";
 
 @Injectable()
 export class CompanyService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   postCreateCompany(data): Observable<any> {
     return this.http.post(environment.apiUrl + "/company/create/", data);
@@ -20,8 +20,8 @@ export class CompanyService {
     return this.http.get<Company>(environment.apiUrl + "/company/" + companyId);
   }
 
-  postUpdateCompany(data): Observable<any> {
-    return this.http.post(environment.apiUrl + "/company/update/", data);
+  putUpdateCompany(data): Observable<any> {
+    return this.http.put(environment.apiUrl + "/company/update/", data);
   }
 
   deleteDeleteCompany(companyId): Observable<any> {

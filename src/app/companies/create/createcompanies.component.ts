@@ -13,16 +13,9 @@ import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
 

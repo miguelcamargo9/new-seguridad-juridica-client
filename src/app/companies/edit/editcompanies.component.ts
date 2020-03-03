@@ -55,7 +55,7 @@ export class EditCompaniesComponent {
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
@@ -78,7 +78,7 @@ export class EditCompaniesComponent {
         documentNumber: val.documentNumber,
         rut: val.rut
       };
-      this.companyService.postUpdateCompany(data).subscribe(
+      this.companyService.putUpdateCompany(data).subscribe(
         data => {
           this.toastr.success("Compañia editada con exito", "Compañia");
           this.router.navigate(["/companies/all"]);

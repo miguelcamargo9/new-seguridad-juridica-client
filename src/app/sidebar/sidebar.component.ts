@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import PerfectScrollbar from "perfect-scrollbar";
+import { JwtHelper } from "angular2-jwt";
+import { environment } from "src/environments/environment";
 
 declare const $: any;
 
@@ -80,7 +82,7 @@ export const ROUTES: RouteInfo[] = [
     collapse: "request",
     children: [
       {
-        path: "all",
+        path: "buscar",
         title: "Buscar Solicitud",
         ab: "SO"
       },
@@ -90,7 +92,14 @@ export const ROUTES: RouteInfo[] = [
         ab: "CS"
       }
     ]
+  },
+  {
+    path: "/pages/login/closeSession",
+    title: "Cerrar Sesión",
+    type: "link",
+    icontype: "exit_to_app"
   }
+
   //   {
   //     path: "/components",
   //     title: "Components",
@@ -113,6 +122,7 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   public menuItems: any[];
   ps: any;
+  userName: String;
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;
@@ -121,11 +131,16 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
+    const jwtHelper: JwtHelper = new JwtHelper();
+    const token = localStorage.getItem(environment.keyToken);
+
+    if (token && !jwtHelper.isTokenExpired(token)) {
+      const user = jwtHelper.decodeToken(token);
+      this.userName = user.sub;
+    }
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-      const elemSidebar = <HTMLElement>(
-        document.querySelector(".sidebar .sidebar-wrapper")
-      );
+      const elemSidebar = <HTMLElement>document.querySelector(".sidebar .sidebar-wrapper");
       this.ps = new PerfectScrollbar(elemSidebar);
     }
   }

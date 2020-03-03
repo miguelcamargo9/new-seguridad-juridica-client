@@ -4,6 +4,14 @@ import { Component, OnInit, OnChanges, AfterViewInit, SimpleChanges } from "@ang
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 import { FormBuilder } from "@angular/forms";
+import { DomainService } from "src/app/domains/domain.service";
+import { Departament } from "src/app/models/Deparamento";
+import { Municipio } from "src/app/models/Municipio";
+import { Domain } from "../../domains/domain.model";
+import { Persona } from "src/app/models/Persona";
+import { ToastrService } from "ngx-toastr";
+import { SolicitudService } from "../solicitudes.service";
+import { Router } from "@angular/router";
 
 declare const $: any;
 interface FileReaderEventTarget extends EventTarget {
@@ -27,24 +35,30 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: "crearsolicitud.component.html"
 })
 export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit {
-  cities = [
-    { value: "paris-0", viewValue: "Paris" },
-    { value: "miami-1", viewValue: "Miami" },
-    { value: "bucharest-2", viewValue: "Bucharest" },
-    { value: "new-york-3", viewValue: "New York" },
-    { value: "london-4", viewValue: "London" },
-    { value: "barcelona-5", viewValue: "Barcelona" },
-    { value: "moscow-6", viewValue: "Moscow" }
-  ];
-  emailFormControl = new FormControl("", [Validators.required, Validators.email]);
+  departamentos: Departament[];
+  municipios: Municipio[];
+  tiposCondicionSolicitante: Domain[];
+  tiposPruebaUnion: Domain[];
+  tiposSexos: Domain[];
+  tiposDocumento: Domain[];
+
+  showPersonas: Boolean = false;
+
+  personas: Persona[] = [new Persona()];
+  indexPersonas: number = 0;
 
   matcher = new MyErrorStateMatcher();
+  solicitud: FormGroup;
 
-  type: FormGroup;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private domainServcie: DomainService,
+    private toastr: ToastrService,
+    private solicitudService: SolicitudService,
+    private router: Router
+  ) {}
 
   isFieldValid(form: FormGroup, field: string) {
-    if (field == "expedienteSIT") console.log(form.get(field));
     return !form.get(field).valid && form.get(field).touched;
   }
 
@@ -55,17 +69,39 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     };
   }
   ngOnInit() {
+    this.getDomains();
     const elemMainPanel = <HTMLElement>document.querySelector(".main-panel");
 
-    this.type = this.formBuilder.group({
+    this.solicitud = this.formBuilder.group({
       // To add a validator, we must first convert the string value into an array. The first item in the array is the default value if any, then the next item in the array is the validator. Here we are adding a required validator meaning that the firstName attribute must have a value in it.
       expedienteSIT: [
         null,
         [Validators.required, Validators.minLength(19), Validators.maxLength(19)]
       ],
       fiso: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
-      email: [null, [Validators.required]]
+      departamentoId: [null, [Validators.required]],
+      departamentoDane: [{ value: null, disabled: true }, [Validators.required]],
+      municipioId: [null, [Validators.required]],
+      municipioDane: [{ value: null, disabled: true }, [Validators.required]],
+      corregimiento: [null],
+      vereda: [null],
+      condicionDelSolicitante: [null, [Validators.required]],
+      pruebaUnion: [null, [Validators.required]],
+      primerNombreSolicitante: [null, [Validators.required]],
+      segundoNombreSolicitante: [null],
+      primerApellidoSolicitante: [null, [Validators.required]],
+      segundoApellidoSolicitante: [null],
+      sexo: [null, [Validators.required]],
+      tipoDocumento: [null, [Validators.required]],
+      documento: [null, [Validators.required]],
+      nombreDelPredioAFormalizar: [null, [Validators.required]],
+      folioDeMatriculaInmobiliaria: [null, [Validators.required]],
+      numeroPredialNacional: [null],
+      predioDeMayorExtension: [null, [Validators.required]],
+      nombrePredioMayorExtension: [null],
+      areaSolicitada: [null, [Validators.required]]
     });
+    this.populateForm();
     // Code for the Validator
     const $validator = $(".card-wizard form").validate({
       rules: {
@@ -78,9 +114,29 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
           required: true,
           minlength: 7
         },
-        email: {
-          required: true,
-          minlength: 3
+        departamentoId: {
+          required: true
+        },
+        departamentoDane: {
+          required: true
+        },
+        municipioId: {
+          required: true
+        },
+        municipioDane: {
+          required: true
+        },
+        condicionDelSolicitante: {
+          required: true
+        },
+        nombreDelPredioAFormalizar: {
+          required: true
+        },
+        folioDeMatriculaInmobiliaria: {
+          required: true
+        },
+        predioDeMayorExtension: {
+          required: true
         }
       },
 
@@ -374,5 +430,185 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
         }, 500);
       });
     });
+  }
+  selectDepartmento(event) {
+    const selectDepartamento = this.departamentos.find(
+      departamento => departamento.id === event.value
+    );
+    this.solicitud.controls["departamentoDane"].setValue(selectDepartamento.dane);
+    this.domainServcie.getMunicipiosPorDepartamento(selectDepartamento.id).subscribe(
+      municipiosData => {
+        this.municipios = municipiosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Municipios!" + error);
+      }
+    );
+  }
+  selectMunicipio(event) {
+    const selectMunicipio = this.municipios.find(municipio => municipio.id === event.value);
+    this.solicitud.controls["municipioDane"].setValue(selectMunicipio.dane);
+  }
+  selectCondicionSolicitante(event) {
+    const selectCondicionSolicitante = this.tiposCondicionSolicitante.find(
+      condicionSolicitante => condicionSolicitante.id === event.value
+    );
+    this.showPersonas = selectCondicionSolicitante.id !== 1 ? true : false;
+  }
+  getDomains() {
+    this.domainServcie.getDepartamentos().subscribe(
+      departamentosData => {
+        this.departamentos = departamentosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Departamentos!" + error);
+      }
+    );
+    this.domainServcie.getTipoCondicionSolicitante().subscribe(
+      tiposCondicionSolicitanteData => {
+        this.tiposCondicionSolicitante = tiposCondicionSolicitanteData;
+      },
+      error => {
+        console.log("There was an error while retrieving Condicion Solicitante!" + error);
+      }
+    );
+    this.domainServcie.getTipoPruebaUnion().subscribe(
+      tiposPruebaUnionData => {
+        this.tiposPruebaUnion = tiposPruebaUnionData;
+      },
+      error => {
+        console.log("There was an error while retrieving Prueba Union!" + error);
+      }
+    );
+    this.domainServcie.getTipoSexo().subscribe(
+      tiposSexosData => {
+        this.tiposSexos = tiposSexosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Sexo!" + error);
+      }
+    );
+    this.domainServcie.getTipoDocumento().subscribe(
+      tiposDocumentosData => {
+        this.tiposDocumento = tiposDocumentosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Tipo Documento!" + error);
+      }
+    );
+  }
+  addPersona() {
+    const persona = new Persona();
+    persona.index = this.indexPersonas;
+    this.personas.splice(this.personas.length, 0, persona);
+    this.indexPersonas++;
+    this.populateForm();
+  }
+  deletePersona(index) {
+    this.unPopulateForm(index);
+    this.personas.splice(index, 1);
+  }
+  populateForm() {
+    this.personas.forEach(persona => {
+      if (persona.index === undefined) {
+        persona.index = this.indexPersonas;
+        this.indexPersonas++;
+      }
+      this.solicitud.addControl(`primerNombreOtroSolicitante${persona.index}`, new FormControl());
+      this.solicitud.addControl(`segundoNombreOtroSolicitante${persona.index}`, new FormControl());
+      this.solicitud.addControl(`primerApellidoOtroSolicitante${persona.index}`, new FormControl());
+      this.solicitud.addControl(
+        `segundoApellidoOtroSolicitante${persona.index}`,
+        new FormControl()
+      );
+      this.solicitud.addControl(`sexoOtro${persona.index}`, new FormControl());
+      this.solicitud.addControl(`tipoDocumentoOtro${persona.index}`, new FormControl());
+      this.solicitud.addControl(`documentoOtro${persona.index}`, new FormControl());
+    });
+    // console.log(this.solicitud.controls);
+  }
+  unPopulateForm(lastPosition: number) {
+    this.solicitud.removeControl(`primerNombreOtroSolicitante${lastPosition}`);
+    this.solicitud.removeControl(`segundoNombreOtroSolicitante${lastPosition}`);
+    this.solicitud.removeControl(`primerApellidoOtroSolicitante${lastPosition}`);
+    this.solicitud.removeControl(`segundoApellidoOtroSolicitante${lastPosition}`);
+    this.solicitud.removeControl(`sexoOtro${lastPosition}`);
+    this.solicitud.removeControl(`tipoDocumentoOtro${lastPosition}`);
+    this.solicitud.removeControl(`documentoOtro${lastPosition}`);
+    // console.log(this.solicitud.controls);
+  }
+  onSubmit() {
+    const formData = this.solicitud.value;
+
+    const personas = this.personas.map(persona => {
+      return {
+        tipoPersonaId: 2,
+        primerNombreSolicitante: formData[`primerNombreOtroSolicitante${persona.index}`],
+        segundoNombreSolicitante: formData[`segundoNombreOtroSolicitante${persona.index}`],
+        primerApellidoSolicitante: formData[`primerApellidoOtroSolicitante${persona.index}`],
+        segundoApellidoSolicitante: formData[`segundoApellidoOtroSolicitante${persona.index}`],
+        sexoId: formData[`sexoOtro${persona.index}`],
+        tipoDocumentoId: formData[`tipoDocumentoOtro${persona.index}`],
+        noDocumento: formData[`documentoOtro${persona.index}`]
+      };
+    });
+
+    const solicitante = {
+      tipoPersonaId: 1,
+      primerNombreSolicitante: formData.primerNombreSolicitante,
+      segundoNombreSolicitante: formData.segundoNombreSolicitante,
+      primerApellidoSolicitante: formData.primerApellidoSolicitante,
+      segundoApellidoSolicitante: formData.segundoApellidoSolicitante,
+      sexoId: formData.sexo,
+      tipoDocumentoId: formData.tipoDocumento,
+      noDocumento: formData.documento
+    };
+
+    personas.splice(0, 0, solicitante);
+
+    if (formData.condicionDelSolicitante === 1) {
+      personas.pop();
+    }
+
+    // console.log(personas);
+
+    const data = {
+      expedienteSit: formData.expedienteSIT,
+      fiso: formData.fiso,
+      departamentoId: formData.departamentoId,
+      municipioId: formData.municipioId,
+      corregimiento: formData.corregimiento,
+      vereda: formData.vereda,
+      condicionDelSolicitante: formData.condicionDelSolicitante,
+      pruebaUnion: formData.pruebaUnion,
+      nombreDelPredioAFormalizar: formData.nombreDelPredioAFormalizar,
+      folioDeMatriculaInmobiliaria: formData.folioDeMatriculaInmobiliaria,
+      numeroPredialNacional: formData.numeroPredialNacional,
+      predioDeMayorExtension: formData.predioDeMayorExtension ? true : false,
+      nombrePredioMayorExtension: formData.nombrePredioMayorExtension,
+      areaSolicitada: formData.areaSolicitada,
+      personas: personas
+    };
+
+    if (this.solicitud.invalid) {
+      console.log("Invalido", this.findInvalidControls());
+      this.toastr.error("Formulario Invalido", "Solicitud");
+      return;
+    }
+    this.solicitudService.postCreateSolicitud(data).subscribe(solicituId => {
+      this.toastr.success("Solicitud creada con exito", "Solicitud");
+      this.router.navigate([`/solicitudes/ver/${solicituId}`]);
+      console.log("Result create: ", solicituId);
+    });
+  }
+  findInvalidControls() {
+    const invalid = [];
+    const controls = this.solicitud.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
   }
 }

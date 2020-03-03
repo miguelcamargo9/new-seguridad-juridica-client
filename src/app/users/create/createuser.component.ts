@@ -1,103 +1,124 @@
-// IMPORTANT: this is a plugin which requires jQuery for initialisation and data manipulation
-
-import { Component, OnInit, AfterViewInit } from "@angular/core";
-
-declare interface CreateUserInterface {
-  headerRow: string[];
-  footerRow: string[];
-  dataRows: string[][];
-}
-
-declare const $: any;
+import { Component, OnInit } from "@angular/core";
+import { UserService } from "../user.services";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
+import { Router } from "@angular/router";
+import { DomainService } from "src/app/domains/domain.service";
+import { Domain } from "src/app/domains/domain.model";
+import { RolesService } from "src/app/roles/roles.services";
+import { Roles } from "src/app/roles/roles.model";
+import { CompanyService } from "src/app/companies/companies.service";
+import { Company } from "src/app/companies/company.model";
+import { PasswordValidationUser } from "./password-validator.component";
 
 @Component({
   selector: "app-create-user",
   templateUrl: "createuser.component.html"
 })
-export class CreateUserComponent implements OnInit, AfterViewInit {
-  public dataTable: CreateUserInterface;
+export class CreateUserComponent implements OnInit {
+  createUser: FormGroup;
+  tiposDocumento: Domain[];
+  roles: Roles[];
+  companies: Company[];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private rolesService: RolesService,
+    private domainServcie: DomainService,
+    private companiesService: CompanyService,
+    private toastr: ToastrService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.dataTable = {
-      headerRow: ["Name", "Position", "Office", "Age", "Date", "Actions"],
-      footerRow: ["Name", "Position", "Office", "Age", "Start Date", "Actions"],
-
-      dataRows: [
-        ["Airi Satou", "Andrew Mike", "Develop", "2013", "99,225", ""],
-        ["Angelica Ramos", "John Doe", "Design", "2012", "89,241", "btn-round"],
-        ["Ashton Cox", "Alex Mike", "Design", "2010", "92,144", "btn-simple"],
-        [
-          "Bradley Greer",
-          "Mike Monday",
-          "Marketing",
-          "2013",
-          "49,990",
-          "btn-round"
+    this.getDomains();
+    this.createUser = this.formBuilder.group(
+      {
+        firstName: [null, [Validators.required]],
+        lastName: [null, [Validators.required]],
+        nickName: [null, [Validators.required]],
+        email: [
+          null,
+          [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")]
         ],
-        [
-          "Brenden Wagner",
-          "Paul Dickens",
-          "Communication",
-          "2015",
-          "69,201",
-          ""
-        ]
-      ]
+        typeDocument: [null, [Validators.required]],
+        documentNumber: [null, [Validators.required]],
+        role: [null, [Validators.required]],
+        company: [null, [Validators.required]],
+        password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
+        passwordConfirm: ["", [Validators.required]]
+      },
+      {
+        validator: PasswordValidationUser.MatchPassword // your validation method
+      }
+    );
+  }
+
+  displayFieldCss(form: FormGroup, field: string) {
+    return {
+      "has-error": this.isFieldValid(form, field),
+      "has-feedback": this.isFieldValid(form, field)
     };
   }
 
-  ngAfterViewInit() {
-    $("#datatables").DataTable({
-      pagingType: "full_numbers",
-      lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Search records"
+  isFieldValid(form: FormGroup, field: string) {
+    return !form.get(field).valid && form.get(field).touched;
+  }
+
+  getDomains() {
+    this.domainServcie.getTipoDocumento().subscribe(
+      tiposDocumentosData => {
+        this.tiposDocumento = tiposDocumentosData;
+      },
+      error => {
+        console.log("There was an error while retrieving Tipo Documento!" + error);
       }
-    });
-
-    const table = $("#datatables").DataTable();
-
-    // Edit record
-    table.on("click", ".edit", function(e) {
-      let $tr = $(this).closest("tr");
-      if ($($tr).hasClass("child")) {
-        $tr = $tr.prev(".parent");
+    );
+    this.rolesService.getRoles().subscribe(
+      rolesData => {
+        this.roles = rolesData;
+      },
+      error => {
+        console.log("There was an error while retrieving Roles!" + error);
       }
+    );
+    this.companiesService.getCompanies().subscribe(
+      companiesData => {
+        this.companies = companiesData;
+      },
+      error => {
+        console.log("There was an error while retrieving Companies!" + error);
+      }
+    );
+  }
 
-      var data = table.row($tr).data();
-      alert(
-        "You press on Row: " +
-          data[0] +
-          " " +
-          data[1] +
-          " " +
-          data[2] +
-          "'s row."
-      );
-      e.preventDefault();
-    });
-
-    // Delete a record
-    table.on("click", ".remove", function(e) {
-      const $tr = $(this).closest("tr");
-      table
-        .row($tr)
-        .remove()
-        .draw();
-      e.preventDefault();
-    });
-
-    //Like record
-    table.on("click", ".like", function(e) {
-      alert("You clicked on Like button");
-      e.preventDefault();
-    });
-
-    $(".card .material-datatables label").addClass("form-group");
+  onSubmit() {
+    if (this.createUser.valid) {
+      const formData = this.createUser.value;
+      const data = {
+        companyId: formData.company,
+        documentNumber: formData.documentNumber,
+        documentTypeId: formData.typeDocument,
+        email: formData.email,
+        firstname: formData.firstName,
+        lastname: formData.lastName,
+        password: formData.password,
+        username: formData.nickName,
+        roleId: formData.role,
+        active: true
+      };
+      this.userService.postCreateUser(data).subscribe(params => {
+        // console.log("Result create: ", params);
+        if (params == true) {
+          this.toastr.success("Usuario creado con exito", "Usuario");
+          this.router.navigate(["/users/list"]);
+        } else {
+          this.toastr.error("Error creando el usuario!", "Usuario");
+        }
+      });
+    } else {
+      this.toastr.error("Formulario Invalido", "Usuarios");
+    }
   }
 }

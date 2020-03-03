@@ -4,10 +4,15 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { MaterialModule } from "../app.module";
+import { MaterialModule, UtilsModule } from "../app.module";
 import { CrearSolicitudComponent } from "./crear/crearsolicitud.component";
 import { SolicitudesRoutes } from "./solicitudes.routing";
-import { FieldErrorDisplayComponent } from "../components/field-error-display/field-error-display.component";
+import { DomainService } from "../domains/domain.service";
+import { SolicitudService } from "./solicitudes.service";
+import { BuscarSolicitudComponent } from "./buscar/buscarsolicitud.component";
+import { DataTablesModule } from "angular-datatables";
+import { VerSolicitudComponent } from "./ver/versolicitud.component";
+import { EditarSolicitudComponent } from "./editar/editarsolicitud.component";
 
 @NgModule({
   imports: [
@@ -15,8 +20,16 @@ import { FieldErrorDisplayComponent } from "../components/field-error-display/fi
     RouterModule.forChild(SolicitudesRoutes),
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    UtilsModule,
+    DataTablesModule
   ],
-  declarations: [CrearSolicitudComponent, FieldErrorDisplayComponent]
+  declarations: [
+    CrearSolicitudComponent,
+    BuscarSolicitudComponent,
+    VerSolicitudComponent,
+    EditarSolicitudComponent
+  ],
+  providers: [DomainService, SolicitudService]
 })
 export class SolicitudModule {}
