@@ -18,6 +18,7 @@ export class BuscarSolicitudComponent implements OnInit {
   typesSearch: TypeSeach[] = [
     { value: "expedienteSIT", viewValue: "Expediente SIT" },
     { value: "fiso", viewValue: "FISO" },
+    { value: "folio", viewValue: "Folio de matrícula inmobiliaria" },
     { value: "cedulaSolicitante", viewValue: "Cedula Solicitante" },
     { value: "nombreSolicitante", viewValue: "Nombre Solicitante" }
   ];

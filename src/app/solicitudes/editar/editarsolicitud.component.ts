@@ -44,6 +44,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   tiposDocumento: Domain[];
 
   showPersonas: Boolean = false;
+  showNombrePredioMayor: Boolean = false;
 
   personas: Persona[];
   solicitante: Persona = new Persona();
@@ -232,6 +233,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
             solicitudData.numeroPredialNacional
           );
           const predioDeMayorExtension = solicitudData.predioDeMayorExtension ? "1" : "2";
+          this.showNombrePredioMayor = solicitudData.predioDeMayorExtension ? true : false;
           this.solicitud.controls["predioDeMayorExtension"].setValue(predioDeMayorExtension);
           this.solicitud.controls["nombrePredioMayorExtension"].setValue(
             solicitudData.nombrePredioMayorExtension
@@ -653,6 +655,9 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     this.solicitud.removeControl(`documentoOtro${lastPosition}`);
     // console.log(this.solicitud.controls);
   }
+  predioDeMayorExtensionChange(event) {
+    this.showNombrePredioMayor = event.value === "1" ? true : false;
+  }
   onSubmit() {
     const formData = this.solicitud.value;
 
@@ -703,8 +708,9 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       nombreDelPredioAFormalizar: formData.nombreDelPredioAFormalizar,
       folioDeMatriculaInmobiliaria: formData.folioDeMatriculaInmobiliaria,
       numeroPredialNacional: formData.numeroPredialNacional,
-      predioDeMayorExtension: formData.predioDeMayorExtension ? true : false,
-      nombrePredioMayorExtension: formData.nombrePredioMayorExtension,
+      predioDeMayorExtension: formData.predioDeMayorExtension === "1" ? true : false,
+      nombrePredioMayorExtension:
+        formData.predioDeMayorExtension === "1" ? formData.nombrePredioMayorExtension : null,
       areaSolicitada: formData.areaSolicitada,
       personas: personas,
       idsDeletedPersonas: this.idsDeletedPersonas

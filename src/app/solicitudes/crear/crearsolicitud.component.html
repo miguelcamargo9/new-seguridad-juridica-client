@@ -61,10 +61,11 @@
                               id="text"
                               placeholder="Expediente SIT"
                               formControlName="expedienteSIT"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'expedienteSIT')"
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-form-field>
@@ -88,10 +89,11 @@
                               id="fiso"
                               placeholder="FISO"
                               formControlName="fiso"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'fiso')"
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-form-field>
@@ -202,6 +204,7 @@
                               id="corregimiento"
                               placeholder="CORREGIMIENTO"
                               formControlName="corregimiento"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -221,6 +224,7 @@
                               id="vereda"
                               placeholder="VEREDA"
                               formControlName="vereda"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -294,10 +298,11 @@
                               id="primerNombreSolicitante"
                               placeholder="PRIMER NOMBRE SOLICITANTE"
                               formControlName="primerNombreSolicitante"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'primerNombreSolicitante')"
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-form-field>
@@ -318,6 +323,7 @@
                               type="text"
                               id="segundoNombreSolicitante"
                               name="segundoNombreSolicitante"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -340,10 +346,11 @@
                               id="primerApellidoSolicitante"
                               placeholder="PRIMER APELLIDO SOLICITANTE"
                               formControlName="primerApellidoSolicitante"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'primerApellidoSolicitante')"
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-form-field>
@@ -364,6 +371,7 @@
                               type="text"
                               id="segundoApellidoSolicitante"
                               name="segundoApellidoSolicitante"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -425,10 +433,11 @@
                               id="documento"
                               placeholder="DOCUMENTO"
                               formControlName="documento"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'documento')"
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-form-field>
@@ -452,6 +461,7 @@
                               matInput
                               placeholder="PRIMER NOMBRE OTRO SOLICITANTE"
                               [formControlName]="'primerNombreOtroSolicitante' + persona.index"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -470,6 +480,7 @@
                               [formControlName]="'segundoNombreOtroSolicitante' + persona.index"
                               type="text"
                               name="segundoNombreOtroSolicitante"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -488,6 +499,7 @@
                               matInput
                               placeholder="PRIMER APELLIDO OTRO SOLICITANTE"
                               [formControlName]="'primerApellidoOtroSolicitante' + persona.index"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -506,6 +518,7 @@
                               [formControlName]="'segundoApellidoOtroSolicitante' + persona.index"
                               type="text"
                               name="segundoApellidoOtroSolicitante"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -567,6 +580,7 @@
                               matInput
                               [formControlName]="'documentoOtro' + persona.index"
                               placeholder="DOCUMENTO"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -615,10 +629,11 @@
                               id="nombreDelPredioAFormalizar"
                               placeholder="NOMBRE DEL PREDIO A FORMALIZAR"
                               formControlName="nombreDelPredioAFormalizar"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'nombreDelPredioAFormalizar')"
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-form-field>
@@ -642,12 +657,13 @@
                               id="folioDeMatriculaInmobiliaria"
                               placeholder="FOLIO DE MATRÍCULA INMOBILIARIA"
                               formControlName="folioDeMatriculaInmobiliaria"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="
                                 isFieldValid(solicitud, 'folioDeMatriculaInmobiliaria')
                               "
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-form-field>
@@ -667,6 +683,7 @@
                               matInput
                               formControlName="numeroPredialNacional"
                               placeholder="NÚMERO PREDIAL NACIONAL"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -682,19 +699,20 @@
                             formControlName="predioDeMayorExtension"
                             class="example-full-width has-label"
                             [ngClass]="displayFieldCss(solicitud, 'predioDeMayorExtension')"
+                            (change)="predioDeMayorExtensionChange($event)"
                           >
                             <mat-radio-button value="1">Sí </mat-radio-button>
                             <br />
                             <mat-radio-button value="2">No </mat-radio-button>
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'predioDeMayorExtension')"
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-radio-group>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!showNombrePredioMayor">
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -708,6 +726,7 @@
                               matInput
                               formControlName="nombrePredioMayorExtension"
                               placeholder="NOMBRE PREDIO MAYOR EXTENSIÓN"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
                         </div>
@@ -728,12 +747,13 @@
                               name="areaSolicitada"
                               matInput
                               id="areaSolicitada"
-                              placeholder="ÁREA SOLICITADA"
+                              placeholder="ÁREA SOLICITADA M2 *"
                               formControlName="areaSolicitada"
+                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'areaSolicitada')"
-                              errorMsg="Deligenciar el campo."
+                              errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
                           </mat-form-field>

@@ -40,7 +40,7 @@
                     />
                     <app-field-error-display
                       [displayError]="isFieldValid(buscarSolicitud, 'searchValue')"
-                      errorMsg="Deligenciar el campo."
+                      errorMsg="Diligenciar el campo."
                     >
                     </app-field-error-display>
                   </mat-form-field>
@@ -82,7 +82,9 @@
                 <thead>
                   <tr>
                     <th>Expediente SIT</th>
+                    <th>FISO</th>
                     <th>Solicitante</th>
+                    <th>Departamento</th>
                     <th>Municipio</th>
                     <th class="text-right">Acciones</th>
                   </tr>
@@ -90,8 +92,10 @@
                 <tbody>
                   <tr *ngFor="let solicitud of solicitudes">
                     <td>{{ solicitud.expedienteSit }}</td>
+                    <td>{{ solicitud.fiso }}</td>
                     <td>{{ solicitud.nombreDelPredioAFormalizar }}</td>
                     <td>{{ solicitud.municipioId }}</td>
+                    <td>{{ solicitud.departamentoId }}</td>
                     <td class="text-right">
                       <a
                         [routerLink]="['/solicitudes/ver/', solicitud.id]"
