@@ -72,31 +72,34 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     private domainService: DomainService
   ) {
     this.tipoSiNo = [new DomainBoolean(false, "No"), new DomainBoolean(true, "Si")];
-    this.userList = [new Domain(1, "Juan!")];
   }
 
-  onSubmit() {
+  save(redirect = false) {
     let data = this.createSeguimiento902.value;
     data.id = this.idForm * 1;
     data.solicitudId = this.solicitudId * 1;
-    if (this.createSeguimiento902.invalid) {
-      console.log("Invalido");
-      this.toastr.error("Formulario Invalido", "Seguimiento 902");
-      return;
-    }
     if (this.idForm == null || this.idForm == 0) {
       console.log("Create");
       this.seguimiento902Service.postCreateSeguimiento902(data).subscribe(params => {
         this.toastr.success("Formulario Creado Correctamente", "Seguimiento 902");
-        this.router.navigate(["/solicitudes/ver/" + data.solicitudId]);
+        if (redirect) this.router.navigate(["/solicitudes/ver/" + data.solicitudId]);
       });
     } else {
       console.log("Update");
       this.seguimiento902Service.putUpdateSeguimiento902(data).subscribe(params => {
         this.toastr.success("Formulario Actualizado Correctamente", "Seguimiento 902");
-        this.router.navigate(["/solicitudes/ver/" + data.solicitudId]);
+        if (redirect) this.router.navigate(["/solicitudes/ver/" + data.solicitudId]);
       });
     }
+  }
+
+  onSubmit() {
+    if (this.createSeguimiento902.invalid) {
+      console.log("Invalido");
+      this.toastr.error("Formulario Invalido", "Seguimiento 902");
+      return;
+    }
+    this.save(true);
     // display form values on success
     // console.log("SUCCESS!! :-)", this.createSeguimiento902.value);
   }
@@ -111,6 +114,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     };
   }
   ngOnInit() {
+    const e = this;
     const elemMainPanel = <HTMLElement>document.querySelector(".main-panel");
     this.getDomains();
     this.initForm();
@@ -162,19 +166,19 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         areaFormalizada: { required: true }
       },
 
-      highlight: function (element) {
+      highlight: function(element) {
         $(element)
           .closest(".form-group")
           .removeClass("has-success")
           .addClass("has-danger");
       },
-      success: function (element) {
+      success: function(element) {
         $(element)
           .closest(".form-group")
           .removeClass("has-danger")
           .addClass("has-success");
       },
-      errorPlacement: function (error, element) {
+      errorPlacement: function(error, element) {
         $(element).append(error);
       }
     });
@@ -185,15 +189,17 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       nextSelector: ".btn-next",
       previousSelector: ".btn-previous",
 
-      onNext: function (tab, navigation, index) {
+      onNext: function(tab, navigation, index) {
         var $valid = $(".card-wizard form").valid();
         if (!$valid) {
           $validator.focusInvalid();
           return false;
+        } else {
+          e.save();
         }
       },
 
-      onInit: function (tab: any, navigation: any, index: any) {
+      onInit: function(tab: any, navigation: any, index: any) {
         // check number of tabs and fill the entire row
         let $total = navigation.find("li").length;
         let $wizard = navigation.closest(".card-wizard");
@@ -245,7 +251,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         $(".moving-tab").css("transition", "transform 0s");
       },
 
-      onTabClick: function (tab: any, navigation: any, index: any) {
+      onTabClick: function(tab: any, navigation: any, index: any) {
         const $valid = $(".card-wizard form").valid();
 
         if (!$valid) {
@@ -255,7 +261,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         }
       },
 
-      onTabShow: function (tab: any, navigation: any, index: any) {
+      onTabShow: function(tab: any, navigation: any, index: any) {
         let $total = navigation.find("li").length;
         let $current = index + 1;
         elemMainPanel.scrollTop = 0;
@@ -280,7 +286,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
 
         const button_text = navigation.find("li:nth-child(" + $current + ") a").html();
 
-        setTimeout(function () {
+        setTimeout(function() {
           $(".moving-tab").text(button_text);
         }, 150);
 
@@ -342,13 +348,13 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     });
 
     // Prepare the preview for profile picture
-    $("#wizard-picture").change(function () {
+    $("#wizard-picture").change(function() {
       const input = $(this);
 
       if (input[0].files && input[0].files[0]) {
         const reader = new FileReader();
 
-        reader.onload = function (e: any) {
+        reader.onload = function(e: any) {
           $("#wizardPicturePreview")
             .attr("src", e.target.result)
             .fadeIn("slow");
@@ -357,7 +363,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       }
     });
 
-    $('[data-toggle="wizard-radio"]').click(function () {
+    $('[data-toggle="wizard-radio"]').click(function() {
       const wizard = $(this).closest(".card-wizard");
       wizard.find('[data-toggle="wizard-radio"]').removeClass("active");
       $(this).addClass("active");
@@ -369,7 +375,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         .attr("checked", "true");
     });
 
-    $('[data-toggle="wizard-checkbox"]').click(function () {
+    $('[data-toggle="wizard-checkbox"]').click(function() {
       if ($(this).hasClass("active")) {
         $(this).removeClass("active");
         $(this)
@@ -840,7 +846,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     if (input[0].files && input[0].files[0]) {
       const reader: any = new FileReader();
 
-      reader.onload = function (e: any) {
+      reader.onload = function(e: any) {
         $("#wizardPicturePreview")
           .attr("src", e.target.result)
           .fadeIn("slow");
@@ -850,7 +856,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
   }
   ngAfterViewInit() {
     $(window).resize(() => {
-      $(".card-wizard").each(function () {
+      $(".card-wizard").each(function() {
         setTimeout(() => {
           const $wizard = $(this);
           const index = $wizard.bootstrapWizard("currentIndex");

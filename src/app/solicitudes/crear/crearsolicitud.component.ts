@@ -43,6 +43,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
   tiposDocumento: Domain[];
 
   showPersonas: Boolean = false;
+  showNombrePredioMayor: Boolean = false;
 
   personas: Persona[] = [new Persona()];
   indexPersonas: number = 0;
@@ -537,6 +538,9 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     this.solicitud.removeControl(`documentoOtro${lastPosition}`);
     // console.log(this.solicitud.controls);
   }
+  predioDeMayorExtensionChange(event) {
+    this.showNombrePredioMayor = event.value === "1" ? true : false;
+  }
   onSubmit() {
     const formData = this.solicitud.value;
 
@@ -584,8 +588,9 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
       nombreDelPredioAFormalizar: formData.nombreDelPredioAFormalizar,
       folioDeMatriculaInmobiliaria: formData.folioDeMatriculaInmobiliaria,
       numeroPredialNacional: formData.numeroPredialNacional,
-      predioDeMayorExtension: formData.predioDeMayorExtension ? true : false,
-      nombrePredioMayorExtension: formData.nombrePredioMayorExtension,
+      predioDeMayorExtension: formData.predioDeMayorExtension === "1" ? true : false,
+      nombrePredioMayorExtension:
+        formData.predioDeMayorExtension === "1" ? formData.nombrePredioMayorExtension : null,
       areaSolicitada: formData.areaSolicitada,
       personas: personas
     };
