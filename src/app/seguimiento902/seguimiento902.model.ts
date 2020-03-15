@@ -78,4 +78,8 @@ export class Seguimiento902 {
   fechaEntregaTitulo: Date;
   tipoEstadoSinegiaId: number;
   fechaAprobacionSinergia: Date;
+  fiso: string;
+  expedienteSit: string;
+  tipoMotivoSuspensionId: number;
+  tipoMotivoDeCorreccionSinergiaId: number;
 }

@@ -600,11 +600,21 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
       this.toastr.error("Formulario Invalido", "Solicitud");
       return;
     }
-    this.solicitudService.postCreateSolicitud(data).subscribe(solicituId => {
-      this.toastr.success("Solicitud creada con exito", "Solicitud");
-      this.router.navigate([`/solicitudes/ver/${solicituId}`]);
-      console.log("Result create: ", solicituId);
-    });
+    this.solicitudService.postCreateSolicitud(data).subscribe(
+      solicituId => {
+        this.toastr.success("Solicitud creada con exito", "Solicitud");
+        this.router.navigate([`/solicitudes/ver/${solicituId}`]);
+        console.log("Result create: ", solicituId);
+      },
+      error => {
+        console.log(error);
+        if (error.status === 409) {
+          this.toastr.error("FISO ó ExpedienteSIT repetidos", "Solicitud");
+        } else {
+          this.toastr.error(error.message, "Solicitud");
+        }
+      }
+    );
   }
   findInvalidControls() {
     const invalid = [];

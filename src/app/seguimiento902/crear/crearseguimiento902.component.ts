@@ -54,9 +54,24 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
   tipoDecisionDeCierre: Domain[];
   tipoRecurso: Domain[];
   tipoEstadoSinegia: Domain[];
+  tipoMotivoSuspension: Domain[];
+  tipoMotivoDeCorreccionSinergia: Domain[];
 
   solicitudId: number;
   idForm: number;
+  fiso: string;
+  expedienteSit: string;
+
+  viewPruebaAdicionalSolicitada: boolean = false;
+  viewTipoDeNoViabilidadId: boolean = false;
+  viewFechaNotificacionPersonalInicio: boolean = false;
+  viewFechaPublicacionWebInicio: boolean = false;
+  viewFechaFijacionNotificacionPorAvisoInicio: boolean = false;
+  viewFechaPublicacionEnEmisora: boolean = false;
+  viewFechaPublicacionAlcaldia: boolean = false;
+  viewNumeroDeResolucionQueResuelveRecurso: boolean = false;
+  viewMotivoOposicion: boolean = false;
+  viewTipoMotivoSuspension: boolean = false;
 
   userList: Domain[];
 
@@ -418,7 +433,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         console.log("It don't getDomain!" + error);
       }
     );
-    this.domainService.getTipoCondicionSolicitante().subscribe(
+    this.domainService.getTipoEstadoInformeTecnicoJuridico().subscribe(
       data => {
         this.tipoEstadoInformeTecnicoJuridico = data;
       },
@@ -514,6 +529,22 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         console.log("It don't getDomain!" + error);
       }
     );
+    this.domainService.getTipoMotivoSuspension().subscribe(
+      data => {
+        this.tipoMotivoSuspension = data;
+      },
+      error => {
+        console.log("It don't getDomain!" + error);
+      }
+    );
+    this.domainService.getTipoMotivoDeCorreccionSinergia().subscribe(
+      data => {
+        this.tipoMotivoDeCorreccionSinergia = data;
+      },
+      error => {
+        console.log("It don't getDomain!" + error);
+      }
+    );
   }
   initForm() {
     this.createSeguimiento902 = this.formBuilder.group({
@@ -536,6 +567,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       tipoDeRutaId: [null, Validators.required],
       tipoTieneViabilidadJuridicaId: [null, Validators.required],
       tipoDeNoViabilidadId: [null],
+      tipoMotivoSuspensionId: [null],
       tipoMedidaDeProteccionUrtId: [null, Validators.required],
       tipoMedidaCautelarId: [null, Validators.required],
       tipoDeActoId: [null, Validators.required],
@@ -593,7 +625,8 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       areaFormalizada: [null, Validators.required],
       fechaEntregaTitulo: [null],
       tipoEstadoSinegiaId: [null],
-      fechaAprobacionSinergia: [null]
+      fechaAprobacionSinergia: [null],
+      tipoMotivoDeCorreccionSinergiaId: [null, Validators.required]
     });
   }
   changeDate(d: Date) {
@@ -605,6 +638,10 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       seguimiento902Data => {
         console.log("service data", seguimiento902Data);
         this.idForm = seguimiento902Data.id;
+        this.fiso = seguimiento902Data.fiso;
+        this.expedienteSit = seguimiento902Data.expedienteSit;
+        this.viewTipoMotivoSuspension =
+          seguimiento902Data.tipoTieneViabilidadJuridicaId == 3 ? true : false;
         this.createSeguimiento902.controls["tieneViabilidadTecnica"].setValue(
           seguimiento902Data.tieneViabilidadTecnica
         );
@@ -661,6 +698,9 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         );
         this.createSeguimiento902.controls["tipoDeNoViabilidadId"].setValue(
           seguimiento902Data.tipoDeNoViabilidadId
+        );
+        this.createSeguimiento902.controls["tipoMotivoSuspensionId"].setValue(
+          seguimiento902Data.tipoMotivoSuspensionId
         );
         this.createSeguimiento902.controls["tipoMedidaDeProteccionUrtId"].setValue(
           seguimiento902Data.tipoMedidaDeProteccionUrtId
@@ -834,6 +874,9 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         this.createSeguimiento902.controls["fechaAprobacionSinergia"].setValue(
           this.changeDate(seguimiento902Data.fechaAprobacionSinergia)
         );
+        this.createSeguimiento902.controls["tipoMotivoDeCorreccionSinergiaId"].setValue(
+          seguimiento902Data.tipoMotivoDeCorreccionSinergiaId
+        );
       },
       error => {
         console.log("Error Obteniendo el Objeto!" + error);
@@ -906,5 +949,33 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         }, 500);
       });
     });
+  }
+  selectRequierePruebasAdicionales(event) {
+    this.viewPruebaAdicionalSolicitada = event.value ? true : false;
+  }
+  selectNotificacionPersonalInicio(event) {
+    this.viewFechaNotificacionPersonalInicio = event.value ? true : false;
+  }
+  selectPublicacionWebInicio(event) {
+    this.viewFechaPublicacionWebInicio = event.value ? true : false;
+  }
+  selectNotificacionPorAvisoInicio(event) {
+    this.viewFechaFijacionNotificacionPorAvisoInicio = event.value ? true : false;
+  }
+  selectPublicacionEmisora(event) {
+    this.viewFechaPublicacionEnEmisora = event.value ? true : false;
+  }
+  selectPublicacionAlcaldia(event) {
+    this.viewFechaPublicacionAlcaldia = event.value ? true : false;
+  }
+  selectRecursoDeReposicion(event) {
+    this.viewNumeroDeResolucionQueResuelveRecurso = event.value ? true : false;
+  }
+  selectOposicion(event) {
+    this.viewMotivoOposicion = event.value ? true : false;
+  }
+  selectTieneViabilidadJuridica(event) {
+    this.viewTipoDeNoViabilidadId = event.value === 2 ? true : false;
+    this.viewTipoMotivoSuspension = event.value === 3 ? true : false;
   }
 }

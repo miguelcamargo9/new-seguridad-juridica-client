@@ -12,7 +12,8 @@
                   Seguimiento 902
                 </h3>
                 <h5 class="card-description">
-                  Información de seguimiento 902
+                  Información de seguimiento 902, ExpedienteSIT: {{ expedienteSit }}, FISO:
+                  {{ fiso }}
                 </h5>
               </div>
               <div class="wizard-navigation">
@@ -447,6 +448,7 @@
                               matInput
                               id="requierePruebasAdicionales"
                               formControlName="requierePruebasAdicionales"
+                              (selectionChange)="selectRequierePruebasAdicionales($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -462,7 +464,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewPruebaAdicionalSolicitada">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -584,6 +586,7 @@
                               matInput
                               id="tipoTieneViabilidadJuridicaId"
                               formControlName="tipoTieneViabilidadJuridicaId"
+                              (selectionChange)="selectTieneViabilidadJuridica($event)"
                             >
                               <mat-option
                                 *ngFor="let item of tipoTieneViabilidadJuridica"
@@ -602,7 +605,39 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewTipoMotivoSuspension">
+                        <div class="input-group form-control-lg">
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="
+                              displayFieldCss(createSeguimiento902, 'tipoMotivoSuspensionId')
+                            "
+                          >
+                            <mat-select
+                              placeholder="MOTIVO DE SUSPENSIÓN"
+                              name="tipoMotivoSuspensionId"
+                              matInput
+                              id="tipoMotivoSuspensionId"
+                              formControlName="tipoMotivoSuspensionId"
+                            >
+                              <mat-option
+                                *ngFor="let item of tipoMotivoSuspension"
+                                [value]="item.id"
+                              >
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                            <app-field-error-display
+                              [displayError]="
+                                isFieldValid(createSeguimiento902, 'tipoMotivoSuspensionId')
+                              "
+                              errorMsg="Diligenciar el campo."
+                            >
+                            </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6" [hidden]="!viewTipoDeNoViabilidadId">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -921,6 +956,7 @@
                               matInput
                               id="notificacionPersonalInicio"
                               formControlName="notificacionPersonalInicio"
+                              (selectionChange)="selectNotificacionPersonalInicio($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -936,7 +972,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaNotificacionPersonalInicio">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -989,6 +1025,7 @@
                               matInput
                               id="notificacionPorAvisoInicio"
                               formControlName="notificacionPorAvisoInicio"
+                              (selectionChange)="selectNotificacionPorAvisoInicio($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -1004,7 +1041,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaFijacionNotificacionPorAvisoInicio">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -1059,6 +1096,7 @@
                               matInput
                               id="publicacionWebInicio"
                               formControlName="publicacionWebInicio"
+                              (selectionChange)="selectPublicacionWebInicio($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -1074,7 +1112,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaPublicacionWebInicio">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -1119,6 +1157,7 @@
                               matInput
                               id="publicacionEmisora"
                               formControlName="publicacionEmisora"
+                              (selectionChange)="selectPublicacionEmisora($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -1134,7 +1173,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaPublicacionEnEmisora">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -1179,6 +1218,7 @@
                               matInput
                               id="publicacionAlcaldia"
                               formControlName="publicacionAlcaldia"
+                              (selectionChange)="selectPublicacionAlcaldia($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -1194,7 +1234,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaPublicacionAlcaldia">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -1236,6 +1276,7 @@
                               matInput
                               id="recursoDeReposicion"
                               formControlName="recursoDeReposicion"
+                              (selectionChange)="selectRecursoDeReposicion($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -1251,7 +1292,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewNumeroDeResolucionQueResuelveRecurso">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -1593,6 +1634,44 @@
                           </mat-form-field>
                         </div>
                       </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="
+                              displayFieldCss(
+                                createSeguimiento902,
+                                'tipoMotivoDeCorreccionSinergiaId'
+                              )
+                            "
+                          >
+                            <mat-select
+                              placeholder="MOTIVO DE CORRECCIÓN SINERGIA"
+                              name="tipoMotivoDeCorreccionSinergiaId"
+                              matInput
+                              id="tipoMotivoDeCorreccionSinergiaId"
+                              formControlName="tipoMotivoDeCorreccionSinergiaId"
+                            >
+                              <mat-option
+                                *ngFor="let item of tipoMotivoDeCorreccionSinergia"
+                                [value]="item.id"
+                              >
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                            <app-field-error-display
+                              [displayError]="
+                                isFieldValid(
+                                  createSeguimiento902,
+                                  'tipoMotivoDeCorreccionSinergiaId'
+                                )
+                              "
+                              errorMsg="Diligenciar el campo."
+                            >
+                            </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="tab-pane" id="etapaC">
@@ -1670,6 +1749,7 @@
                               matInput
                               id="oposicion"
                               formControlName="oposicion"
+                              (selectionChange)="selectOposicion($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -1683,7 +1763,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewMotivoOposicion">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
