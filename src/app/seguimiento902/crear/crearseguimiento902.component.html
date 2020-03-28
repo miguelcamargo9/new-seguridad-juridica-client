@@ -12,8 +12,7 @@
                   Seguimiento 902
                 </h3>
                 <h5 class="card-description">
-                  Información de seguimiento 902, ExpedienteSIT: {{ expedienteSit }}, FISO:
-                  {{ fiso }}
+                  ExpedienteSIT: {{ expedienteSit }}, FISO: {{ fiso }}
                 </h5>
               </div>
               <div class="wizard-navigation">
@@ -1482,6 +1481,125 @@
                           </mat-form-field>
                         </div>
                       </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="
+                              displayFieldCss(
+                                createSeguimiento902,
+                                'resolucionModificacionAclaracion'
+                              )
+                            "
+                          >
+                            <mat-select
+                              placeholder="RESOLUCIÓN DE MODIFICACIÓN / ACLARACIÓN*"
+                              name="resolucionModificacionAclaracion"
+                              matInput
+                              id="resolucionModificacionAclaracion"
+                              formControlName="resolucionModificacionAclaracion"
+                              (selectionChange)="selectResolucionModificacionAclaracion($event)"
+                            >
+                              <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                            <app-field-error-display
+                              [displayError]="
+                                isFieldValid(
+                                  createSeguimiento902,
+                                  'resolucionModificacionAclaracion'
+                                )
+                              "
+                              errorMsg="Diligenciar el campo."
+                            >
+                            </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <button
+                          [hidden]="
+                            initialStageButton !== 'add' || !viewResolucionModificacionAclaracion
+                          "
+                          mat-raised-button
+                          class="btn btn-success btn-sm"
+                          (click)="addEtapaInicio()"
+                        >
+                          Crear
+                        </button>
+                        <button
+                          [hidden]="initialStageButton !== 'edit'"
+                          mat-raised-button
+                          class="btn btn-warning btn-sm"
+                          (click)="editEtapaInicio()"
+                        >
+                          Guardar
+                        </button>
+                        <button
+                          [hidden]="initialStageButton !== 'delete'"
+                          mat-raised-button
+                          class="btn btn-danger btn-sm"
+                          (click)="deleteEtapaInicio()"
+                        >
+                          Eliminar
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th class="text-center">#</th>
+                                <th>Campo 1</th>
+                                <th>Campo 2</th>
+                                <th>Campo 3</th>
+                                <th class="text-right">Campo 4</th>
+                                <th class="text-right">Opciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let initialStage of initialStages">
+                                <td class="text-center">{{ initialStage.id }}</td>
+                                <td>{{ initialStage.tipoDeActoId }}</td>
+                                <td>{{ initialStage.numeroResolucionInicioArchivo }}</td>
+                                <td>{{ initialStage.fechaResolucion }}</td>
+                                <td class="text-right">{{ initialStage.recursoDeReposicion }}</td>
+                                <td class="td-actions text-right">
+                                  <button
+                                    type="button"
+                                    rel="tooltip"
+                                    class="btn btn-info btn-round"
+                                    (click)="loadEtapaInicio(initialStage.id, 'load')"
+                                  >
+                                    <i class="material-icons">search</i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    rel="tooltip"
+                                    class="btn btn-warning btn-round"
+                                    (click)="loadEtapaInicio(initialStage.id, 'edit')"
+                                  >
+                                    <i class="material-icons">edit</i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    rel="tooltip"
+                                    class="btn btn-danger btn-round"
+                                    (click)="loadEtapaInicio(initialStage.id, 'delete')"
+                                  >
+                                    <i class="material-icons">close</i>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="tab-pane" id="periodoP">
@@ -1627,44 +1745,6 @@
                             <app-field-error-display
                               [displayError]="
                                 isFieldValid(createSeguimiento902, 'fechaAudienciaPublica')
-                              "
-                              errorMsg="Diligenciar el campo."
-                            >
-                            </app-field-error-display>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="input-group form-control-lg">
-                          <mat-form-field
-                            class="example-full-width has-label"
-                            [ngClass]="
-                              displayFieldCss(
-                                createSeguimiento902,
-                                'tipoMotivoDeCorreccionSinergiaId'
-                              )
-                            "
-                          >
-                            <mat-select
-                              placeholder="MOTIVO DE CORRECCIÓN SINERGIA"
-                              name="tipoMotivoDeCorreccionSinergiaId"
-                              matInput
-                              id="tipoMotivoDeCorreccionSinergiaId"
-                              formControlName="tipoMotivoDeCorreccionSinergiaId"
-                            >
-                              <mat-option
-                                *ngFor="let item of tipoMotivoDeCorreccionSinergia"
-                                [value]="item.id"
-                              >
-                                {{ item.nombre }}
-                              </mat-option>
-                            </mat-select>
-                            <app-field-error-display
-                              [displayError]="
-                                isFieldValid(
-                                  createSeguimiento902,
-                                  'tipoMotivoDeCorreccionSinergiaId'
-                                )
                               "
                               errorMsg="Diligenciar el campo."
                             >
@@ -2294,6 +2374,125 @@
                           </mat-form-field>
                         </div>
                       </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="
+                              displayFieldCss(
+                                createSeguimiento902,
+                                'resolucionModificacionAclaracionC'
+                              )
+                            "
+                          >
+                            <mat-select
+                              placeholder="RESOLUCIÓN DE MODIFICACIÓN / ACLARACIÓN*"
+                              name="resolucionModificacionAclaracionC"
+                              matInput
+                              id="resolucionModificacionAclaracionC"
+                              formControlName="resolucionModificacionAclaracionC"
+                              (selectionChange)="selectResolucionModificacionAclaracionC($event)"
+                            >
+                              <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                            <app-field-error-display
+                              [displayError]="
+                                isFieldValid(
+                                  createSeguimiento902,
+                                  'resolucionModificacionAclaracionC'
+                                )
+                              "
+                              errorMsg="Diligenciar el campo."
+                            >
+                            </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <button
+                          [hidden]="
+                            finalStageButton !== 'add' || !viewResolucionModificacionAclaracionC
+                          "
+                          mat-raised-button
+                          class="btn btn-success btn-sm"
+                          (click)="addEtapaCierre()"
+                        >
+                          Crear
+                        </button>
+                        <button
+                          [hidden]="finalStageButton !== 'edit'"
+                          mat-raised-button
+                          class="btn btn-warning btn-sm"
+                          (click)="editEtapaCierre()"
+                        >
+                          Guardar
+                        </button>
+                        <button
+                          [hidden]="finalStageButton !== 'delete'"
+                          mat-raised-button
+                          class="btn btn-danger btn-sm"
+                          (click)="deleteEtapaCierre()"
+                        >
+                          Eliminar
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th class="text-center">#</th>
+                                <th>Campo 1</th>
+                                <th>Campo 2</th>
+                                <th>Campo 3</th>
+                                <th class="text-right">Campo 4</th>
+                                <th class="text-right">Opciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let finalStage of finalStages">
+                                <td class="text-center">{{ finalStage.id }}</td>
+                                <td>{{ finalStage.tipoDeActoId }}</td>
+                                <td>{{ finalStage.numeroResolucionInicioArchivo }}</td>
+                                <td>{{ finalStage.fechaResolucion }}</td>
+                                <td class="text-right">{{ finalStage.recursoDeReposicion }}</td>
+                                <td class="td-actions text-right">
+                                  <button
+                                    type="button"
+                                    rel="tooltip"
+                                    class="btn btn-info btn-round"
+                                    (click)="loadEtapaCierre(finalStage.id, 'load')"
+                                  >
+                                    <i class="material-icons">search</i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    rel="tooltip"
+                                    class="btn btn-warning btn-round"
+                                    (click)="loadEtapaCierre(finalStage.id, 'edit')"
+                                  >
+                                    <i class="material-icons">edit</i>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    rel="tooltip"
+                                    class="btn btn-danger btn-round"
+                                    (click)="loadEtapaCierre(finalStage.id, 'delete')"
+                                  >
+                                    <i class="material-icons">close</i>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="tab-pane" id="registroT">
@@ -2499,6 +2698,7 @@
                               matInput
                               id="tipoEstadoSinegiaId"
                               formControlName="tipoEstadoSinegiaId"
+                              (selectionChange)="selectEstadoSinegia($event)"
                             >
                               <mat-option *ngFor="let item of tipoEstadoSinegia" [value]="item.id">
                                 {{ item.nombre }}
@@ -2514,7 +2714,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaAprobacionSinergia">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -2537,6 +2737,44 @@
                             <app-field-error-display
                               [displayError]="
                                 isFieldValid(createSeguimiento902, 'fechaAprobacionSinergia')
+                              "
+                              errorMsg="Diligenciar el campo."
+                            >
+                            </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6" [hidden]="!viewMotivoDeCorreccionSinergia">
+                        <div class="input-group form-control-lg">
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="
+                              displayFieldCss(
+                                createSeguimiento902,
+                                'tipoMotivoDeCorreccionSinergiaId'
+                              )
+                            "
+                          >
+                            <mat-select
+                              placeholder="MOTIVO DE CORRECCIÓN SINERGIA"
+                              name="tipoMotivoDeCorreccionSinergiaId"
+                              matInput
+                              id="tipoMotivoDeCorreccionSinergiaId"
+                              formControlName="tipoMotivoDeCorreccionSinergiaId"
+                            >
+                              <mat-option
+                                *ngFor="let item of tipoMotivoDeCorreccionSinergia"
+                                [value]="item.id"
+                              >
+                                {{ item.nombre }}
+                              </mat-option>
+                            </mat-select>
+                            <app-field-error-display
+                              [displayError]="
+                                isFieldValid(
+                                  createSeguimiento902,
+                                  'tipoMotivoDeCorreccionSinergiaId'
+                                )
                               "
                               errorMsg="Diligenciar el campo."
                             >
