@@ -35,6 +35,10 @@ export const AppRoutes: Routes = [
         loadChildren: "./seguimiento902/seguimiento902.module#Seguimiento902Module"
       },
       {
+        path: "reportes",
+        loadChildren: "./reportes/reportes.module#ReportesModule"
+      },
+      {
         path: "",
         loadChildren: "./userpage/user.module#UserModule"
       },

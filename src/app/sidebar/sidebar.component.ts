@@ -94,6 +94,20 @@ export const ROUTES: RouteInfo[] = [
     ]
   },
   {
+    path: "/reportes",
+    title: "Reportes",
+    type: "sub",
+    icontype: "assessment",
+    collapse: "reports",
+    children: [
+      {
+        path: "descargables",
+        title: "Descargables",
+        ab: "DS"
+      }
+    ]
+  },
+  {
     path: "/pages/login/closeSession",
     title: "Cerrar Sesión",
     type: "link",

@@ -93,9 +93,9 @@
                   <tr *ngFor="let solicitud of solicitudes">
                     <td>{{ solicitud.expedienteSit }}</td>
                     <td>{{ solicitud.fiso }}</td>
-                    <td>{{ solicitud.nombreDelPredioAFormalizar }}</td>
-                    <td>{{ solicitud.municipioId }}</td>
-                    <td>{{ solicitud.departamentoId }}</td>
+                    <td>{{ solicitud.solicitante }}</td>
+                    <td>{{ solicitud.municipio }}</td>
+                    <td>{{ solicitud.departamento }}</td>
                     <td class="text-right">
                       <a
                         [routerLink]="['/solicitudes/ver/', solicitud.id]"
