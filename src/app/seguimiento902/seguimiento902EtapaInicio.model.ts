@@ -2,6 +2,7 @@ export class Seguimiento902EtapaIncio {
   id: number;
   seguimiento902Id: number;
   tipoDeActoId: number;
+  tipoDeActo: string;
   abogadoProyeccionId: number;
   fechaEnvioAFirmaDeSubdirectorInicio: Date;
   fechaRecibidoFirmaInicio: Date;

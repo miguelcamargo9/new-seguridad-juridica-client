@@ -673,6 +673,10 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     if (d == null) return null;
     return new Date(d);
   }
+  showDate(d: String) {
+    if (d == null) return null;
+    return d.substring(0, 10);
+  }
   getDataForm(idSolicitud) {
     this.seguimiento902Service.getSeguimiento902(idSolicitud).subscribe(
       seguimiento902Data => {

@@ -1549,27 +1549,31 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-sm-10">
+                      <div class="col-sm-11">
                         <div class="table-responsive">
                           <table class="table">
                             <thead>
                               <tr>
                                 <th class="text-center">#</th>
-                                <th>Campo 1</th>
-                                <th>Campo 2</th>
-                                <th>Campo 3</th>
-                                <th class="text-right">Campo 4</th>
-                                <th class="text-right">Opciones</th>
+                                <th>TIPO DE ACTO</th>
+                                <th>NUMERO DE RESOLUCIÓN</th>
+                                <th>FECHA RESOLUCIÓN</th>
+                                <th>NOTIFIFCACIÓN PERSONAL</th>
+                                <th>FECHA NOTIFICACIÓN PERSONAL</th>
+                                <th class="text-right">OPCIONES</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr *ngFor="let initialStage of initialStages">
                                 <td class="text-center">{{ initialStage.id }}</td>
-                                <td>{{ initialStage.tipoDeActoId }}</td>
+                                <td>{{ initialStage.tipoDeActo }}</td>
                                 <td>{{ initialStage.numeroResolucionInicioArchivo }}</td>
-                                <td>{{ initialStage.fechaResolucion }}</td>
-                                <td class="text-right">{{ initialStage.recursoDeReposicion }}</td>
-                                <td class="td-actions text-right">
+                                <td>{{ showDate(initialStage.fechaResolucion) }}</td>
+                                <td>{{ initialStage.notificacionPersonalInicio ? "Si" : "No" }}</td>
+                                <td>
+                                  {{ showDate(initialStage.fechaNotificacionPersonalInicio) }}
+                                </td>
+                                <td class="td-actions">
                                   <button
                                     type="button"
                                     rel="tooltip"
@@ -2448,20 +2452,22 @@
                             <thead>
                               <tr>
                                 <th class="text-center">#</th>
-                                <th>Campo 1</th>
-                                <th>Campo 2</th>
-                                <th>Campo 3</th>
-                                <th class="text-right">Campo 4</th>
+                                <th>DECISIÓN DE CIERRE</th>
+                                <th>NUMERO DE RESOLUCIÓN</th>
+                                <th>FECHA RESOLUCIÓN</th>
+                                <th>NOTIFIFCACIÓN PERSONAL</th>
+                                <th>FECHA NOTIFICACIÓN PERSONAL</th>
                                 <th class="text-right">Opciones</th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr *ngFor="let finalStage of finalStages">
                                 <td class="text-center">{{ finalStage.id }}</td>
-                                <td>{{ finalStage.tipoDeActoId }}</td>
-                                <td>{{ finalStage.numeroResolucionInicioArchivo }}</td>
-                                <td>{{ finalStage.fechaResolucion }}</td>
-                                <td class="text-right">{{ finalStage.recursoDeReposicion }}</td>
+                                <td>{{ finalStage.tipoDecisionDeCierre }}</td>
+                                <td>{{ finalStage.numeroDeResolucionDeCierre }}</td>
+                                <td>{{ showDate(finalStage.fechaResolucionDeCierre) }}</td>
+                                <td>{{ finalStage.notificacionPersonalCierre ? "Si" : "No" }}</td>
+                                <td>{{ showDate(finalStage.fechaNotificacionPersonalCierre) }}</td>
                                 <td class="td-actions text-right">
                                   <button
                                     type="button"

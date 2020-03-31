@@ -2,6 +2,7 @@ export class Seguimiento902EtapaCierre {
   id: number;
   seguimiento902Id: number;
   tipoDecisionDeCierreId: number;
+  tipoDecisionDeCierre: string;
   abogadoProyeccionCierreId: number;
   oposicion: boolean;
   motivoOposicion: string;
