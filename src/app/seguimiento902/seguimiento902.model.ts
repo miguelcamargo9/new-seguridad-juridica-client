@@ -82,4 +82,6 @@ export class Seguimiento902 {
   expedienteSit: string;
   tipoMotivoSuspensionId: number;
   tipoMotivoDeCorreccionSinergiaId: number;
+  resolucionModificacionAclaracion: boolean;
+  resolucionModificacionAclaracionCierre: boolean;
 }

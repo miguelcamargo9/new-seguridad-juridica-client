@@ -37,6 +37,7 @@
                       id="text"
                       placeholder="Valor a Buscar"
                       formControlName="searchValue"
+                      oninput="this.value = this.value.toUpperCase()"
                     />
                     <app-field-error-display
                       [displayError]="isFieldValid(buscarSolicitud, 'searchValue')"
