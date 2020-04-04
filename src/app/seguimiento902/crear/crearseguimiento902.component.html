@@ -1556,9 +1556,9 @@
                               <tr>
                                 <th class="text-center">#</th>
                                 <th>TIPO DE ACTO</th>
-                                <th>NUMERO DE RESOLUCIÓN</th>
+                                <th>NÚMERO DE RESOLUCIÓN</th>
                                 <th>FECHA RESOLUCIÓN</th>
-                                <th>NOTIFIFCACIÓN PERSONAL</th>
+                                <th>NOTIFICACIÓN PERSONAL</th>
                                 <th>FECHA NOTIFICACIÓN PERSONAL</th>
                                 <th class="text-right">OPCIONES</th>
                               </tr>
@@ -1574,14 +1574,6 @@
                                   {{ showDate(initialStage.fechaNotificacionPersonalInicio) }}
                                 </td>
                                 <td class="td-actions">
-                                  <button
-                                    type="button"
-                                    rel="tooltip"
-                                    class="btn btn-info btn-round"
-                                    (click)="loadEtapaInicio(initialStage.id, 'load')"
-                                  >
-                                    <i class="material-icons">search</i>
-                                  </button>
                                   <button
                                     type="button"
                                     rel="tooltip"
@@ -2385,17 +2377,19 @@
                             [ngClass]="
                               displayFieldCss(
                                 createSeguimiento902,
-                                'resolucionModificacionAclaracionC'
+                                'resolucionModificacionAclaracionCierre'
                               )
                             "
                           >
                             <mat-select
                               placeholder="RESOLUCIÓN DE MODIFICACIÓN / ACLARACIÓN*"
-                              name="resolucionModificacionAclaracionC"
+                              name="resolucionModificacionAclaracionCierre"
                               matInput
-                              id="resolucionModificacionAclaracionC"
-                              formControlName="resolucionModificacionAclaracionC"
-                              (selectionChange)="selectResolucionModificacionAclaracionC($event)"
+                              id="resolucionModificacionAclaracionCierre"
+                              formControlName="resolucionModificacionAclaracionCierre"
+                              (selectionChange)="
+                                selectResolucionModificacionAclaracionCierre($event)
+                              "
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -2405,7 +2399,7 @@
                               [displayError]="
                                 isFieldValid(
                                   createSeguimiento902,
-                                  'resolucionModificacionAclaracionC'
+                                  'resolucionModificacionAclaracionCierre'
                                 )
                               "
                               errorMsg="Diligenciar el campo."
@@ -2419,7 +2413,8 @@
                       <div class="col-sm-12">
                         <button
                           [hidden]="
-                            finalStageButton !== 'add' || !viewResolucionModificacionAclaracionC
+                            finalStageButton !== 'add' ||
+                            !viewResolucionModificacionAclaracionCierre
                           "
                           mat-raised-button
                           class="btn btn-success btn-sm"
@@ -2469,14 +2464,6 @@
                                 <td>{{ finalStage.notificacionPersonalCierre ? "Si" : "No" }}</td>
                                 <td>{{ showDate(finalStage.fechaNotificacionPersonalCierre) }}</td>
                                 <td class="td-actions text-right">
-                                  <button
-                                    type="button"
-                                    rel="tooltip"
-                                    class="btn btn-info btn-round"
-                                    (click)="loadEtapaCierre(finalStage.id, 'load')"
-                                  >
-                                    <i class="material-icons">search</i>
-                                  </button>
                                   <button
                                     type="button"
                                     rel="tooltip"

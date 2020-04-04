@@ -39,7 +39,7 @@ export class Seguimiento902Service {
   }
 
   postCreateSeguimiento902EtapaInicio(data: any) {
-    return this.http.post(environment.apiUrl + "/seguimiento902/etapaInicio", data);
+    return this.http.post<number>(environment.apiUrl + "/seguimiento902/etapaInicio", data);
   }
 
   putUpdateSeguimiento902EtapaInicio(data: any): Observable<any> {
@@ -69,7 +69,7 @@ export class Seguimiento902Service {
   }
 
   postCreateSeguimiento902EtapaCierre(data: any) {
-    return this.http.post(environment.apiUrl + "/seguimiento902/etapaCierre", data);
+    return this.http.post<number>(environment.apiUrl + "/seguimiento902/etapaCierre", data);
   }
 
   putUpdateSeguimiento902EtapaCierre(data: any): Observable<any> {
