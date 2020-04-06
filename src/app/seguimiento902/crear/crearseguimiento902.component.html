@@ -11,12 +11,8 @@
                 <h3 class="card-title">
                   Seguimiento 902
                 </h3>
-                <h5 class="card-description">
-                  Expediente SIT: {{ expedienteSit }}
-              </h5>
-                <h5 class="card-description">
-                  FISO: {{ fiso }}
-                </h5>
+                <h5 class="card-description">Expediente SIT: {{ expedienteSit }}</h5>
+                <h5 class="card-description">FISO: {{ fiso }}</h5>
               </div>
               <div class="wizard-navigation">
                 <ul class="nav nav-pills">
@@ -1524,14 +1520,12 @@
                     <div class="row">
                       <div class="col-sm-12">
                         <button
-                          [hidden]="
-                            initialStageButton !== 'add' || !viewResolucionModificacionAclaracion
-                          "
+                          [hidden]="initialStageButton !== 'add'"
                           mat-raised-button
-                          class="btn btn-success btn-sm"
+                          class="btn btn-warning btn-sm"
                           (click)="addEtapaInicio()"
                         >
-                          Crear
+                          Guardar
                         </button>
                         <button
                           [hidden]="initialStageButton !== 'edit'"
@@ -1539,7 +1533,7 @@
                           class="btn btn-warning btn-sm"
                           (click)="editEtapaInicio()"
                         >
-                          Guardar
+                          Editar
                         </button>
                         <button
                           [hidden]="initialStageButton !== 'delete'"
@@ -1598,6 +1592,18 @@
                             </tbody>
                           </table>
                         </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <button
+                          [hidden]="!viewResolucionModificacionAclaracion"
+                          mat-raised-button
+                          class="btn btn-success btn-sm"
+                          (click)="clearEtapaInicio()"
+                        >
+                          Nuevo Registro
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -2415,15 +2421,12 @@
                     <div class="row">
                       <div class="col-sm-12">
                         <button
-                          [hidden]="
-                            finalStageButton !== 'add' ||
-                            !viewResolucionModificacionAclaracionCierre
-                          "
+                          [hidden]="finalStageButton !== 'add'"
                           mat-raised-button
                           class="btn btn-success btn-sm"
                           (click)="addEtapaCierre()"
                         >
-                          Crear
+                          Guardar
                         </button>
                         <button
                           [hidden]="finalStageButton !== 'edit'"
@@ -2431,7 +2434,7 @@
                           class="btn btn-warning btn-sm"
                           (click)="editEtapaCierre()"
                         >
-                          Guardar
+                          Editar
                         </button>
                         <button
                           [hidden]="finalStageButton !== 'delete'"
@@ -2488,6 +2491,18 @@
                             </tbody>
                           </table>
                         </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <button
+                          [hidden]="!viewResolucionModificacionAclaracionCierre"
+                          mat-raised-button
+                          class="btn btn-success btn-sm"
+                          (click)="clearEtapaCierre()"
+                        >
+                          Nuevo Registro
+                        </button>
                       </div>
                     </div>
                   </div>
