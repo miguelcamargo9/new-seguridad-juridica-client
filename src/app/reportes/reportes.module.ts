@@ -4,7 +4,8 @@ import { RouterModule } from "@angular/router";
 
 import { ReportRoutes } from "./reportes.routing";
 import { ReportsService } from "./reportes.service";
-import { ReporteSeguimiento902Component } from "./descargables/reporteSeguimiento902/reporteSeguimiento902.component";
+import {ReporteSeguimiento902Component} from "./descargables/reporteSeguimiento902/reporteseguimiento902.component";
+
 
 @NgModule({
   imports: [RouterModule.forChild(ReportRoutes), MaterialModule],

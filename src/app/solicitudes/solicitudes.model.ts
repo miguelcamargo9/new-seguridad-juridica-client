@@ -6,6 +6,8 @@ export class Solicitud {
   fiso: string;
   departamentoId: number;
   municipioId: number;
+  departamento: string;
+  municipio: string;
   corregimiento: string;
   vereda: string;
   condicionDelSolicitante: number;

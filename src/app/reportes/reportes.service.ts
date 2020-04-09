@@ -8,6 +8,6 @@ export class ReportsService {
   constructor(private http: HttpClient) {}
 
   getReporteSeguimiento902(): Observable<Blob> {
-    return this.http.get<Blob>(environment.apiUrl + "/reports/seguimiento902");
+    return this.http.get(environment.apiUrl + "/reports/seguimiento902", {responseType: 'blob'});
   }
 }

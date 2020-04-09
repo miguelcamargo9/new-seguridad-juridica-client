@@ -23,7 +23,7 @@ export class BuscarSolicitudComponent implements OnInit {
     { value: "nombreSolicitante", viewValue: "Nombre Solicitante" }
   ];
   buscarSolicitud: FormGroup;
-  // dtOptions: DataTables.Settings = {};
+  dtOptions: DataTables.Settings = {};
   solicitudes: Solicitud[];
   dtTrigger: Subject<any> = new Subject();
 
