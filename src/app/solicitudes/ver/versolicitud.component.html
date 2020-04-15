@@ -2,14 +2,14 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="card ">
+        <div class="card">
           <div class="card-header card-header-success card-header-icon">
             <div class="card-icon">
               <i class="material-icons">info</i>
             </div>
             <h4 class="card-title">Expediente #{{ solicitud.expedienteSit }}</h4>
           </div>
-          <div class="card-body ">
+          <div class="card-body">
             <div class="row">
               <div class="col-md-6">
                 <h4>FISO:</h4>
@@ -51,14 +51,14 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="card ">
+        <div class="card">
           <div class="card-header card-header-success card-header-icon">
             <div class="card-icon">
               <i class="material-icons">bookmarks</i>
             </div>
             <h4 class="card-title">Productos</h4>
           </div>
-          <div class="card-body ">
+          <div class="card-body">
             <div class="row">
               <div class="col-md-12">
                 <a
@@ -79,6 +79,41 @@
                   class="btn btn-info col-md-4 text-left">Repositorio
                   Documental</a>
               </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment </i>
+            </div>
+            <h4 class="card-title">Entregables Juridicos</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <a
+                  [routerLink]="[
+                    '/templates',
+                    { foo: 'siquiero enviar texto', other: '/url/url', template: 'mitemplate.url' }
+                  ]"
+                  class="btn btn-info col-md-4 text-left"
+                  [state]="{ service: 'nuevoServicio' }"
+                  >Modelo Apertura</a
+                >
+              </div>
+              <div class="col-md-12">
+                <a
+                  [routerLink]="['/templates']"
+                  class="btn btn-info col-md-4 text-left"
+                  [state]="{ service: 'nuevoServicio' }"
+                  >Modelo Cierro</a
+                >
+              </div>
             </div>
           </div>
         </div>

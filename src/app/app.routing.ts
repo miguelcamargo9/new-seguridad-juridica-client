@@ -8,7 +8,7 @@ export const AppRoutes: Routes = [
   {
     path: "",
     redirectTo: "dashboard",
-    pathMatch: "full"
+    pathMatch: "full",
   },
   {
     path: "",
@@ -16,38 +16,42 @@ export const AppRoutes: Routes = [
     children: [
       {
         path: "",
-        loadChildren: "./dashboard/dashboard.module#DashboardModule"
+        loadChildren: "./dashboard/dashboard.module#DashboardModule",
       },
       {
         path: "users",
-        loadChildren: "./users/users.module#UsersModule"
+        loadChildren: "./users/users.module#UsersModule",
       },
       {
         path: "companies",
-        loadChildren: "./companies/companies.module#CompaniesModule"
+        loadChildren: "./companies/companies.module#CompaniesModule",
       },
       {
         path: "solicitudes",
-        loadChildren: "./solicitudes/solicitudes.module#SolicitudModule"
+        loadChildren: "./solicitudes/solicitudes.module#SolicitudModule",
       },
       {
         path: "seguimiento902",
-        loadChildren: "./seguimiento902/seguimiento902.module#Seguimiento902Module"
+        loadChildren: "./seguimiento902/seguimiento902.module#Seguimiento902Module",
       },
       {
         path: "reportes",
-        loadChildren: "./reportes/reportes.module#ReportesModule"
+        loadChildren: "./reportes/reportes.module#ReportesModule",
+      },
+      {
+        path: "templates",
+        loadChildren: "./templates/template.module#TemplateModule",
       },
       {
         path: "",
-        loadChildren: "./userpage/user.module#UserModule"
+        loadChildren: "./userpage/user.module#UserModule",
       },
       {
         path: "",
-        loadChildren: "./timeline/timeline.module#TimelineModule"
-      }
+        loadChildren: "./timeline/timeline.module#TimelineModule",
+      },
     ],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: "",
@@ -55,8 +59,8 @@ export const AppRoutes: Routes = [
     children: [
       {
         path: "pages",
-        loadChildren: "./pages/pages.module#PagesModule"
-      }
-    ]
-  }
+        loadChildren: "./pages/pages.module#PagesModule",
+      },
+    ],
+  },
 ];
