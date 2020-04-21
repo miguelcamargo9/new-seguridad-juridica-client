@@ -6,6 +6,8 @@ import { TemplateRoutes } from "./template.routing";
 import { TemplateService } from "./template.service";
 import { TemplateComponet } from "./template.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 
 @NgModule({
   imports: [
@@ -14,6 +16,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     RouterModule.forChild(TemplateRoutes),
     FormsModule,
     ReactiveFormsModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot(),
+    CKEditorModule,
   ],
   declarations: [TemplateComponet],
   providers: [TemplateService],

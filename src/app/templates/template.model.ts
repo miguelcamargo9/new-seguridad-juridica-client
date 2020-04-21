@@ -1,5 +1,6 @@
 export class Template {
   id: number;
-  title: string;
+  name: string;
   content: string;
+  orden: number;
 }

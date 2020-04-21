@@ -99,7 +99,12 @@
                 <a
                   [routerLink]="[
                     '/templates',
-                    { foo: 'siquiero enviar texto', other: '/url/url', template: 'mitemplate.url' }
+                    {
+                      foo: 'siquiero enviar texto',
+                      other: '/url/url',
+                      template: 'mitemplate.url',
+                      solicitudId: solicitud.id
+                    }
                   ]"
                   class="btn btn-info col-md-4 text-left"
                   [state]="{ service: 'nuevoServicio' }"

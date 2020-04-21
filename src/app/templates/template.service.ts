@@ -2,12 +2,20 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Template } from "./template.model";
 
 @Injectable()
 export class TemplateService {
   constructor(private http: HttpClient) {}
 
-  postCreateCompany(data): Observable<any> {
-    return this.http.post(environment.apiUrl + "/company/create/", data);
+  getTemplateCloseResolution(solicitudId): Observable<any> {
+    return this.http.get<Template>(environment.apiUrl + "/template/closeResolution/" + solicitudId);
+  }
+
+  postTemplateCloseResolution(solicitudId, listTabs): Observable<any> {
+    return this.http.post(
+      environment.apiUrl + "/template/closeResolution/" + solicitudId,
+      listTabs
+    );
   }
 }

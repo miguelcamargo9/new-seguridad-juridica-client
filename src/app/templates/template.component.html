@@ -4,78 +4,37 @@
       <div class="col-md-12 mr-auto ml-auto">
         <!--      Wizard container        -->
         <div class="wizard-container">
-          <div class="card card-wizard" data-color="green" id="wizardProfile">
+          <div class="card card-wizard" data-color="green">
             <form [formGroup]="templateForm">
               <div class="card-header text-center">
                 <h3 class="card-title">
                   {{ templateTitle }}
                 </h3>
               </div>
-              <div class="wizard-navigation">
-                <ul class="nav nav-pills">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#tab0" data-toggle="tab" role="tab">
-                      {{ tabs[0].title }}
-                    </a>
-                  </li>
-                  <li class="nav-item" *ngFor="let tab of tabs">
-                    <a class="nav-link" href="#tab{{ tab.id }}" data-toggle="tab" role="tab">
-                      {{ tab.title }}
-                    </a>
-                  </li>
-                </ul>
-              </div>
               <div class="card-body">
-                <div class="tab-content">
-                  <div class="tab-pane" id="tab1">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        X1
-                      </div>
-                    </div>
+                <mat-tab-group>
+                  <div *ngFor="let tab of tabs">
+                    <mat-tab label="{{ tab.name }}">
+                      <ckeditor
+                        [editor]="editor"
+                        data="{{ tab.content }}"
+                        (ready)="onReady($event)"
+                        (change)="onChange($event, tab.id)"
+                      ></ckeditor>
+                    </mat-tab>
                   </div>
-                  <div class="tab-pane" id="tab2">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        X2
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane" id="tab3">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        X3
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </mat-tab-group>
               </div>
               <div class="card-footer">
-                <div class="mr-auto">
-                  <input
-                    type="button"
-                    class="btn btn-previous btn-fill btn-default btn-wd disabled"
-                    name="previous"
-                    value="Atras"
-                  />
-                </div>
                 <div class="ml-auto">
                   <input
                     type="button"
-                    class="btn btn-next btn-fill btn-success btn-wd"
-                    name="next"
-                    value="Siguiente"
-                  />
-                  <input
-                    type="button"
-                    class="btn btn-finish btn-fill btn-warning btn-wd"
+                    class="btn btn-fill btn-warning btn-wd"
                     name="finish"
                     value="Guardar"
-                    style="display: none;"
                     (click)="onSubmit()"
                   />
                 </div>
-                <div class="clearfix"></div>
               </div>
             </form>
           </div>
