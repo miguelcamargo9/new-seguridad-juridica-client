@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   apiUrl: "http://localhost:8080",
+  // apiUrl: "http://formalizacionssj.agenciadetierras.gov.co:8080",
   keyToken: "token",
   pathInit: "/dashboard",
   pathLogin: "/pages/login"

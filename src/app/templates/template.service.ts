@@ -18,4 +18,12 @@ export class TemplateService {
       listTabs
     );
   }
+
+  getReloadTemplate(solicitudId: number, reportType: String, listTabs): Observable<any> {
+    return this.http.get<Template>(environment.apiUrl + "/template/reload/" + solicitudId + "/type/" + reportType, listTabs);
+  }
+
+  getPDFTemplate(solicitudId: number, reportType: String): Observable<Blob> {
+    return this.http.get(environment.apiUrl + "/template/generatePDF/" + solicitudId + "/type/" + reportType, {responseType: 'blob'});
+  }
 }

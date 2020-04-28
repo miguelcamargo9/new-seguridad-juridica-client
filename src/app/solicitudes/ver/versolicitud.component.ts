@@ -15,6 +15,7 @@ export class VerSolicitudComponent implements OnInit {
   solicitudId: number;
   solicitud: Solicitud;
   solicitante: Persona;
+  hasSeguimiento902: Boolean;
 
   constructor(
     private solicitudService: SolicitudService,
@@ -26,6 +27,7 @@ export class VerSolicitudComponent implements OnInit {
     this.solicitudService.onSolicitudChanged.subscribe(
       solicitudData => {
         this.solicitud = solicitudData;
+        this.hasSeguimiento902 = this.solicitudService.hasSeguimiento902;
         this.solicitante = solicitudData.personas.filter(persona => {
           return persona.tipoPersonaId === 1;
         })[0];

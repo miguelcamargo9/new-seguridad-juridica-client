@@ -19,7 +19,7 @@
                         [editor]="editor"
                         data="{{ tab.content }}"
                         (ready)="onReady($event)"
-                        (change)="onChange($event, tab.id)"
+                        (change)="onChange($event, tab.orden)"
                       ></ckeditor>
                     </mat-tab>
                   </div>
@@ -27,6 +27,28 @@
               </div>
               <div class="card-footer">
                 <div class="ml-auto">
+                  <input
+                          type="button"
+                          class="btn btn-fill btn-link btn-wd"
+                          name="volver"
+                          value="volver"
+                          [routerLink]="'/solicitudes/ver/'+solicitudId"
+                  />
+                  <input
+                          *ngIf="tabs[0].id"
+                          type="button"
+                          class="btn btn-fill btn-dark btn-wd"
+                          name="Generar_PDF"
+                          value="Generar PDF"
+                          (click)="generatePDF()"
+                  />
+                  <input
+                          type="button"
+                          class="btn btn-fill btn-success btn-wd"
+                          name="Recargar_Documento"
+                          value="Recargar Documento"
+                          (click)="reloadTemplate()"
+                  />
                   <input
                     type="button"
                     class="btn btn-fill btn-warning btn-wd"

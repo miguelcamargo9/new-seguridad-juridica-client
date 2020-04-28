@@ -124,9 +124,20 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     }
   }
 
+  findInvalidControls() {
+    const invalid = [];
+    const controls = this.createSeguimiento902.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
+  }
+
   onSubmit() {
     if (this.createSeguimiento902.invalid) {
-      console.log("Invalido");
+      console.log("Invalido", this.findInvalidControls());
       this.toastr.error("Formulario Invalido", "Seguimiento 902");
       return;
     }

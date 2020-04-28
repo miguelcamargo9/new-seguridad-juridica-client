@@ -96,29 +96,33 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-12">
-                <a
+                <a *ngIf="hasSeguimiento902"
                   [routerLink]="[
                     '/templates',
                     {
                       foo: 'siquiero enviar texto',
-                      other: '/url/url',
-                      template: 'mitemplate.url',
+                      nameFile: 'resolucion_cierre',
+                      reportType: 'closeResolution',
                       solicitudId: solicitud.id
                     }
                   ]"
                   class="btn btn-info col-md-4 text-left"
                   [state]="{ service: 'nuevoServicio' }"
-                  >Modelo Apertura</a
-                >
+                  >Modelo Resolución de Cierre
+                </a>
+                <a *ngIf="!hasSeguimiento902"
+                   class="btn btn-info disabled col-md-4 text-left">
+                  Modelo Resolución de Cierre
+                </a>
               </div>
-              <div class="col-md-12">
-                <a
-                  [routerLink]="['/templates']"
-                  class="btn btn-info col-md-4 text-left"
-                  [state]="{ service: 'nuevoServicio' }"
-                  >Modelo Cierro</a
-                >
-              </div>
+<!--              <div class="col-md-12">-->
+<!--                <a-->
+<!--                  [routerLink]="['/templates']"-->
+<!--                  class="btn btn-info col-md-4 text-left"-->
+<!--                  [state]="{ service: 'nuevoServicio' }"-->
+<!--                  >Modelo Cierro</a-->
+<!--                >-->
+<!--              </div>-->
             </div>
           </div>
         </div>
