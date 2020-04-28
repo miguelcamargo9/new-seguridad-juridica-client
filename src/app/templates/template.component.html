@@ -1,0 +1,68 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 mr-auto ml-auto">
+        <!--      Wizard container        -->
+        <div class="wizard-container">
+          <div class="card card-wizard" data-color="green">
+            <form [formGroup]="templateForm">
+              <div class="card-header text-center">
+                <h3 class="card-title">
+                  {{ templateTitle }}
+                </h3>
+              </div>
+              <div class="card-body">
+                <mat-tab-group>
+                  <div *ngFor="let tab of tabs">
+                    <mat-tab label="{{ tab.name }}">
+                      <ckeditor
+                        [editor]="editor"
+                        data="{{ tab.content }}"
+                        (ready)="onReady($event)"
+                        (change)="onChange($event, tab.orden)"
+                      ></ckeditor>
+                    </mat-tab>
+                  </div>
+                </mat-tab-group>
+              </div>
+              <div class="card-footer">
+                <div class="ml-auto">
+                  <input
+                          type="button"
+                          class="btn btn-fill btn-link btn-wd"
+                          name="volver"
+                          value="volver"
+                          [routerLink]="'/solicitudes/ver/'+solicitudId"
+                  />
+                  <input
+                          *ngIf="tabs[0].id"
+                          type="button"
+                          class="btn btn-fill btn-dark btn-wd"
+                          name="Generar_PDF"
+                          value="Generar PDF"
+                          (click)="generatePDF()"
+                  />
+                  <input
+                          type="button"
+                          class="btn btn-fill btn-success btn-wd"
+                          name="Recargar_Documento"
+                          value="Recargar Documento"
+                          (click)="reloadTemplate()"
+                  />
+                  <input
+                    type="button"
+                    class="btn btn-fill btn-warning btn-wd"
+                    name="finish"
+                    value="Guardar"
+                    (click)="onSubmit()"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- wizard container -->
+      </div>
+    </div>
+  </div>
+</div>

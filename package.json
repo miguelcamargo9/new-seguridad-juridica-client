@@ -1,10 +1,10 @@
 {
   "name": "material-dashboard-pro-angular",
   "version": "2.3.0",
-  "license": "https://demos.creative-tim.com/material-dashboard-pro-angular2/documentation/tutorial",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/creativetimofficial/ct-material-dashboard-pro-angular.git"
+    "url": "git+https://github.com/creativetimofficial/ct-material-dashboard-pro-angular.git"
   },
   "scripts": {
     "ng": "ng",
@@ -30,9 +30,13 @@
     "@angular/platform-browser-dynamic": "8.0.0",
     "@angular/platform-server": "8.0.0",
     "@angular/router": "8.0.0",
+    "@ckeditor/ckeditor5-angular": "^1.2.3",
+    "ckeditor5-build-alignment-b64image": "1.0.1",
+    "@ckeditor/ckeditor5-upload": "^18.0.0",
     "ajv": "6.10.0",
     "angular-calendar": "0.27.9",
     "angular-datatables": "^8.0.0",
+    "angular-froala-wysiwyg": "^3.1.0",
     "angular2-jwt": "^0.2.3",
     "animate.css": "3.7.2",
     "arrive": "2.4.1",
@@ -99,5 +103,12 @@
     "ts-node": "8.2.0",
     "tslint": "5.17.0",
     "typescript": "3.4.5"
-  }
+  },
+  "description": "![version](https://img.shields.io/badge/version-2.3.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ct-material-dashboard-pro-angular.svg?maxAge=2592000)](https://github.com/creativetimofficial/ct-material-dashboard-pro-angular/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/ct-material-dashboard-pro-angular.svg?maxAge=2592000)](https://github.com/creativetimofficial/ct-material-dashboard-pro-angular/issues?q=is%3Aissue+is%3Aclosed)",
+  "bugs": {
+    "url": "https://github.com/creativetimofficial/ct-material-dashboard-pro-angular/issues"
+  },
+  "homepage": "https://github.com/creativetimofficial/ct-material-dashboard-pro-angular#readme",
+  "main": "karma.conf.js",
+  "author": ""
 }
