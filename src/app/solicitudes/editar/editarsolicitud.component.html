@@ -298,6 +298,7 @@
                               id="primerNombreSolicitante"
                               placeholder="PRIMER NOMBRE SOLICITANTE"
                               formControlName="primerNombreSolicitante"
+                              (focusout)="this.solicitud.controls['primerNombreSolicitante'].setValue(standardWord(this.solicitud.value.primerNombreSolicitante))"
                               oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
@@ -323,6 +324,7 @@
                               type="text"
                               id="segundoNombreSolicitante"
                               name="segundoNombreSolicitante"
+                              (focusout)="this.solicitud.controls['segundoNombreSolicitante'].setValue(standardWord(this.solicitud.value.segundoNombreSolicitante))"
                               oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
@@ -346,6 +348,7 @@
                               id="primerApellidoSolicitante"
                               placeholder="PRIMER APELLIDO SOLICITANTE"
                               formControlName="primerApellidoSolicitante"
+                              (focusout)="this.solicitud.controls['primerApellidoSolicitante'].setValue(standardWord(this.solicitud.value.primerApellidoSolicitante))"
                               oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
@@ -371,6 +374,7 @@
                               type="text"
                               id="segundoApellidoSolicitante"
                               name="segundoApellidoSolicitante"
+                              (focusout)="this.solicitud.controls['segundoApellidoSolicitante'].setValue(standardWord(this.solicitud.value.segundoApellidoSolicitante))"
                               oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
@@ -743,13 +747,13 @@
                             [ngClass]="displayFieldCss(solicitud, 'areaSolicitada')"
                           >
                             <input
-                              type="text"
+                              type="number"
                               name="areaSolicitada"
                               matInput
                               id="areaSolicitada"
+                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                               placeholder="ÁREA SOLICITADA m2 *"
                               formControlName="areaSolicitada"
-                              oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'areaSolicitada')"

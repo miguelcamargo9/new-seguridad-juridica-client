@@ -33,4 +33,8 @@ export class UserService {
   putUpdateUser(data): Observable<any> {
     return this.http.put(environment.apiUrl + `/users/update/${data.userId}`, data);
   }
+
+  putResetPassword(data): Observable<any> {
+    return this.http.put(environment.apiUrl + `/users/update/${data.userId}/resetPassword`, data);
+  }
 }

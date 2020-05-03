@@ -11,8 +11,7 @@
                 <h3 class="card-title">
                   Seguimiento 902
                 </h3>
-                <h5 class="card-description">Expediente SIT: {{ expedienteSit }}</h5>
-                <h5 class="card-description">FISO: {{ fiso }}</h5>
+                <h5 class="card-description">Expediente SIT: {{ expedienteSit }} <br />FISO: {{ fiso }}</h5>
               </div>
               <div class="wizard-navigation">
                 <ul class="nav nav-pills">
@@ -72,23 +71,23 @@
                           <mat-form-field
                             class="example-full-width has-label"
                             [ngClass]="
-                              displayFieldCss(createSeguimiento902, 'tieneViabilidadTecnica')
+                              displayFieldCss(createSeguimiento902, 'tipoViabilidadTecnicaId')
                             "
                           >
                             <mat-select
-                              placeholder="¿TIENE VIABILIDAD TÉCNICA?*"
-                              name="tieneViabilidadTecnica"
+                              placeholder="¿VIABILIDAD TÉCNICA?*"
+                              name="tipoViabilidadTecnicaId"
                               matInput
-                              id="tieneViabilidadTecnica"
-                              formControlName="tieneViabilidadTecnica"
+                              id="tipoViabilidadTecnicaId"
+                              formControlName="tipoViabilidadTecnicaId"
                             >
-                              <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
+                              <mat-option *ngFor="let item of tipoViabilidadTecnica" [value]="item.id">
                                 {{ item.nombre }}
                               </mat-option>
                             </mat-select>
                             <app-field-error-display
                               [displayError]="
-                                isFieldValid(createSeguimiento902, 'tieneViabilidadTecnica')
+                                isFieldValid(createSeguimiento902, 'tipoViabilidadTecnicaId')
                               "
                               errorMsg="Diligenciar el campo."
                             >
@@ -179,6 +178,7 @@
                               id="areaDelPredioEnCatastroR1YR2"
                               placeholder="ÁREA DEL PREDIO EN CATASTRO (R1 Y R2) - m2 *"
                               formControlName="areaDelPredioEnCatastroR1YR2"
+                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />
                             <app-field-error-display
                               [displayError]="
@@ -208,6 +208,7 @@
                               id="areaDelPredioEnFolioDeMatriculaInmobiliaria"
                               placeholder="ÁREA DEL PREDIO EN FOLIO DE MATRÍCULA INMOBILIARIA - m2 *"
                               formControlName="areaDelPredioEnFolioDeMatriculaInmobiliaria"
+                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />
                             <app-field-error-display
                               [displayError]="
@@ -237,6 +238,7 @@
                               id="areaLevantamientoPredial"
                               placeholder="ÁREA LEVANTAMIENTO PREDIAL - m2*"
                               formControlName="areaLevantamientoPredial"
+                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />
                             <app-field-error-display
                               [displayError]="
@@ -504,6 +506,7 @@
                               id="anosDePosesionSegunFiso"
                               placeholder="AÑOS DE POSESIÓN SEGÚN FISO*"
                               formControlName="anosDePosesionSegunFiso"
+                              onkeypress='return event.charCode >= 48 && event.charCode <= 57'
                             />
                             <app-field-error-display
                               [displayError]="
@@ -530,6 +533,7 @@
                               id="anosDePosesionSegunPrueba"
                               placeholder="AÑOS DE POSESIÓN SEGÚN PRUEBA*"
                               formControlName="anosDePosesionSegunPrueba"
+                              onkeypress='return event.charCode >= 48 && event.charCode <= 57'
                             />
                             <app-field-error-display
                               [displayError]="
@@ -579,7 +583,7 @@
                             "
                           >
                             <mat-select
-                              placeholder="¿TIENE VIABILIDAD JURÍDICA?*"
+                              placeholder="Viabilidad Jurídica*"
                               name="tipoTieneViabilidadJuridicaId"
                               matInput
                               id="tipoTieneViabilidadJuridicaId"
@@ -774,110 +778,6 @@
                             <app-field-error-display
                               [displayError]="
                                 isFieldValid(createSeguimiento902, 'abogadoProyeccionId')
-                              "
-                              errorMsg="Diligenciar el campo."
-                            >
-                            </app-field-error-display>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="input-group form-control-lg">
-                          <mat-form-field
-                            class="example-full-width has-label"
-                            [ngClass]="
-                              displayFieldCss(
-                                createSeguimiento902,
-                                'fechaEnvioAFirmaDeSubdirectorInicio'
-                              )
-                            "
-                          >
-                            <input
-                              matInput
-                              [matDatepicker]="fechaEnvioAFirmaDeSubdirectorIniciopicker"
-                              placeholder="FECHA ENVÍO A FIRMA DE SUBDIRECTOR INICIO"
-                              name="fechaEnvioAFirmaDeSubdirectorInicio"
-                              id="fechaEnvioAFirmaDeSubdirectorInicio"
-                              (click)="fechaEnvioAFirmaDeSubdirectorIniciopicker.open()"
-                              formControlName="fechaEnvioAFirmaDeSubdirectorInicio"
-                            />
-                            <mat-datepicker-toggle
-                              matSuffix
-                              [for]="fechaEnvioAFirmaDeSubdirectorIniciopicker"
-                            >
-                            </mat-datepicker-toggle>
-                            <mat-datepicker
-                              #fechaEnvioAFirmaDeSubdirectorIniciopicker
-                            ></mat-datepicker>
-                            <app-field-error-display
-                              [displayError]="
-                                isFieldValid(
-                                  createSeguimiento902,
-                                  'fechaEnvioAFirmaDeSubdirectorInicio'
-                                )
-                              "
-                              errorMsg="Diligenciar el campo."
-                            >
-                            </app-field-error-display>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="input-group form-control-lg">
-                          <mat-form-field
-                            class="example-full-width has-label"
-                            [ngClass]="
-                              displayFieldCss(createSeguimiento902, 'fechaRecibidoFirmaInicio')
-                            "
-                          >
-                            <input
-                              matInput
-                              [matDatepicker]="fechaRecibidoFirmaIniciopicker"
-                              placeholder="FECHA RECIBIDO FIRMA INICIO"
-                              name="fechaRecibidoFirmaInicio"
-                              id="fechaRecibidoFirmaInicio"
-                              (click)="fechaRecibidoFirmaIniciopicker.open()"
-                              formControlName="fechaRecibidoFirmaInicio"
-                            />
-                            <mat-datepicker-toggle matSuffix [for]="fechaRecibidoFirmaIniciopicker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #fechaRecibidoFirmaIniciopicker></mat-datepicker>
-                            <app-field-error-display
-                              [displayError]="
-                                isFieldValid(createSeguimiento902, 'fechaRecibidoFirmaInicio')
-                              "
-                              errorMsg="Diligenciar el campo."
-                            >
-                            </app-field-error-display>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="input-group form-control-lg">
-                          <mat-form-field
-                            class="example-full-width has-label"
-                            [ngClass]="
-                              displayFieldCss(createSeguimiento902, 'fechaEnvioANumeracionInicio')
-                            "
-                          >
-                            <input
-                              matInput
-                              [matDatepicker]="fechaEnvioANumeracionIniciopicker"
-                              placeholder="FECHA ENVÍO A NUMERACIÓN INICIO"
-                              name="fechaEnvioANumeracionInicio"
-                              id="fechaEnvioANumeracionInicio"
-                              (click)="fechaEnvioANumeracionIniciopicker.open()"
-                              formControlName="fechaEnvioANumeracionInicio"
-                            />
-                            <mat-datepicker-toggle
-                              matSuffix
-                              [for]="fechaEnvioANumeracionIniciopicker"
-                            >
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #fechaEnvioANumeracionIniciopicker></mat-datepicker>
-                            <app-field-error-display
-                              [displayError]="
-                                isFieldValid(createSeguimiento902, 'fechaEnvioANumeracionInicio')
                               "
                               errorMsg="Diligenciar el campo."
                             >
@@ -1323,7 +1223,7 @@
                           </app-field-error-display>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewNumeroDeResolucionQueResuelveRecurso">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -1834,7 +1734,7 @@
                               matInput
                               id="oposicion"
                               formControlName="oposicion"
-                              (selectionChange)="selectOposicion($event)"
+                              (selectionChange)="selectOposicionCierre($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -1848,7 +1748,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6" [hidden]="!viewMotivoOposicion">
+                      <div class="col-sm-6" [hidden]="!viewMotivoOposicionCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -1871,7 +1771,7 @@
                           </app-field-error-display>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6"  [hidden]="!viewMotivoOposicionCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -1894,110 +1794,6 @@
                             <app-field-error-display
                               [displayError]="
                                 isFieldValid(createSeguimiento902, 'fechaRadicadoOposicion')
-                              "
-                              errorMsg="Diligenciar el campo."
-                            >
-                            </app-field-error-display>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="input-group form-control-lg">
-                          <mat-form-field
-                            class="example-full-width has-label"
-                            [ngClass]="
-                              displayFieldCss(
-                                createSeguimiento902,
-                                'fechaEnvioAFirmaDeSubdirectorCierre'
-                              )
-                            "
-                          >
-                            <input
-                              matInput
-                              [matDatepicker]="fechaEnvioAFirmaDeSubdirectorCierrepicker"
-                              placeholder="FECHA ENVÍO A FIRMA DE SUBDIRECTOR CIERRE"
-                              name="fechaEnvioAFirmaDeSubdirectorCierre"
-                              id="fechaEnvioAFirmaDeSubdirectorCierre"
-                              (click)="fechaEnvioAFirmaDeSubdirectorCierrepicker.open()"
-                              formControlName="fechaEnvioAFirmaDeSubdirectorCierre"
-                            />
-                            <mat-datepicker-toggle
-                              matSuffix
-                              [for]="fechaEnvioAFirmaDeSubdirectorCierrepicker"
-                            >
-                            </mat-datepicker-toggle>
-                            <mat-datepicker
-                              #fechaEnvioAFirmaDeSubdirectorCierrepicker
-                            ></mat-datepicker>
-                            <app-field-error-display
-                              [displayError]="
-                                isFieldValid(
-                                  createSeguimiento902,
-                                  'fechaEnvioAFirmaDeSubdirectorCierre'
-                                )
-                              "
-                              errorMsg="Diligenciar el campo."
-                            >
-                            </app-field-error-display>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="input-group form-control-lg">
-                          <mat-form-field
-                            class="example-full-width has-label"
-                            [ngClass]="
-                              displayFieldCss(createSeguimiento902, 'fechaRecibidoFirmaCierre')
-                            "
-                          >
-                            <input
-                              matInput
-                              [matDatepicker]="fechaRecibidoFirmaCierrepicker"
-                              placeholder="FECHA RECIBIDO FIRMA CIERRE"
-                              name="fechaRecibidoFirmaCierre"
-                              id="fechaRecibidoFirmaCierre"
-                              (click)="fechaRecibidoFirmaCierrepicker.open()"
-                              formControlName="fechaRecibidoFirmaCierre"
-                            />
-                            <mat-datepicker-toggle matSuffix [for]="fechaRecibidoFirmaCierrepicker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #fechaRecibidoFirmaCierrepicker></mat-datepicker>
-                            <app-field-error-display
-                              [displayError]="
-                                isFieldValid(createSeguimiento902, 'fechaRecibidoFirmaCierre')
-                              "
-                              errorMsg="Diligenciar el campo."
-                            >
-                            </app-field-error-display>
-                          </mat-form-field>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="input-group form-control-lg">
-                          <mat-form-field
-                            class="example-full-width has-label"
-                            [ngClass]="
-                              displayFieldCss(createSeguimiento902, 'fechaEnvioANumeracionCierre')
-                            "
-                          >
-                            <input
-                              matInput
-                              [matDatepicker]="fechaEnvioANumeracionCierrepicker"
-                              placeholder="FECHA ENVÍO A NUMERACIÓN CIERRE"
-                              name="fechaEnvioANumeracionCierre"
-                              id="fechaEnvioANumeracionCierre"
-                              (click)="fechaEnvioANumeracionCierrepicker.open()"
-                              formControlName="fechaEnvioANumeracionCierre"
-                            />
-                            <mat-datepicker-toggle
-                              matSuffix
-                              [for]="fechaEnvioANumeracionCierrepicker"
-                            >
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #fechaEnvioANumeracionCierrepicker></mat-datepicker>
-                            <app-field-error-display
-                              [displayError]="
-                                isFieldValid(createSeguimiento902, 'fechaEnvioANumeracionCierre')
                               "
                               errorMsg="Diligenciar el campo."
                             >
@@ -2076,6 +1872,7 @@
                               matInput
                               id="notificacionPersonalCierre"
                               formControlName="notificacionPersonalCierre"
+                              (selectionChange)="selectNotificacionPersonalCierre($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -2091,7 +1888,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaNotificacionPersonalCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -2144,6 +1941,7 @@
                               matInput
                               id="notificacionPorAvisoCierre"
                               formControlName="notificacionPorAvisoCierre"
+                              (selectionChange)="selectNotificacionPorAvisoCierre($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -2159,7 +1957,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaNotificacionPorAvisoCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -2214,6 +2012,7 @@
                               matInput
                               id="publicacionResolucionCierre"
                               formControlName="publicacionResolucionCierre"
+                              (selectionChange)="selectPublicacionResolucionCierre($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -2229,7 +2028,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewFechaPublicacionResolucionCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -2273,6 +2072,7 @@
                               matInput
                               id="recursoResolucionCierre"
                               formControlName="recursoResolucionCierre"
+                              (selectionChange)="selectResolucionCierre($event)"
                             >
                               <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
                                 {{ item.nombre }}
@@ -2288,7 +2088,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewResolucionCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -2313,7 +2113,7 @@
                           </mat-form-field>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewResolucionCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -2343,7 +2143,7 @@
                           </app-field-error-display>
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-6" [hidden]="!viewResolucionCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -2658,6 +2458,7 @@
                               id="areaFormalizada"
                               placeholder="ÁREA FORMALIZADA*"
                               formControlName="areaFormalizada"
+                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(createSeguimiento902, 'areaFormalizada')"

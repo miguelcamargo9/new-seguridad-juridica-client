@@ -9,6 +9,17 @@
                 <i class="material-icons">person</i>
               </div>
               <h4 class="card-title">Editar Usuario</h4>
+              <div class="text-right">
+                <div class="form-check mr-auto"></div>
+                <input
+                        mat-raised-button
+                        type="button"
+                        class="btn btn-fill btn-warning btn-wd"
+                        name="password"
+                        value="Restaurar Contraseña"
+                        (click)="resetPassword(this.editUser.value.nickName)"
+                />
+              </div>
             </div>
             <div class="card-body">
               <br />
@@ -184,6 +195,14 @@
 
             <div class="card-footer text-right">
               <div class="form-check mr-auto"></div>
+              <input
+                      mat-raised-button
+                      type="button"
+                      class="btn btn-fill btn-link btn-wd"
+                      name="volver"
+                      value="volver"
+                      [routerLink]="'/users/list'"
+              />
               <button mat-raised-button type="submit" class="btn btn-success" (click)="onSubmit()">
                 Guardar
               </button>

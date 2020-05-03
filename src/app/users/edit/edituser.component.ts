@@ -10,6 +10,7 @@ import { Roles } from "src/app/roles/roles.model";
 import { CompanyService } from "src/app/companies/companies.service";
 import { Company } from "src/app/companies/company.model";
 import { Subscription } from "rxjs";
+import swal from "sweetalert2";
 
 @Component({
   selector: "app-edit-user",
@@ -134,5 +135,45 @@ export class EditUserComponent implements OnInit {
     } else {
       this.toastr.error("Formulario Invalido", "Usuarios");
     }
+  }
+
+  resetPassword(nickname) {
+    swal({
+      title: 'Restaurar contraseña?',
+      text: "Esta seguro de restaurar la contraseña al usuario " + nickname + "!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      confirmButtonText: 'Estoy Seguro!',
+      cancelButtonText: 'Cancelar',
+      buttonsStyling: false
+    }).then((result) => {
+      if (result.value) {
+        this.userService.putResetPassword({userId: this.userId}).subscribe(
+          params => {
+            swal(
+              {
+                title: 'Contraseña!',
+                text: 'La contraseña del usuario fue actualizada exitosamente',
+                type: 'success',
+                confirmButtonClass: "btn btn-success",
+                buttonsStyling: false
+              }
+            )
+          }, error => {
+              swal(
+                  {
+                    title: 'Contraseña!',
+                    text: 'Error al actualizar la contraseña',
+                    type: 'error',
+                    confirmButtonClass: "btn btn-danger",
+                    buttonsStyling: false
+                  }
+              )
+          }
+        );
+      }
+    })
   }
 }
