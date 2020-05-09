@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: "http://vps235362.vps.ovh.ca:8080",
+  apiUrl: "http://formalizacionssj.agenciadetierras.gov.co:8080",
   keyToken: "token",
-  pathInit: "/dashboard",
+  pathInit: "/solicitudes/buscar",
   pathLogin: "/pages/login"
 };

@@ -106,7 +106,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       numeroPredialNacional: [null],
       predioDeMayorExtension: [null, [Validators.required]],
       nombrePredioMayorExtension: [null],
-      areaSolicitada: [null, [Validators.required]]
+      areaSolicitada: [null, [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]]
     });
     // this.populateForm();
     // Code for the Validator
@@ -710,7 +710,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       numeroPredialNacional: formData.numeroPredialNacional,
       predioDeMayorExtension: formData.predioDeMayorExtension === "1" ? true : false,
       nombrePredioMayorExtension:
-        formData.predioDeMayorExtension === "1" ? formData.nombrePredioMayorExtension : null,
+      formData.predioDeMayorExtension === "1" ? formData.nombrePredioMayorExtension : null,
       areaSolicitada: formData.areaSolicitada,
       personas: personas,
       idsDeletedPersonas: this.idsDeletedPersonas
@@ -721,6 +721,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       this.toastr.error("Formulario Invalido", "Solicitud");
       return;
     }
+    console.log("Formulario valido")
     // console.log("DATA", data);
     this.solicitudService.putUpdateSolicitud(data).subscribe(solicitudResult => {
       console.log("Result update: ", solicitudResult);
@@ -742,4 +743,25 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     }
     return invalid;
   }
+  standardWord(str) {
+    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÇç",
+        to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuucc",
+        mapping = {};
+
+    for(let i = 0, j = from.length; i < j; i++ )
+      mapping[ from.charAt( i ) ] = to.charAt( i );
+
+
+    var ret = [];
+    for( let i = 0, j = str.length; i < j; i++ ) {
+      var c = str.charAt( i );
+      if( mapping.hasOwnProperty( str.charAt( i ) ) )
+        ret.push( mapping[ c ] );
+      else
+        ret.push( c );
+    }
+    console.log("STrign finallll: ", ret.join( '' ))
+    return ret.join( '' );
+
+  };
 }

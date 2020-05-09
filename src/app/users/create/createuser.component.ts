@@ -46,12 +46,12 @@ export class CreateUserComponent implements OnInit {
         documentNumber: [null, [Validators.required]],
         role: [null, [Validators.required]],
         company: [null, [Validators.required]],
-        password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
-        passwordConfirm: ["", [Validators.required]]
+        // password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
+        // passwordConfirm: ["", [Validators.required]]
       },
-      {
-        validator: PasswordValidationUser.MatchPassword // your validation method
-      }
+      // {
+      //   validator: PasswordValidationUser.MatchPassword // your validation method
+      // }
     );
   }
 
@@ -103,7 +103,7 @@ export class CreateUserComponent implements OnInit {
         email: formData.email,
         firstname: formData.firstName,
         lastname: formData.lastName,
-        password: formData.password,
+        // password: formData.password,
         username: formData.nickName,
         roleId: formData.role,
         active: true

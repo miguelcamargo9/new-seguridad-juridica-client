@@ -2,14 +2,14 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="card ">
+        <div class="card">
           <div class="card-header card-header-success card-header-icon">
             <div class="card-icon">
               <i class="material-icons">info</i>
             </div>
             <h4 class="card-title">Expediente #{{ solicitud.expedienteSit }}</h4>
           </div>
-          <div class="card-body ">
+          <div class="card-body">
             <div class="row">
               <div class="col-md-6">
                 <h4>FISO:</h4>
@@ -51,22 +51,15 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <div class="card ">
+        <div class="card">
           <div class="card-header card-header-success card-header-icon">
             <div class="card-icon">
               <i class="material-icons">bookmarks</i>
             </div>
-            <h4 class="card-title">Productos</h4>
+            <h4 class="card-title">Formularios</h4>
           </div>
-          <div class="card-body ">
+          <div class="card-body">
             <div class="row">
-              <div class="col-md-12">
-                <a
-                  [routerLink]="['/seguimiento902/editar/', solicitud.id]"
-                  class="btn btn-info col-md-4 text-left"
-                  >Seguimiento 902</a
-                >
-              </div>
               <div class="col-md-12">
                 <a
                   [routerLink]="['/solicitudes/editar/', solicitud.id]"
@@ -74,11 +67,62 @@
                   >Editar Solicitud</a
                 >
               </div>
+              <div class="col-md-12">
+                <a
+                  [routerLink]="['/seguimiento902/editar/', solicitud.id]"
+                  class="btn btn-info col-md-4 text-left"
+                  >Seguimiento 902</a
+                >
+              </div>
               <!-- <div class="col-md-12">
                 <a [routerLink]="['/solicitudes/ver/', solicitud.id]"
                   class="btn btn-info col-md-4 text-left">Repositorio
                   Documental</a>
               </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment </i>
+            </div>
+            <h4 class="card-title">Entregables Técnico jurídicos</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <a *ngIf="hasSeguimiento902"
+                  [routerLink]="[
+                    '/templates',
+                    {
+                      foo: 'siquiero enviar texto',
+                      nameFile: 'resolucion_cierre',
+                      reportType: 'closeResolution',
+                      solicitudId: solicitud.id
+                    }
+                  ]"
+                  class="btn btn-info col-md-4 text-left"
+                  [state]="{ service: 'nuevoServicio' }"
+                  >Modelo Resolución de Cierre
+                </a>
+                <a *ngIf="!hasSeguimiento902"
+                   class="btn btn-info disabled col-md-4 text-left">
+                  Modelo Resolución de Cierre
+                </a>
+              </div>
+<!--              <div class="col-md-12">-->
+<!--                <a-->
+<!--                  [routerLink]="['/templates']"-->
+<!--                  class="btn btn-info col-md-4 text-left"-->
+<!--                  [state]="{ service: 'nuevoServicio' }"-->
+<!--                  >Modelo Cierro</a-->
+<!--                >-->
+<!--              </div>-->
             </div>
           </div>
         </div>

@@ -78,4 +78,7 @@ export class DomainService {
   getTipoMotivoDeCorreccionSinergia(): Observable<Domain[]> {
     return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoMotivoDeCorreccionSinergia");
   }
+  getTipoViabilidadTecnica(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoViabilidadTecnica");
+  }
 }

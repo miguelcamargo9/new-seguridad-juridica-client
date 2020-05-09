@@ -9,6 +9,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/r
 export class SolicitudService implements Resolve<any> {
   routeParams: any;
   solicitud: Solicitud;
+  hasSeguimiento902: Boolean;
   onSolicitudChanged: BehaviorSubject<any> = new BehaviorSubject({});
 
   constructor(private http: HttpClient) {}
@@ -19,7 +20,9 @@ export class SolicitudService implements Resolve<any> {
   ): Observable<any> | Promise<any> | any {
     this.routeParams = route.params;
     return new Promise((resolve, reject) => {
-      Promise.all([this.getSolicitudPreviewById(this.routeParams.id)]).then(() => {
+      Promise.all([this.getSolicitudPreviewById(this.routeParams.id),
+                         this.getHasSeguimiento902(this.routeParams.id)
+      ]).then(() => {
         resolve();
       }, reject);
     });
@@ -41,6 +44,15 @@ export class SolicitudService implements Resolve<any> {
     return this.http.get<Solicitud>(environment.apiUrl + `/solicitud/${solicitudId}`);
   }
 
+  getHasSeguimiento902(solicitudId: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(environment.apiUrl + "/seguimiento902/" + solicitudId + "/exists").subscribe((response: any) => {
+        this.hasSeguimiento902 = response;
+        this.onSolicitudChanged.next(this.solicitud);
+        resolve(response);
+      }, reject);
+    });
+  }
   getSolicitudPreviewById(solicitudId: number): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.get(environment.apiUrl + "/solicitud/" + solicitudId).subscribe((response: any) => {

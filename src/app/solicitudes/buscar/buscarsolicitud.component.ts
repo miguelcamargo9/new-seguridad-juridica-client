@@ -19,7 +19,7 @@ export class BuscarSolicitudComponent implements OnInit {
     { value: "expedienteSIT", viewValue: "Expediente SIT" },
     { value: "fiso", viewValue: "FISO" },
     { value: "folio", viewValue: "Folio de matrícula inmobiliaria" },
-    { value: "cedulaSolicitante", viewValue: "Cedula Solicitante" },
+    { value: "cedulaSolicitante", viewValue: "Cédula Solicitante" },
     { value: "nombreSolicitante", viewValue: "Nombre Solicitante" }
   ];
   buscarSolicitud: FormGroup;
@@ -63,4 +63,26 @@ export class BuscarSolicitudComponent implements OnInit {
       this.toastr.error("Formulario Invalido", "Buscar Solicitud");
     }
   }
+
+  standardWord(str) {
+    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÇç",
+        to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuucc",
+        mapping = {};
+
+    for(let i = 0, j = from.length; i < j; i++ )
+      mapping[ from.charAt( i ) ] = to.charAt( i );
+
+
+      var ret = [];
+      for( let i = 0, j = str.length; i < j; i++ ) {
+        var c = str.charAt( i );
+        if( mapping.hasOwnProperty( str.charAt( i ) ) )
+          ret.push( mapping[ c ] );
+        else
+          ret.push( c );
+      }
+      console.log("STrign finallll: ", ret.join( '' ))
+      return ret.join( '' );
+
+  };
 }
