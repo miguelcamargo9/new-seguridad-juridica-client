@@ -19,7 +19,7 @@ export class BuscarSolicitudComponent implements OnInit {
     { value: "expedienteSIT", viewValue: "Expediente SIT" },
     { value: "fiso", viewValue: "FISO" },
     { value: "folio", viewValue: "Folio de matrícula inmobiliaria" },
-    { value: "cedulaSolicitante", viewValue: "Cedula Solicitante" },
+    { value: "cedulaSolicitante", viewValue: "Cédula Solicitante" },
     { value: "nombreSolicitante", viewValue: "Nombre Solicitante" }
   ];
   buscarSolicitud: FormGroup;
