@@ -100,7 +100,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
       numeroPredialNacional: [null],
       predioDeMayorExtension: [null, [Validators.required]],
       nombrePredioMayorExtension: [null],
-      areaSolicitada: [null, [Validators.required]]
+      areaSolicitada: [null, [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]]
     });
     this.populateForm();
     // Code for the Validator
@@ -626,4 +626,25 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     }
     return invalid;
   }
+  standardWord(str) {
+    var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÇç",
+        to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuucc",
+        mapping = {};
+
+    for(let i = 0, j = from.length; i < j; i++ )
+      mapping[ from.charAt( i ) ] = to.charAt( i );
+
+
+    var ret = [];
+    for( let i = 0, j = str.length; i < j; i++ ) {
+      var c = str.charAt( i );
+      if( mapping.hasOwnProperty( str.charAt( i ) ) )
+        ret.push( mapping[ c ] );
+      else
+        ret.push( c );
+    }
+    console.log("STrign finallll: ", ret.join( '' ))
+    return ret.join( '' );
+
+  };
 }

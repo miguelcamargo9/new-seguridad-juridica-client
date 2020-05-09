@@ -1,7 +1,7 @@
 export class Seguimiento902 {
   id: number;
   solicitudId: number;
-  tieneViabilidadTecnica: boolean;
+  tipoViabilidadTecnicaId: number;
   estadoInformeTecnicoJuridicoId: number;
   fechaInformeTecnicoJuridico: Date;
   areaDelPredioEnCatastroR1YR2: number;

@@ -7,9 +7,6 @@ export class Seguimiento902EtapaCierre {
   oposicion: boolean;
   motivoOposicion: string;
   fechaRadicadoOposicion: Date;
-  fechaEnvioAFirmaDeSubdirectorCierre: Date;
-  fechaRecibidoFirmaCierre: Date;
-  fechaEnvioANumeracionCierre: Date;
   numeroDeResolucionDeCierre: string;
   fechaResolucionDeCierre: Date;
   notificacionPersonalCierre: boolean;

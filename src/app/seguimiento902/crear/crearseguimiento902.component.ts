@@ -58,6 +58,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
   tipoEstadoSinegia: Domain[];
   tipoMotivoSuspension: Domain[];
   tipoMotivoDeCorreccionSinergia: Domain[];
+  tipoViabilidadTecnica: Domain[];
 
   solicitudId: number;
   seguimiento902Id: number;
@@ -81,6 +82,12 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
   viewResolucionModificacionAclaracion: boolean = false;
   viewResolucionModificacionAclaracionCierre: boolean = false;
 
+  // Form Cierre
+  viewMotivoOposicionCierre: boolean = false;
+  viewFechaNotificacionPersonalCierre: boolean = false;
+  viewFechaNotificacionPorAvisoCierre: boolean = false;
+  viewFechaPublicacionResolucionCierre: boolean = false;
+  viewResolucionCierre: boolean = false;
   userList: Domain[];
 
   initialStages: Seguimiento902EtapaIncio[];
@@ -168,7 +175,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     // Code for the Validator
     const $validator = $(".card-wizard form").validate({
       rules: {
-        tieneViabilidadTecnica: { required: true },
+        tipoViabilidadTecnicaId: { required: true },
         estadoInformeTecnicoJuridicoId: { required: true },
         areaDelPredioEnCatastroR1YR2: { required: true },
         areaDelPredioEnFolioDeMatriculaInmobiliaria: { required: true },
@@ -590,10 +597,18 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         console.log("It don't getDomain!" + error);
       }
     );
+    this.domainService.getTipoViabilidadTecnica().subscribe(
+        (data) => {
+          this.tipoViabilidadTecnica = data;
+        },
+        (error) => {
+          console.log("It don't getDomain!" + error);
+        }
+    );
   }
   initForm() {
     this.createSeguimiento902 = this.formBuilder.group({
-      tieneViabilidadTecnica: [null, Validators.required],
+      tipoViabilidadTecnicaId: [null, Validators.required],
       estadoInformeTecnicoJuridicoId: [null, Validators.required],
       fechaInformeTecnicoJuridico: [null],
       areaDelPredioEnCatastroR1YR2: [null, Validators.required],
@@ -617,9 +632,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       tipoMedidaCautelarId: [null, Validators.required],
       tipoDeActoId: [null, Validators.required],
       abogadoProyeccionId: [null, Validators.required],
-      fechaEnvioAFirmaDeSubdirectorInicio: [null],
-      fechaRecibidoFirmaInicio: [null],
-      fechaEnvioANumeracionInicio: [null],
       numeroResolucionInicioArchivo: [null, Validators.required],
       fechaResolucion: [null, Validators.required],
       notificacionPersonalInicio: [null],
@@ -650,9 +662,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       oposicion: [null, Validators.required],
       motivoOposicion: [null],
       fechaRadicadoOposicion: [null],
-      fechaEnvioAFirmaDeSubdirectorCierre: [null],
-      fechaRecibidoFirmaCierre: [null],
-      fechaEnvioANumeracionCierre: [null],
       numeroDeResolucionDeCierre: [null, Validators.required],
       fechaResolucionDeCierre: [null, Validators.required],
       notificacionPersonalCierre: [null],
@@ -691,13 +700,11 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         this.seguimiento902Id = seguimiento902Data.id;
         this.fiso = seguimiento902Data.fiso;
         this.expedienteSit = seguimiento902Data.expedienteSit;
-        this.viewTipoMotivoSuspension =
-          seguimiento902Data.tipoTieneViabilidadJuridicaId === 3 ? true : false;
-        this.viewTipoDeNoViabilidadId =
-          seguimiento902Data.tipoTieneViabilidadJuridicaId === 2 ? true : false;
+        this.viewTipoMotivoSuspension = seguimiento902Data.tipoTieneViabilidadJuridicaId === 3 ? true : false;
+        this.viewTipoDeNoViabilidadId = seguimiento902Data.tipoTieneViabilidadJuridicaId === 2 ? true : false;
 
-        this.createSeguimiento902.controls["tieneViabilidadTecnica"].setValue(
-          seguimiento902Data.tieneViabilidadTecnica
+        this.createSeguimiento902.controls["tipoViabilidadTecnicaId"].setValue(
+          seguimiento902Data.tipoViabilidadTecnicaId
         );
         this.createSeguimiento902.controls["estadoInformeTecnicoJuridicoId"].setValue(
           seguimiento902Data.estadoInformeTecnicoJuridicoId
@@ -767,15 +774,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         );
         this.createSeguimiento902.controls["abogadoProyeccionId"].setValue(
           seguimiento902Data.abogadoProyeccionId
-        );
-        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorInicio"].setValue(
-          this.changeDate(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorInicio)
-        );
-        this.createSeguimiento902.controls["fechaRecibidoFirmaInicio"].setValue(
-          this.changeDate(seguimiento902Data.fechaRecibidoFirmaInicio)
-        );
-        this.createSeguimiento902.controls["fechaEnvioANumeracionInicio"].setValue(
-          this.changeDate(seguimiento902Data.fechaEnvioANumeracionInicio)
         );
         this.createSeguimiento902.controls["numeroResolucionInicioArchivo"].setValue(
           seguimiento902Data.numeroResolucionInicioArchivo
@@ -859,15 +857,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         this.createSeguimiento902.controls["fechaRadicadoOposicion"].setValue(
           this.changeDate(seguimiento902Data.fechaRadicadoOposicion)
         );
-        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorCierre"].setValue(
-          this.changeDate(seguimiento902Data.fechaEnvioAFirmaDeSubdirectorCierre)
-        );
-        this.createSeguimiento902.controls["fechaRecibidoFirmaCierre"].setValue(
-          this.changeDate(seguimiento902Data.fechaRecibidoFirmaCierre)
-        );
-        this.createSeguimiento902.controls["fechaEnvioANumeracionCierre"].setValue(
-          this.changeDate(seguimiento902Data.fechaEnvioANumeracionCierre)
-        );
         this.createSeguimiento902.controls["numeroDeResolucionDeCierre"].setValue(
           seguimiento902Data.numeroDeResolucionDeCierre
         );
@@ -938,13 +927,8 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
           seguimiento902Data.resolucionModificacionAclaracionCierre
         );
         this.initialStageButton = seguimiento902Data.resolucionModificacionAclaracion ? "add" : "";
-        this.viewResolucionModificacionAclaracion =
-          seguimiento902Data.resolucionModificacionAclaracion || false;
-        this.finalStageButton = seguimiento902Data.resolucionModificacionAclaracionCierre
-          ? "add"
-          : "";
-        this.viewResolucionModificacionAclaracionCierre =
-          seguimiento902Data.resolucionModificacionAclaracionCierre || false;
+        this.finalStageButton = seguimiento902Data.resolucionModificacionAclaracionCierre ? "add" : "";
+
         this.getSeguimiento902EtapaInicioBySeguimiento902Id(seguimiento902Data.id);
         this.getSeguimiento902EtapaCierreBySeguimiento902Id(seguimiento902Data.id);
       },
@@ -1071,6 +1055,24 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     }
   }
 
+
+  // Form Cierre
+  selectOposicionCierre(event) {
+    this.viewMotivoOposicionCierre = event.value ? true : false;
+  }
+  selectNotificacionPersonalCierre(event) {
+    this.viewFechaNotificacionPersonalCierre = event.value ? true : false;
+  }
+  selectNotificacionPorAvisoCierre(event) {
+    this.viewFechaNotificacionPorAvisoCierre = event.value ? true : false;
+  }
+  selectPublicacionResolucionCierre(event) {
+    this.viewFechaPublicacionResolucionCierre = event.value ? true : false;
+  }
+  selectResolucionCierre(event) {
+    this.viewResolucionCierre = event.value ? true : false;
+  }
+
   loadEtapaInicio(initialStageId: number, process: String) {
     this.initialStageId = initialStageId;
     this.initialStageButton = process;
@@ -1082,15 +1084,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         );
         this.createSeguimiento902.controls["abogadoProyeccionId"].setValue(
           seguimiento902EtapaInicialData.abogadoProyeccionId
-        );
-        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorInicio"].setValue(
-          this.changeDate(seguimiento902EtapaInicialData.fechaEnvioAFirmaDeSubdirectorInicio)
-        );
-        this.createSeguimiento902.controls["fechaRecibidoFirmaInicio"].setValue(
-          this.changeDate(seguimiento902EtapaInicialData.fechaRecibidoFirmaInicio)
-        );
-        this.createSeguimiento902.controls["fechaEnvioANumeracionInicio"].setValue(
-          this.changeDate(seguimiento902EtapaInicialData.fechaEnvioANumeracionInicio)
         );
         this.createSeguimiento902.controls["numeroResolucionInicioArchivo"].setValue(
           seguimiento902EtapaInicialData.numeroResolucionInicioArchivo
@@ -1146,6 +1139,12 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         this.createSeguimiento902.controls["fechaRegistroEnOripResolucionInicio"].setValue(
           this.changeDate(seguimiento902EtapaInicialData.fechaRegistroEnOripResolucionInicio)
         );
+        this.viewFechaNotificacionPersonalInicio = seguimiento902EtapaInicialData.notificacionPersonalInicio;
+        this.viewFechaFijacionNotificacionPorAvisoInicio = seguimiento902EtapaInicialData.notificacionPorAvisoInicio;
+        this.viewFechaPublicacionWebInicio = seguimiento902EtapaInicialData.publicacionWebInicio;
+        this.viewFechaPublicacionEnEmisora = seguimiento902EtapaInicialData.publicacionEmisora;
+        this.viewFechaPublicacionAlcaldia = seguimiento902EtapaInicialData.publicacionAlcaldia;
+        this.viewNumeroDeResolucionQueResuelveRecurso = seguimiento902EtapaInicialData.recursoDeReposicion;
       });
   }
 
@@ -1153,9 +1152,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     this.initialStageButton = "add";
     this.createSeguimiento902.controls["tipoDeActoId"].setValue(null);
     this.createSeguimiento902.controls["abogadoProyeccionId"].setValue(null);
-    this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorInicio"].setValue(null);
-    this.createSeguimiento902.controls["fechaRecibidoFirmaInicio"].setValue(null);
-    this.createSeguimiento902.controls["fechaEnvioANumeracionInicio"].setValue(null);
     this.createSeguimiento902.controls["numeroResolucionInicioArchivo"].setValue(null);
     this.createSeguimiento902.controls["fechaResolucion"].setValue(null);
     this.createSeguimiento902.controls["notificacionPersonalInicio"].setValue(null);
@@ -1174,6 +1170,12 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     this.createSeguimiento902.controls["fechaComunicacionAProcuraduria"].setValue(null);
     this.createSeguimiento902.controls["fechaEnvioAOripResolucionInicio"].setValue(null);
     this.createSeguimiento902.controls["fechaRegistroEnOripResolucionInicio"].setValue(null);
+    this.viewFechaNotificacionPersonalInicio = false;
+    this.viewFechaFijacionNotificacionPorAvisoInicio = false;
+    this.viewFechaPublicacionWebInicio = false;
+    this.viewFechaPublicacionEnEmisora = false;
+    this.viewFechaPublicacionAlcaldia = false;
+    this.viewNumeroDeResolucionQueResuelveRecurso = false;
   }
 
   getSeguimiento902EtapaInicioBySeguimiento902Id(seguimiento902Id: number) {
@@ -1204,9 +1206,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       seguimiento902Id: this.seguimiento902Id,
       tipoDeActoId: formData.tipoDeActoId,
       abogadoProyeccionId: formData.abogadoProyeccionId,
-      fechaEnvioAFirmaDeSubdirectorInicio: formData.fechaEnvioAFirmaDeSubdirectorInicio,
-      fechaRecibidoFirmaInicio: formData.fechaRecibidoFirmaInicio,
-      fechaEnvioANumeracionInicio: formData.fechaEnvioANumeracionInicio,
       numeroResolucionInicioArchivo: formData.numeroResolucionInicioArchivo,
       fechaResolucion: formData.fechaResolucion,
       notificacionPersonalInicio: formData.notificacionPersonalInicio,
@@ -1293,15 +1292,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         this.createSeguimiento902.controls["fechaRadicadoOposicion"].setValue(
           this.changeDate(seguimiento902EtapaCierreData.fechaRadicadoOposicion)
         );
-        this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorCierre"].setValue(
-          this.changeDate(seguimiento902EtapaCierreData.fechaEnvioAFirmaDeSubdirectorCierre)
-        );
-        this.createSeguimiento902.controls["fechaRecibidoFirmaCierre"].setValue(
-          this.changeDate(seguimiento902EtapaCierreData.fechaRecibidoFirmaCierre)
-        );
-        this.createSeguimiento902.controls["fechaEnvioANumeracionCierre"].setValue(
-          this.changeDate(seguimiento902EtapaCierreData.fechaEnvioANumeracionCierre)
-        );
         this.createSeguimiento902.controls["numeroDeResolucionDeCierre"].setValue(
           seguimiento902EtapaCierreData.numeroDeResolucionDeCierre
         );
@@ -1338,6 +1328,11 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         this.createSeguimiento902.controls["fechaResolucionResuelveRecurso"].setValue(
           this.changeDate(seguimiento902EtapaCierreData.fechaResolucionResuelveRecurso)
         );
+        this.viewMotivoOposicionCierre = seguimiento902EtapaCierreData.oposicion;
+        this.viewFechaNotificacionPersonalCierre = seguimiento902EtapaCierreData.notificacionPersonalCierre;
+        this.viewFechaNotificacionPorAvisoCierre = seguimiento902EtapaCierreData.notificacionPorAvisoCierre;
+        this.viewFechaPublicacionResolucionCierre = seguimiento902EtapaCierreData.publicacionResolucionCierre;
+        this.viewResolucionCierre = seguimiento902EtapaCierreData.recursoResolucionCierre;
       });
   }
 
@@ -1348,9 +1343,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     this.createSeguimiento902.controls["oposicion"].setValue(null);
     this.createSeguimiento902.controls["motivoOposicion"].setValue(null);
     this.createSeguimiento902.controls["fechaRadicadoOposicion"].setValue(null);
-    this.createSeguimiento902.controls["fechaEnvioAFirmaDeSubdirectorCierre"].setValue(null);
-    this.createSeguimiento902.controls["fechaRecibidoFirmaCierre"].setValue(null);
-    this.createSeguimiento902.controls["fechaEnvioANumeracionCierre"].setValue(null);
     this.createSeguimiento902.controls["numeroDeResolucionDeCierre"].setValue(null);
     this.createSeguimiento902.controls["fechaResolucionDeCierre"].setValue(null);
     this.createSeguimiento902.controls["notificacionPersonalCierre"].setValue(null);
@@ -1363,6 +1355,11 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     this.createSeguimiento902.controls["tipoRecursoId"].setValue(null);
     this.createSeguimiento902.controls["numeroResolucionResuelveRecurso"].setValue(null);
     this.createSeguimiento902.controls["fechaResolucionResuelveRecurso"].setValue(null);
+    this.viewMotivoOposicionCierre = false;
+    this.viewFechaNotificacionPersonalCierre = false;
+    this.viewFechaNotificacionPorAvisoCierre = false;
+    this.viewFechaPublicacionResolucionCierre = false;
+    this.viewResolucionCierre = false;
   }
 
   getDataFormEtapaCierre() {
@@ -1374,9 +1371,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       oposicion: formData.oposicion,
       motivoOposicion: formData.motivoOposicion,
       fechaRadicadoOposicion: formData.fechaRadicadoOposicion,
-      fechaEnvioAFirmaDeSubdirectorCierre: formData.fechaEnvioAFirmaDeSubdirectorCierre,
-      fechaRecibidoFirmaCierre: formData.fechaRecibidoFirmaCierre,
-      fechaEnvioANumeracionCierre: formData.fechaEnvioANumeracionCierre,
       numeroDeResolucionDeCierre: formData.numeroDeResolucionDeCierre,
       fechaResolucionDeCierre: formData.fechaResolucionDeCierre,
       notificacionPersonalCierre: formData.notificacionPersonalCierre,
