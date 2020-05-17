@@ -24,12 +24,12 @@ import { DeleteCompaniesComponent } from "./delete/deletecompanies.component";
     DataTablesModule,
     UtilsModule
   ],
-  declarations: [
-    CreateCompaniesComponent,
-    EditCompaniesComponent,
-    DeleteCompaniesComponent,
-    CompaniesListComponent,
-  ],
+    declarations: [
+        CreateCompaniesComponent,
+        EditCompaniesComponent,
+        DeleteCompaniesComponent,
+        CompaniesListComponent
+    ],
   providers: [CompanyService]
 })
 export class CompaniesModule { }

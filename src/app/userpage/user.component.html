@@ -7,105 +7,329 @@
             <div class="card-icon">
               <i class="material-icons">perm_identity</i>
             </div>
-            <h4 class="card-title">Edit Profile -
-              <small class="category">Complete your profile</small>
+            <h4 class="card-title">Editar Perfil -
+              <small class="category"></small>
             </h4>
           </div>
           <div class="card-body">
-            <form>
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Company (disabled)</label>
-                    <input type="text" class="form-control" disabled>
+            <form [formGroup]="editUser">
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width"
+                            [ngClass]="displayFieldCss(editUser, 'firstName')"
+                    >
+                      <input
+                              type="text"
+                              matInput
+                              id="firstName"
+                              placeholder="Nombres *"
+                              formControlName="firstName"
+                      />
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'firstName')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width"
+                            [ngClass]="displayFieldCss(editUser, 'lastName')"
+                    >
+                      <input
+                              type="text"
+                              matInput
+                              id="lastName"
+                              placeholder="Apellidos *"
+                              formControlName="lastName"
+                      />
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'lastName')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Username</label>
-                    <input type="text" class="form-control">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width"
+                            [ngClass]="displayFieldCss(editUser, 'nickName')"
+                    >
+                      <input
+                              type="text"
+                              matInput
+                              id="nickName"
+                              placeholder="Usuario *"
+                              formControlName="nickName"
+                      />
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'nickName')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width"
+                            [ngClass]="displayFieldCss(editUser, 'email')"
+                    >
+                      <input
+                              type="email"
+                              matInput
+                              id="email"
+                              placeholder="Correo *"
+                              formControlName="email"
+                      />
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'email')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Email address</label>
-                    <input type="email" class="form-control">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width"
+                            [ngClass]="displayFieldCss(editUser, 'typeDocument')"
+                    >
+                      <mat-select
+                              placeholder="Tipo de Documento"
+                              name="typeDocument"
+                              id="typeDocument"
+                              formControlName="typeDocument"
+                      >
+                        <mat-option
+                                *ngFor="let tipoDocumento of tiposDocumento"
+                                [value]="tipoDocumento.id"
+                        >
+                          {{ tipoDocumento.nombre }}
+                        </mat-option>
+                      </mat-select>
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'typeDocument')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width"
+                            [ngClass]="displayFieldCss(editUser, 'documentNumber')"
+                    >
+                      <input
+                              type="text"
+                              matInput
+                              id="documentNumber"
+                              placeholder="Documento *"
+                              formControlName="documentNumber"
+                      />
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'documentNumber')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width"
+                            [ngClass]="displayFieldCss(editUser, 'role')"
+                    >
+                      <mat-select placeholder="Rol" name="role" id="role" formControlName="role">
+                        <mat-option *ngFor="let role of roles" [value]="role.id">
+                          {{ role.name }}
+                        </mat-option>
+                      </mat-select>
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'role')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width"
+                            [ngClass]="displayFieldCss(editUser, 'company')"
+                    >
+                      <mat-select
+                              placeholder="Compañia"
+                              name="company"
+                              id="company"
+                              formControlName="company"
+                      >
+                        <mat-option *ngFor="let company of companies" [value]="company.id">
+                          {{ company.businessName }}
+                        </mat-option>
+                      </mat-select>
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'company')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="displayFieldCss(editUser, 'expireDate')"
+                    >
+                      <input
+                              matInput
+                              [matDatepicker]="expireDatepicker"
+                              placeholder="Fecha Expiración*"
+                              name="expireDate"
+                              id="expireDate"
+                              (click)="expireDatepicker.open()"
+                              formControlName="expireDate"
+                      />
+                      <mat-datepicker-toggle
+                              matSuffix
+                              [for]="expireDatepicker"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #expireDatepicker></mat-datepicker>
+                      <app-field-error-display
+                              [displayError]="isFieldValid(editUser, 'expireDate')"
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="
+                              displayFieldCss(editUser, 'active')
+                            "
+                    >
+                      <mat-select
+                              placeholder="Activo"
+                              name="active"
+                              matInput
+                              id="active"
+                              formControlName="active"
+                      >
+                        <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
+                          {{ item.nombre }}
+                        </mat-option>
+                      </mat-select>
+                      <app-field-error-display
+                              [displayError]="
+                                isFieldValid(editUser, 'active')
+                              "
+                              errorMsg="Diligenciar el campo."
+                      >
+                      </app-field-error-display>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="category form-category">* Campos Requeridos</div>
+
+
+              <div class="card-footer text-right">
+                <div class="form-check mr-auto"></div>
+                <button mat-raised-button type="submit" class="btn btn-success" (click)="onSubmit()">
+                  Guardar
+                </button>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Fist Name</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Last Name</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Adress</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">City</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Country</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Postal Code</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>About Me</label>
-                    <div class="form-group">
-                      <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                      <textarea class="form-control" rows="5"></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button mat-raised-button type="submit" class="btn btn-rose pull-right">Update Profile</button>
-              <div class="clearfix"></div>
             </form>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-        <div class="card card-profile">
-          <div class="card-avatar">
-            <a href="#pablo">
-              <img class="img" src="./assets/img/faces/marc.jpg" />
-            </a>
+        <div class="card">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">security</i>
+            </div>
+            <h4 class="card-title">Cambiar Contraseña -
+              <small class="category">{{userName}}</small>
+            </h4>
           </div>
           <div class="card-body">
-            <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-            <h4 class="card-title">Alec Thompson</h4>
-            <p class="card-description">
-              Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-            </p>
-            <a href="#pablo" class="btn btn-rose btn-round">Follow</a>
+            <form [formGroup]="passwordUserFrom">
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-form-field
+                          class="example-full-width"
+                          [ngClass]="displayFieldCss(passwordUserFrom, 'passwordCurrent')"
+                  >
+                    <input
+                            type="text"
+                            matInput
+                            id="passwordCurrent"
+                            placeholder="Clave Actual *"
+                            formControlName="passwordCurrent"
+                    />
+                    <app-field-error-display
+                            [displayError]="isFieldValid(passwordUserFrom, 'passwordCurrent')"
+                            errorMsg="Diligenciar el campo."
+                    >
+                    </app-field-error-display>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field
+                          class="example-full-width"
+                          [ngClass]="displayFieldCss(passwordUserFrom, 'password')"
+                  >
+                    <input
+                            type="password"
+                            matInput
+                            id="password"
+                            placeholder="Nueva Clave *"
+                            formControlName="password"
+                    />
+                    <app-field-error-display
+                            [displayError]="isFieldValid(passwordUserFrom, 'password')"
+                            errorMsg="Diligenciar el campo."
+                    >
+                    </app-field-error-display>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field
+                          class="example-full-width"
+                          [ngClass]="displayFieldCss(passwordUserFrom, 'passwordConfirm')"
+                  >
+                    <input
+                            type="password"
+                            matInput
+                            id="passwordConfirm"
+                            placeholder="Confirmar Nueva Clave *"
+                            formControlName="passwordConfirm"
+                    />
+                    <app-field-error-display
+                            [displayError]="isFieldValid(passwordUserFrom, 'passwordConfirm')"
+                            errorMsg="Diligenciar el campo."
+                    >
+                    </app-field-error-display>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="category form-category">* Campos Requeridos</div>
+              <div class="card-footer text-right">
+                <div class="form-check mr-auto"></div>
+                <button mat-raised-button type="submit" class="btn btn-success" (click)="onSubmitPassword()">
+                  Actualizar Clave
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

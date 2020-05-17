@@ -37,7 +37,7 @@
                   type="text"
                   matInput
                   id="documentNumber"
-                  placeholder="Número de Documento *"
+                  placeholder="Número de Documento"
                   [errorStateMatcher]="matcher"
                   formControlName="documentNumber"
                   (ngModelChange)="textValidationType($event)"
@@ -59,13 +59,38 @@
                   type="text"
                   matInput
                   id="rut"
-                  placeholder="RUT *"
+                  placeholder="RUT"
                   (ngModelChange)="textValidationType($event)"
                   formControlName="rut"
                 />
                 <app-field-error-display
                   [displayError]="isFieldValid(createComany, 'rut')"
                   errorMsg="Ingrese el RUT"
+                >
+                </app-field-error-display>
+              </mat-form-field>
+              <mat-form-field
+                      class="example-full-width has-label"
+                      [ngClass]="
+                              displayFieldCss(createComany, 'status')
+                            "
+              >
+                <mat-select
+                        placeholder="Estado"
+                        name="status"
+                        matInput
+                        id="status"
+                        formControlName="status"
+                >
+                  <mat-option *ngFor="let item of tipoSiNo" [value]="item.id">
+                    {{ item.nombre }}
+                  </mat-option>
+                </mat-select>
+                <app-field-error-display
+                        [displayError]="
+                                isFieldValid(createComany, 'status')
+                              "
+                        errorMsg="Diligenciar el campo."
                 >
                 </app-field-error-display>
               </mat-form-field>

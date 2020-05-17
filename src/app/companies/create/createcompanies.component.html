@@ -29,46 +29,6 @@
                   Ingrese el nombre de la compañia <strong>requerido</strong>
                 </mat-error>
               </mat-form-field>
-              <mat-form-field
-                class="example-full-width has-label"
-                [ngClass]="{ 'has-success': validDocumentNumber === true }"
-              >
-                <input
-                  type="text"
-                  matInput
-                  id="documentNumber"
-                  placeholder="Número de Documento *"
-                  [errorStateMatcher]="matcher"
-                  formControlName="documentNumber"
-                  (ngModelChange)="textValidationType($event)"
-                />
-                <app-field-error-display
-                  [displayError]="isFieldValid(createComany, 'documentNumber')"
-                  errorMsg="Ingrese el número de documento."
-                >
-                </app-field-error-display>
-              </mat-form-field>
-
-              <mat-form-field
-                class="example-full-width has-label"
-                [ngClass]="{
-                  'has-success': validRut === true
-                }"
-              >
-                <input
-                  type="text"
-                  matInput
-                  id="rut"
-                  placeholder="RUT *"
-                  (ngModelChange)="textValidationType($event)"
-                  formControlName="rut"
-                />
-                <app-field-error-display
-                  [displayError]="isFieldValid(createComany, 'rut')"
-                  errorMsg="Ingrese el RUT"
-                >
-                </app-field-error-display>
-              </mat-form-field>
               <div class="category form-category">* Campos Requeridos</div>
             </div>
             <div class="card-footer text-right">

@@ -751,7 +751,7 @@
                               name="areaSolicitada"
                               matInput
                               id="areaSolicitada"
-                              placeholder="ÁREA SOLICITADA m2 *"
+                              placeholder="ÁREA SOLICITADA m2 * - {{solicitud.get('areaSolicitada').value | replaceArea}}"
                               formControlName="areaSolicitada"
                               onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />

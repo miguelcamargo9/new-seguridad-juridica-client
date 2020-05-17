@@ -43,7 +43,7 @@ export const AppRoutes: Routes = [
         loadChildren: "./templates/template.module#TemplateModule",
       },
       {
-        path: "",
+        path: "user",
         loadChildren: "./userpage/user.module#UserModule",
       },
       {

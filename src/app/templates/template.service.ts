@@ -8,13 +8,13 @@ import { Template } from "./template.model";
 export class TemplateService {
   constructor(private http: HttpClient) {}
 
-  getTemplateCloseResolution(solicitudId): Observable<any> {
-    return this.http.get<Template>(environment.apiUrl + "/template/closeResolution/" + solicitudId);
+  getTemplateCloseResolution(solicitudId, type): Observable<any> {
+    return this.http.get<Template>(environment.apiUrl + "/template/" + solicitudId + "/type/" + type);
   }
 
-  postTemplateCloseResolution(solicitudId, listTabs): Observable<any> {
+  postTemplateCloseResolution(solicitudId, listTabs, type): Observable<any> {
     return this.http.post(
-      environment.apiUrl + "/template/closeResolution/" + solicitudId,
+      environment.apiUrl + "/template/" + solicitudId + "/type/" + type,
       listTabs
     );
   }

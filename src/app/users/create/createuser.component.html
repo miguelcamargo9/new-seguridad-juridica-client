@@ -179,46 +179,34 @@
                   </mat-form-field>
                 </div>
               </div>
-<!--              <div class="row">-->
-<!--                <div class="col-md-6">-->
-<!--                  <mat-form-field-->
-<!--                    class="example-full-width"-->
-<!--                    [ngClass]="displayFieldCss(createUser, 'password')"-->
-<!--                  >-->
-<!--                    <input-->
-<!--                      type="password"-->
-<!--                      matInput-->
-<!--                      id="password"-->
-<!--                      placeholder="Contraseña *"-->
-<!--                      formControlName="password"-->
-<!--                    />-->
-<!--                    <app-field-error-display-->
-<!--                      [displayError]="isFieldValid(createUser, 'password')"-->
-<!--                      errorMsg="Diligenciar el campo."-->
-<!--                    >-->
-<!--                    </app-field-error-display>-->
-<!--                  </mat-form-field>-->
-<!--                </div>-->
-<!--                <div class="col-md-6">-->
-<!--                  <mat-form-field-->
-<!--                    class="example-full-width"-->
-<!--                    [ngClass]="displayFieldCss(createUser, 'passwordConfirm')"-->
-<!--                  >-->
-<!--                    <input-->
-<!--                      type="password"-->
-<!--                      matInput-->
-<!--                      id="passwordConfirm"-->
-<!--                      placeholder="Confirmar Contraseña *"-->
-<!--                      formControlName="passwordConfirm"-->
-<!--                    />-->
-<!--                    <app-field-error-display-->
-<!--                      [displayError]="isFieldValid(createUser, 'passwordConfirm')"-->
-<!--                      errorMsg="Diligenciar el campo."-->
-<!--                    >-->
-<!--                    </app-field-error-display>-->
-<!--                  </mat-form-field>-->
-<!--                </div>-->
-<!--              </div>-->
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field
+                          class="example-full-width has-label"
+                          [ngClass]="displayFieldCss(createUser, 'expireDate')"
+                  >
+                    <input
+                            matInput
+                            [matDatepicker]="expireDatepicker"
+                            placeholder="Fecha Expiración*"
+                            name="expireDate"
+                            id="expireDate"
+                            (click)="expireDatepicker.open()"
+                            formControlName="expireDate"
+                    />
+                    <mat-datepicker-toggle
+                            matSuffix
+                            [for]="expireDatepicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #expireDatepicker></mat-datepicker>
+                    <app-field-error-display
+                            [displayError]="isFieldValid(createUser, 'expireDate')"
+                            errorMsg="Diligenciar el campo."
+                    >
+                    </app-field-error-display>
+                  </mat-form-field>
+                </div>
+              </div>
               <div class="category form-category">* Campos Requeridos</div>
             </div>
 

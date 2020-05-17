@@ -176,7 +176,7 @@
                               name="areaDelPredioEnCatastroR1YR2"
                               matInput
                               id="areaDelPredioEnCatastroR1YR2"
-                              placeholder="ÁREA DEL PREDIO EN CATASTRO (R1 Y R2) - m2 *"
+                              placeholder="ÁREA DEL PREDIO EN CATASTRO (R1 Y R2) - m2 * - {{createSeguimiento902.get('areaDelPredioEnCatastroR1YR2').value | replaceArea}}"
                               formControlName="areaDelPredioEnCatastroR1YR2"
                               onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />
@@ -206,7 +206,7 @@
                               name="areaDelPredioEnFolioDeMatriculaInmobiliaria"
                               matInput
                               id="areaDelPredioEnFolioDeMatriculaInmobiliaria"
-                              placeholder="ÁREA DEL PREDIO EN FOLIO DE MATRÍCULA INMOBILIARIA - m2 *"
+                              placeholder="ÁREA DEL PREDIO EN FOLIO DE MATRÍCULA INMOBILIARIA - m2 * - {{createSeguimiento902.get('areaDelPredioEnFolioDeMatriculaInmobiliaria').value | replaceArea}}"
                               formControlName="areaDelPredioEnFolioDeMatriculaInmobiliaria"
                               onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />
@@ -236,7 +236,7 @@
                               name="areaLevantamientoPredial"
                               matInput
                               id="areaLevantamientoPredial"
-                              placeholder="ÁREA LEVANTAMIENTO PREDIAL - m2*"
+                              placeholder="ÁREA LEVANTAMIENTO PREDIAL - m2* - {{createSeguimiento902.get('areaLevantamientoPredial').value | replaceArea}}"
                               formControlName="areaLevantamientoPredial"
                               onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />
@@ -2456,7 +2456,7 @@
                               name="areaFormalizada"
                               matInput
                               id="areaFormalizada"
-                              placeholder="ÁREA FORMALIZADA*"
+                              placeholder="ÁREA FORMALIZADA* - {{createSeguimiento902.get('areaFormalizada').value | replaceArea}}"
                               formControlName="areaFormalizada"
                               onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
                             />

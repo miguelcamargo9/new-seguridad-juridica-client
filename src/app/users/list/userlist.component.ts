@@ -6,6 +6,7 @@ import { User } from "../user.model";
 import { Subject } from "rxjs";
 import { Roles } from "src/app/roles/roles.model";
 import { RolesService } from "src/app/roles/roles.services";
+import {DomainBoolean} from "../../seguimiento902/DomainBoolean.model";
 
 @Component({
   selector: "app-user-list-cmp",

@@ -9,7 +9,6 @@ import { RolesService } from "src/app/roles/roles.services";
 import { Roles } from "src/app/roles/roles.model";
 import { CompanyService } from "src/app/companies/companies.service";
 import { Company } from "src/app/companies/company.model";
-import { PasswordValidationUser } from "./password-validator.component";
 
 @Component({
   selector: "app-create-user",
@@ -46,6 +45,7 @@ export class CreateUserComponent implements OnInit {
         documentNumber: [null, [Validators.required]],
         role: [null, [Validators.required]],
         company: [null, [Validators.required]],
+        expireDate: [null, [Validators.required]],
         // password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
         // passwordConfirm: ["", [Validators.required]]
       },
@@ -106,6 +106,7 @@ export class CreateUserComponent implements OnInit {
         // password: formData.password,
         username: formData.nickName,
         roleId: formData.role,
+        expireDate: formData.expireDate,
         active: true
       };
       this.userService.postCreateUser(data).subscribe(params => {

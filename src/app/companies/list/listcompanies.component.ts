@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { CompanyService } from "../companies.service";
 import { Company } from "../company.model";
 import { Subject } from "rxjs/Subject";
+import {DomainBoolean} from "../../seguimiento902/DomainBoolean.model";
 
 @Component({
   selector: "app-companies",
@@ -11,8 +12,11 @@ export class CompaniesListComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   companies: Company[];
   dtTrigger: Subject<any> = new Subject();
+  tipoSiNo: DomainBoolean[];
 
-  constructor(private companyService: CompanyService) {}
+  constructor(private companyService: CompanyService) {
+    this.tipoSiNo = [new DomainBoolean(false, "No"), new DomainBoolean(true, "Si")];
+  }
 
   ngOnInit(): void {
     this.companyService.getCompanies().subscribe(

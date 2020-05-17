@@ -56,7 +56,8 @@ import { CheckInterfaceDirective } from "./directives/checkinterface.directive";
 
 import { AppRoutes } from "./app.routing";
 import { FieldErrorDisplayComponent } from "./components/field-error-display/field-error-display.component";
-import { ReplaceId } from "./pipes/replaceId";
+import {ReplaceBoolean, ReplaceId} from "./pipes/replaceId";
+import {ReplaceArea} from "./pipes/replaceArea";
 
 @NgModule({
   exports: [
@@ -102,11 +103,15 @@ export class MaterialModule { }
   ],
   declarations: [
     FieldErrorDisplayComponent,
-    ReplaceId
+    ReplaceId,
+    ReplaceBoolean,
+    ReplaceArea
   ],
   exports: [
     FieldErrorDisplayComponent,
-    ReplaceId
+    ReplaceId,
+    ReplaceBoolean,
+    ReplaceArea
   ]
 })
 export class UtilsModule { }
