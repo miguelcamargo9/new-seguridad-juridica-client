@@ -24,8 +24,8 @@
                   <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>NIT</th>
-                    <th>RUT</th>
+<!--                    <th>NIT</th>-->
+<!--                    <th>RUT</th>-->
                     <th>Estado</th>
                     <th class="text-right">Acciones</th>
                   </tr>
@@ -34,20 +34,20 @@
                   <tr *ngFor="let company of companies">
                     <td>{{ company.id }}</td>
                     <td>{{ company.businessName }}</td>
-                    <td>{{ company.documentNumber }}</td>
-                    <td>{{ company.rut }}</td>
-                    <td>{{ company.status }}</td>
+<!--                    <td>{{ company.documentNumber }}</td>-->
+<!--                    <td>{{ company.rut }}</td>-->
+                    <td>{{ company.status | replaceBoolean: 'nombre': tipoSiNo}}</td>
                     <td class="text-right">
                       <a
                         [routerLink]="['/companies/edit/', company.id]"
                         class="btn btn-link btn-warning btn-just-icon edit"
                         ><i class="material-icons">create</i></a
                       >
-                      <a
-                        [routerLink]="['/companies/delete/', company.id]"
-                        class="btn btn-link btn-danger btn-just-icon remove"
-                        ><i class="material-icons">close</i></a
-                      >
+<!--                      <a-->
+<!--                        [routerLink]="['/companies/delete/', company.id]"-->
+<!--                        class="btn btn-link btn-danger btn-just-icon remove"-->
+<!--                        ><i class="material-icons">close</i></a-->
+<!--                      >-->
                     </td>
                   </tr>
                 </tbody>

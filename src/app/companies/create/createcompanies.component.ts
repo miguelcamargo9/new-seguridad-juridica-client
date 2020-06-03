@@ -60,9 +60,7 @@ export class CreateCompaniesComponent {
       const val = this.createComany.value;
 
       const data = {
-        businessName: val.businessName,
-        documentNumber: val.documentNumber,
-        rut: val.rut
+        businessName: val.businessName
       };
       this.companyService.postCreateCompany(data).subscribe(
         data => {
@@ -95,9 +93,7 @@ export class CreateCompaniesComponent {
 
   ngOnInit() {
     this.createComany = this.formBuilder.group({
-      businessName: [null, [Validators.required]],
-      documentNumber: [null, [Validators.required]],
-      rut: [null, [Validators.required]]
+      businessName: [null, [Validators.required]]
     });
   }
 

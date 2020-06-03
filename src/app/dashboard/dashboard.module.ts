@@ -7,6 +7,8 @@ import { MaterialModule } from '../app.module';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
+import {DashboardService} from "./dashboard.services";
+import {SafePipe} from "../pipes/safePipe";
 
 @NgModule({
     imports: [
@@ -16,7 +18,8 @@ import { DashboardRoutes } from './dashboard.routing';
         MdModule,
         MaterialModule
     ],
-    declarations: [DashboardComponent]
+    providers:[DashboardService],
+    declarations: [DashboardComponent, SafePipe]
 })
 
 export class DashboardModule {}

@@ -4,7 +4,7 @@
       <img src="/assets/img/logo_ant.png" />
     </div>
   </a>
-  <a href="#" class="simple-text logo-normal" style="font-size: 11px;">
+  <a [routerLink]="['/solicitudes/buscar']" class="simple-text logo-normal" style="font-size: 11px;">
     Agencia Nacional de Tierras
   </a>
 </div>
@@ -12,7 +12,7 @@
 <div class="sidebar-wrapper">
   <div class="user">
     <div class="photo">
-      <img src="./assets/img/default-avatar.png" />
+      <img [src]="photo" />
     </div>
     <div class="user-info">
       <a data-toggle="collapse" href="#collapseExample" class="collapsed">
@@ -24,23 +24,25 @@
       <div class="collapse" id="collapseExample">
         <ul class="nav">
           <li class="nav-item">
-            <a href="javascript:void(0)" class="nav-link">
+            <a
+                    [routerLink]="['/user/profile']" class="nav-link"
+            >
               <span class="sidebar-mini">MP</span>
               <span class="sidebar-normal">Mi Perfil</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="javascript:void(0)" class="nav-link">
-              <span class="sidebar-mini">EP</span>
-              <span class="sidebar-normal">Editar Perfil</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="javascript:void(0)" class="nav-link">
-              <span class="sidebar-mini">S</span>
-              <span class="sidebar-normal">Configuración</span>
-            </a>
-          </li>
+<!--          <li class="nav-item">-->
+<!--            <a href="javascript:void(0)" class="nav-link">-->
+<!--              <span class="sidebar-mini">EP</span>-->
+<!--              <span class="sidebar-normal">Editar Perfil</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a href="javascript:void(0)" class="nav-link">-->
+<!--              <span class="sidebar-mini">S</span>-->
+<!--              <span class="sidebar-normal">Configuración</span>-->
+<!--            </a>-->
+<!--          </li>-->
         </ul>
       </div>
     </div>

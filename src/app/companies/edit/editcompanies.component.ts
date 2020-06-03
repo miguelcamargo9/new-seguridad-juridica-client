@@ -12,6 +12,7 @@ import { CompanyService } from "../companies.service";
 import { ToastrService } from "ngx-toastr";
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
+import {DomainBoolean} from "../../seguimiento902/DomainBoolean.model";
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -44,6 +45,7 @@ export class EditCompaniesComponent {
   validBusinessName: boolean = false;
   validDocumentNumber: boolean = false;
   validRut: boolean = false;
+  tipoSiNo: DomainBoolean[];
 
   routeSub: Subscription;
 
@@ -55,7 +57,9 @@ export class EditCompaniesComponent {
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+    this.tipoSiNo = [new DomainBoolean(false, "Inactivo"), new DomainBoolean(true, "Activo")];
+  }
 
   isFieldValid(form: FormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
@@ -76,7 +80,8 @@ export class EditCompaniesComponent {
         id: this.companyId,
         businessName: val.businessName,
         documentNumber: val.documentNumber,
-        rut: val.rut
+        rut: val.rut,
+        status: val.status
       };
       this.companyService.putUpdateCompany(data).subscribe(
         data => {
@@ -110,8 +115,9 @@ export class EditCompaniesComponent {
   ngOnInit() {
     this.createComany = this.formBuilder.group({
       businessName: [null, [Validators.required]],
-      documentNumber: [null, [Validators.required]],
-      rut: [null, [Validators.required]]
+      documentNumber: [null,[]],
+      rut: [null, []],
+      status: [null, [Validators.required]]
     });
     this.routeSub = this.route.params.subscribe(params => {
       this.companyId = params["id"];
@@ -124,6 +130,7 @@ export class EditCompaniesComponent {
             companiesData.documentNumber
           );
           this.createComany.controls["rut"].setValue(companiesData.rut);
+          this.createComany.controls["status"].setValue(companiesData.status);
         },
         error => {
           console.log("Error Obteniendo el Objeto!" + error);

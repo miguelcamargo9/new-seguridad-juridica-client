@@ -20,7 +20,9 @@ export class BuscarSolicitudComponent implements OnInit {
     { value: "fiso", viewValue: "FISO" },
     { value: "folio", viewValue: "Folio de matrícula inmobiliaria" },
     { value: "cedulaSolicitante", viewValue: "Cédula Solicitante" },
-    { value: "nombreSolicitante", viewValue: "Nombre Solicitante" }
+    { value: "nombreSolicitante", viewValue: "Nombre Solicitante" },
+    { value: "departamento", viewValue: "Departamento" },
+    { value: "municipio", viewValue: "Municipio" }
   ];
   buscarSolicitud: FormGroup;
   // dtOptions: DataTables.Settings = {};

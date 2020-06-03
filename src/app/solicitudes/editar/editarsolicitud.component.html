@@ -752,9 +752,12 @@
                               matInput
                               id="areaSolicitada"
                               onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
-                              placeholder="ÁREA SOLICITADA m2 *"
+                              placeholder="ÁREA SOLICITADA m2 (FISO) * - {{solicitud.get('areaSolicitada').value | replaceArea}}"
                               formControlName="areaSolicitada"
                             />
+<!--                            <div>-->
+<!--                              -->
+<!--                            </div>-->
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'areaSolicitada')"
                               errorMsg="Diligenciar el campo."

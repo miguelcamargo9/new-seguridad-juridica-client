@@ -11,6 +11,7 @@ import { CompanyService } from "src/app/companies/companies.service";
 import { Company } from "src/app/companies/company.model";
 import { Subscription } from "rxjs";
 import swal from "sweetalert2";
+import {DomainBoolean} from "../../seguimiento902/DomainBoolean.model";
 
 @Component({
   selector: "app-edit-user",
@@ -23,6 +24,7 @@ export class EditUserComponent implements OnInit {
   companies: Company[];
   routeSub: Subscription;
   userId: Number;
+  tipoSiNo: DomainBoolean[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,7 +35,9 @@ export class EditUserComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    this.tipoSiNo = [new DomainBoolean(false, "No"), new DomainBoolean(true, "Si")];
+  }
 
   ngOnInit() {
     this.getDomains();
@@ -48,12 +52,15 @@ export class EditUserComponent implements OnInit {
       typeDocument: [null, [Validators.required]],
       documentNumber: [null, [Validators.required]],
       role: [null, [Validators.required]],
-      company: [null, [Validators.required]]
+      company: [null, [Validators.required]],
+      active: [null, [Validators.required]],
+      expireDate: [null, [Validators.required]]
     });
     this.routeSub = this.route.params.subscribe(params => {
       this.userId = params["id"];
       this.userService.getUserById(this.userId).subscribe(
         userData => {
+          console.log("usuario", userData);
           this.editUser.controls["firstName"].setValue(userData.firstname);
           this.editUser.controls["lastName"].setValue(userData.lastname);
           this.editUser.controls["nickName"].setValue(userData.username);
@@ -62,12 +69,19 @@ export class EditUserComponent implements OnInit {
           this.editUser.controls["documentNumber"].setValue(userData.documentNumber);
           this.editUser.controls["role"].setValue(userData.roleId);
           this.editUser.controls["company"].setValue(userData.companyId);
+          this.editUser.controls["active"].setValue(userData.active);
+          this.editUser.controls["expireDate"].setValue(this.changeDate(userData.expireDate));
         },
         error => {
           console.log("Error Obteniendo el Objeto!" + error);
         }
       );
     });
+  }
+
+  changeDate(d: Date) {
+    if (d == null) return null;
+    return new Date(d);
   }
 
   displayFieldCss(form: FormGroup, field: string) {
@@ -120,7 +134,8 @@ export class EditUserComponent implements OnInit {
         firstname: formData.firstName,
         lastname: formData.lastName,
         username: formData.nickName,
-        active: true,
+        active: formData.active,
+        expireDate: formData.expireDate,
         roleId: formData.role
       };
       this.userService.putUpdateUser(data).subscribe(params => {

@@ -34,7 +34,7 @@ export class TemplateComponet implements OnInit {
       this.solicitudId = params.solicitudId;
       this.reportType = params.reportType;
       this.nameFile = params.nameFile;
-      this.templateService.getTemplateCloseResolution(params.solicitudId).subscribe(
+      this.templateService.getTemplateCloseResolution(params.solicitudId, this.reportType).subscribe(
         (TemplateDataData) => {
           this.tabs = TemplateDataData;
         },
@@ -63,7 +63,7 @@ export class TemplateComponet implements OnInit {
   }
 
   onSubmit() {
-    this.templateService.postTemplateCloseResolution(this.solicitudId, this.tabs).subscribe(
+    this.templateService.postTemplateCloseResolution(this.solicitudId, this.tabs, this.reportType).subscribe(
       (dataResult) => {
         this.tabs = dataResult;
         this.toastr.success("Información Guardada con Éxito", "Templates");

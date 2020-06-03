@@ -68,8 +68,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     body.classList.remove("off-canvas-sidebar");
   }
   login() {
+    localStorage.removeItem(environment.keyToken);
     const val = this.loginForm.value;
-
     if (val.username && val.password) {
       const data = {
         username: val.username,
@@ -82,8 +82,13 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.router.navigate([environment.pathInit]);
         },
         err => {
-          // this.notifier.notify("success", "You are awesome! I mean it!");
-          this.toastr.error("Error al iniciar sesión", "Login");
+          console.log(err);
+          if(err.status === 401) {
+            this.toastr.error("Usuario o contraseña invalido", "Login");
+            // aEPX6mw5
+          } else {
+            this.toastr.error("Error al iniciar sesión", "Login");
+          }
           // this.dialogRef = this.dialog.open(FuseAlertDialogComponent, {
           //   panelClass: 'contact-form-dialog',
           //   data      : {
