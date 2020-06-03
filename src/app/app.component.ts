@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import {JwtHelper} from "angular2-jwt";
+import {environment} from "../environments/environment";
 
 @Component({
     selector: 'app-my-app',
@@ -9,7 +11,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class AppComponent implements OnInit {
   private _router: Subscription;
-
   constructor( private router: Router ) {
   }
 

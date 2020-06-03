@@ -58,7 +58,7 @@ export class EditCompaniesComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.tipoSiNo = [new DomainBoolean(false, "No"), new DomainBoolean(true, "Si")];
+    this.tipoSiNo = [new DomainBoolean(false, "Inactivo"), new DomainBoolean(true, "Activo")];
   }
 
   isFieldValid(form: FormGroup, field: string) {

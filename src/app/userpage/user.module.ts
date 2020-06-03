@@ -12,6 +12,7 @@ import {RolesService} from "../roles/roles.services";
 import {CompanyService} from "../companies/companies.service";
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/format-datepicker";
+import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/form
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        UtilsModule
+        UtilsModule,
+        FileUploadModule
     ],
     providers: [
         UserService, DomainService, RolesService, CompanyService,

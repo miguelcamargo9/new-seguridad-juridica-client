@@ -236,15 +236,13 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="category form-category">* Campos Requeridos</div>
-
-
-              <div class="card-footer text-right">
-                <div class="form-check mr-auto"></div>
-                <button mat-raised-button type="submit" class="btn btn-success" (click)="onSubmit()">
-                  Guardar
-                </button>
-              </div>
+<!--                <div class="category form-category">* Campos Requeridos</div>-->
+<!--              <div class="card-footer text-right">-->
+<!--                <div class="form-check mr-auto"></div>-->
+<!--                <button mat-raised-button type="submit" class="btn btn-success" (click)="onSubmit()">-->
+<!--                  Guardar-->
+<!--                </button>-->
+<!--              </div>-->
             </form>
           </div>
         </div>
@@ -332,6 +330,37 @@
             </form>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-4">
+          <div class="card">
+            <div class="card-header card-header-icon card-header-rose">
+              <div class="card-icon">
+                <i class="material-icons">photo</i>
+              </div>
+              <h4 class="card-title">
+                Cambiar Foto
+              </h4>
+            </div>
+            <div class="card-body" style="text-align: center">
+              <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                <div class="fileinput-new thumbnail img-circle">
+                  <img [src]="photo" alt="avatar">
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                <div>
+                                <span class="btn btn-round btn-rose btn-file">
+                                    <span class="fileinput-new">Agregar Foto</span>
+                                    <span class="fileinput-exists">Cambiar</span>
+                                    <input type="file" name="file"  ng2FileSelect [uploader]="uploader" (onFileSelected)="uploader.uploadAll()" />
+                                </span>
+<!--                  <br />-->
+<!--                  <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Eliminiar</a>-->
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </div>

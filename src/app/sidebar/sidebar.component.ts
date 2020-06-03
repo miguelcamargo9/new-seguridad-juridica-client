@@ -30,8 +30,8 @@ export const ROUTES: RouteInfo[] = [
     path: "/dashboard",
     title: "Dashboard",
     type: "link",
-    icontype: "dashboard",
-    permission: "DashboardModule"
+    icontype: "dashboard"
+    // permission: "DashboardModule"
   },
   {
     path: "/users",
@@ -137,6 +137,7 @@ export class SidebarComponent implements OnInit {
   public menuItems: any[];
   ps: any;
   userName: String;
+  photo: any;
   isMobileMenu() {
     if ($(window).width() > 991) {
       return false;
@@ -151,6 +152,7 @@ export class SidebarComponent implements OnInit {
     if (token && !jwtHelper.isTokenExpired(token)) {
       const user = jwtHelper.decodeToken(token);
       this.userName = user.sub;
+      this.photo = user.photo? environment.apiUrl + "/users/getPhoto/" + user.photo: "./assets/img/default-avatar.png";
     }
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {

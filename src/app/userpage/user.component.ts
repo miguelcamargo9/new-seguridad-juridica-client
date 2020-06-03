@@ -15,6 +15,7 @@ import {environment} from "../../environments/environment";
 import {JwtHelper} from "angular2-jwt";
 import {PasswordValidationUser} from "../users/create/password-validator.component";
 import swal from "sweetalert2";
+import {FileUploader} from "ng2-file-upload";
 
 @Component({
     selector: 'app-user-cmp',
@@ -34,6 +35,9 @@ export class UserComponent {
     token: any;
     userName: string;
     userObj: any = {firstname:'', lastname:''};
+    pathUploadFile = environment.apiUrl + "/users/uploadPhoto";
+    uploader: FileUploader;
+    photo: any;
 
     constructor(private formBuilder: FormBuilder,
                 private userService: UserService,
@@ -46,9 +50,32 @@ export class UserComponent {
         this.tipoSiNo = [new DomainBoolean(false, "No"), new DomainBoolean(true, "Si")];
         this.token = localStorage.getItem(environment.keyToken);
         this.jwtHelper = new JwtHelper();
+        this.uploader = new FileUploader({ url: this.pathUploadFile , itemAlias: 'file', headers: [
+                {"name": "Authorization", value:"Bearer " + this.token}
+        ] })
+        const jwtHelper: JwtHelper = new JwtHelper();
+        const token = localStorage.getItem(environment.keyToken);
+
+        if (token && !jwtHelper.isTokenExpired(token)) {
+            const user = jwtHelper.decodeToken(token);
+            this.userName = user.sub;
+            this.photo = user.photo? environment.apiUrl + "/users/getPhoto/" + user.photo: "./assets/img/default-avatar.png";
+        }
     }
 
     ngOnInit() {
+        this.uploader.onAfterAddingFile = (file) => {
+            file.withCredentials = false;
+        };
+        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+            console.log('FileUpload:uploaded successfully:', item, status, response);
+            if (response) {
+                this.toastr.success("Imagen cargada con exito", "Imagen");
+            } else {
+                this.toastr.error("Error cargando imagen!", "Usuario");
+            }
+        };
+
         this.passwordUserFrom = this.formBuilder.group({
             passwordCurrent: ["", Validators.compose([Validators.required])],
             password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
@@ -61,15 +88,15 @@ export class UserComponent {
 
         this.getDomains();
         this.editUser = this.formBuilder.group({
-            firstName: [null, [Validators.required]],
-            lastName: [null, [Validators.required]],
+            firstName: [{value: null, disabled: true}, [Validators.required]],
+            lastName: [{value: null, disabled: true}, [Validators.required]],
             nickName: [{value: null, disabled: true}, [Validators.required]],
             email: [
                 {value: null, disabled: true},
                 [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$")]
             ],
-            typeDocument: [null, [Validators.required]],
-            documentNumber: [null, [Validators.required]],
+            typeDocument: [{value: null, disabled: true}, [Validators.required]],
+            documentNumber: [{value: null, disabled: true}, [Validators.required]],
             role: [{value: null, disabled: true}, [Validators.required]],
             company: [{value: null, disabled: true}, [Validators.required]],
             active: [{value: null, disabled: true}, [Validators.required]],
