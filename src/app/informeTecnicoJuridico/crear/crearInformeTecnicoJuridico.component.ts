@@ -6,7 +6,6 @@ import { InformeTecnicoJuridicoService } from "../informeTecnicoJuridico.service
 import { Subscription } from "rxjs";
 import { DomainService } from "src/app/domains/domain.service";
 import { Domain } from "src/app/domains/domain.model";
-import { runInThisContext } from "vm";
 
 @Component({
   selector: "app-crearInformeTecnicoJuridico",
