@@ -36,7 +36,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatStepperModule
+  MatStepperModule,
 } from "@angular/material";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { ToastrModule } from "ngx-toastr";
@@ -56,8 +56,8 @@ import { CheckInterfaceDirective } from "./directives/checkinterface.directive";
 
 import { AppRoutes } from "./app.routing";
 import { FieldErrorDisplayComponent } from "./components/field-error-display/field-error-display.component";
-import {ReplaceBoolean, ReplaceId} from "./pipes/replaceId";
-import {ReplaceArea} from "./pipes/replaceArea";
+import { ReplaceBoolean, ReplaceId } from "./pipes/replaceId";
+import { ReplaceArea } from "./pipes/replaceArea";
 
 @NgModule({
   exports: [
@@ -91,30 +91,17 @@ import {ReplaceArea} from "./pipes/replaceArea";
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
 })
-export class MaterialModule { }
-
+export class MaterialModule {}
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [
-    FieldErrorDisplayComponent,
-    ReplaceId,
-    ReplaceBoolean,
-    ReplaceArea
-  ],
-  exports: [
-    FieldErrorDisplayComponent,
-    ReplaceId,
-    ReplaceBoolean,
-    ReplaceArea
-  ]
+  imports: [CommonModule],
+  declarations: [FieldErrorDisplayComponent, ReplaceId, ReplaceBoolean, ReplaceArea],
+  exports: [FieldErrorDisplayComponent, ReplaceId, ReplaceBoolean, ReplaceArea],
 })
-export class UtilsModule { }
+export class UtilsModule {}
 
 @NgModule({
   imports: [
@@ -122,7 +109,7 @@ export class UtilsModule { }
     BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot(AppRoutes, {
-      useHash: true
+      useHash: true,
     }),
     HttpModule,
     HttpClientModule,
@@ -132,22 +119,17 @@ export class UtilsModule { }
     SidebarModule,
     NavbarModule,
     FooterModule,
-    FixedpluginModule
+    FixedpluginModule,
   ],
   providers: [
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent,
-    AuthLayoutComponent,
-    CheckInterfaceDirective,
-  ],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent, CheckInterfaceDirective],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

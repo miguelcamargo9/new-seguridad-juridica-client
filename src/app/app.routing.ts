@@ -35,6 +35,11 @@ export const AppRoutes: Routes = [
         loadChildren: "./seguimiento902/seguimiento902.module#Seguimiento902Module",
       },
       {
+        path: "informeTecnicoJuridico",
+        loadChildren:
+          "./informeTecnicoJuridico/informeTecnicoJuridico.module#InformeTecnicoJuridicoModule",
+      },
+      {
         path: "reportes",
         loadChildren: "./reportes/reportes.module#ReportesModule",
       },
