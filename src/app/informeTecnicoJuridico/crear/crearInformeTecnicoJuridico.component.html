@@ -1,0 +1,974 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 mr-auto ml-auto">
+        <div class="wizard-container">
+          <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>IDENTIFICACIÓN SOLICITUD</ng-template>
+                <div class="card card-wizard">
+                  <div class="card-header">IDENTIFICACIÓN SOLICITUD</div>
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(firstFormGroup, 'zona')"
+                            >
+                              <input
+                                type="text"
+                                name="zona"
+                                matInput
+                                id="zona"
+                                placeholder="ZONA"
+                                formControlName="zona"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(firstFormGroup, 'zona')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(firstFormGroup, 'sector')"
+                            >
+                              <input
+                                type="text"
+                                name="sector"
+                                matInput
+                                id="sector"
+                                placeholder="SECTOR"
+                                formControlName="sector"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(firstFormGroup, 'sector')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(firstFormGroup, 'comuna')"
+                            >
+                              <input
+                                type="text"
+                                name="comuna"
+                                matInput
+                                id="comuna"
+                                placeholder="COMUNA"
+                                formControlName="comuna"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(firstFormGroup, 'comuna')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(firstFormGroup, 'barrio')"
+                            >
+                              <input
+                                type="text"
+                                name="barrio"
+                                matInput
+                                id="barrio"
+                                placeholder="BARRIO"
+                                formControlName="barrio"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(firstFormGroup, 'barrio')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(firstFormGroup, 'manzana')"
+                            >
+                              <input
+                                type="text"
+                                name="manzana"
+                                matInput
+                                id="manzana"
+                                placeholder="MANZANA"
+                                formControlName="manzana"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(firstFormGroup, 'manzana')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(firstFormGroup, 'direccion')"
+                            >
+                              <input
+                                type="text"
+                                name="direccion"
+                                matInput
+                                id="direccion"
+                                placeholder="DIRECCION"
+                                formControlName="direccion"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(firstFormGroup, 'direccion')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(firstFormGroup, 'tipoPredioId')"
+                            >
+                              <mat-select
+                                placeholder="TIPO PREDIO"
+                                name="tipoPredioId"
+                                formControlName="tipoPredioId"
+                              >
+                                <mat-option
+                                  *ngFor="let tipoPredio of tipoPredios"
+                                  [value]="tipoPredio.id"
+                                >
+                                  {{ tipoPredio.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(firstFormGroup, 'tipoPredioId')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(firstFormGroup, 'idPredial')"
+                            >
+                              <input
+                                type="text"
+                                name="idPredial"
+                                matInput
+                                id="idPredial"
+                                placeholder="ID PREDIAL"
+                                formControlName="idPredial"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(firstFormGroup, 'idPredial')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button
+                      mat-button
+                      matStepperNext
+                      (click)="onNext(firstFormGroup, 'firstFormGroup')"
+                      class="btn btn-next btn-fill btn-success btn-wd"
+                    >
+                      Siguiente
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel
+                  >ANALISIS PREDIAL - INFORMACIÓN REGISTRAL (VUR)</ng-template
+                >
+                <div class="card card-wizard">
+                  <div class="card-header">INFORMACIÓN REGISTRAL (VUR)</div>
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(secondFormGroup, 'referenciaCatastral')"
+                            >
+                              <input
+                                type="text"
+                                name="referenciaCatastral"
+                                matInput
+                                id="referenciaCatastral"
+                                placeholder="REFERENCIA CATASTRAL"
+                                formControlName="referenciaCatastral"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(secondFormGroup, 'referenciaCatastral')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(secondFormGroup, 'analisisDireccion')"
+                            >
+                              <input
+                                type="text"
+                                name="analisisDireccion"
+                                matInput
+                                id="analisisDireccion"
+                                placeholder="DIRECCIÓN"
+                                formControlName="analisisDireccion"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(secondFormGroup, 'analisisDireccion')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(secondFormGroup, 'fmiMatriz')"
+                            >
+                              <input
+                                type="text"
+                                name="fmiMatriz"
+                                matInput
+                                id="fmiMatriz"
+                                placeholder="FMI MATRIZ"
+                                formControlName="fmiMatriz"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(secondFormGroup, 'fmiMatriz')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(secondFormGroup, 'fmiDerivados')"
+                            >
+                              <input
+                                type="text"
+                                name="fmiDerivados"
+                                matInput
+                                id="fmiDerivados"
+                                placeholder="FMI DERIVADOS"
+                                formControlName="fmiDerivados"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(secondFormGroup, 'fmiDerivados')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(secondFormGroup, 'tipoEstadoVurId')"
+                            >
+                              <mat-select
+                                placeholder="TIPO ESTADO"
+                                name="tipoEstadoVurId"
+                                formControlName="tipoEstadoVurId"
+                              >
+                                <mat-option
+                                  *ngFor="let estadoITJ of tipoEstadosInformeTecnicoJuridico"
+                                  [value]="estadoITJ.id"
+                                >
+                                  {{ estadoITJ.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(secondFormGroup, 'tipoEstadoVurId')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(secondFormGroup, 'propietario')"
+                            >
+                              <input
+                                type="text"
+                                name="propietario"
+                                matInput
+                                id="propietario"
+                                placeholder="PROPIETARIO"
+                                formControlName="propietario"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(secondFormGroup, 'propietario')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(secondFormGroup, 'documentoAperturaFmi')"
+                            >
+                              <input
+                                type="text"
+                                name="documentoAperturaFmi"
+                                matInput
+                                id="documentoAperturaFmi"
+                                placeholder="DOCUMENTO APERTURA FMI"
+                                formControlName="documentoAperturaFmi"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(secondFormGroup, 'documentoAperturaFmi')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(secondFormGroup, 'areaTerreno')"
+                            >
+                              <input
+                                type="number"
+                                name="areaTerreno"
+                                matInput
+                                id="areaTerreno"
+                                placeholder="ÁREA DE TERRENO"
+                                formControlName="areaTerreno"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(secondFormGroup, 'areaTerreno')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button mat-button matStepperPrevious class="btn btn-fill btn-link btn-wd">
+                      Volver
+                    </button>
+                    <button
+                      mat-button
+                      matStepperNext
+                      (click)="onNext(secondFormGroup, 'secondFormGroup')"
+                      class="btn btn-next btn-fill btn-success btn-wd"
+                    >
+                      Siguiente
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+              <form [formGroup]="thirdFormGroup">
+                <ng-template matStepLabel
+                  >ANALISIS PREDIAL - INFORMACIÓN CATASTRAL (IGAC)</ng-template
+                >
+                <div class="card card-wizard">
+                  <div class="card-header">INFORMACIÓN CATASTRAL (IGAC)</div>
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(thirdFormGroup, 'direccion')"
+                            >
+                              <input
+                                type="text"
+                                name="direccion"
+                                matInput
+                                id="direccion"
+                                placeholder="DIRECCIÓN"
+                                formControlName="direccion"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(thirdFormGroup, 'direccion')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(thirdFormGroup, 'folio')"
+                            >
+                              <input
+                                type="text"
+                                name="folio"
+                                matInput
+                                id="folio"
+                                placeholder="FOLIO"
+                                formControlName="folio"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(thirdFormGroup, 'folio')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(thirdFormGroup, 'propietario')"
+                            >
+                              <input
+                                type="text"
+                                name="propietario"
+                                matInput
+                                id="propietario"
+                                placeholder="PROPIETARIO"
+                                formControlName="propietario"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(thirdFormGroup, 'propietario')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(thirdFormGroup, 'areaConstruidaR1R2')"
+                            >
+                              <input
+                                type="number"
+                                name="areaConstruidaR1R2"
+                                matInput
+                                id="areaConstruidaR1R2"
+                                placeholder="ÁREA CONSTRUIDA (R1 R2) m2"
+                                formControlName="areaConstruidaR1R2"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(thirdFormGroup, 'areaConstruidaR1R2')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(thirdFormGroup, 'areaTerrenoShp')"
+                            >
+                              <input
+                                type="number"
+                                name="areaTerrenoShp"
+                                matInput
+                                id="areaTerrenoShp"
+                                placeholder="ÁREA DE TERRENO SHP ha + m2"
+                                formControlName="areaTerrenoShp"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(thirdFormGroup, 'areaTerrenoShp')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button mat-button matStepperPrevious class="btn btn-fill btn-link btn-wd">
+                      Volver
+                    </button>
+                    <button
+                      mat-button
+                      matStepperNext
+                      (click)="onNext(thirdFormGroup, 'thirdFormGroup')"
+                      class="btn btn-next btn-fill btn-success btn-wd"
+                    >
+                      Siguiente
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="fourthFormGroup">
+              <form [formGroup]="fourthFormGroup">
+                <ng-template matStepLabel
+                  >ANALISIS PREDIAL - INFORMACIÓN PREDIAL SOLICITUD</ng-template
+                >
+                <div class="card card-wizard">
+                  <div class="card-header">INFORMACIÓN PREDIAL SOLICITUD</div>
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fourthFormGroup, 'idProyecto')"
+                            >
+                              <input
+                                type="text"
+                                name="idProyecto"
+                                matInput
+                                id="idProyecto"
+                                placeholder="ID PROYECTO"
+                                formControlName="idProyecto"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fourthFormGroup, 'idProyecto')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fourthFormGroup, 'direccion')"
+                            >
+                              <input
+                                type="text"
+                                name="direccion"
+                                matInput
+                                id="direccion"
+                                placeholder="DIRECCIÓN"
+                                formControlName="direccion"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fourthFormGroup, 'direccion')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="
+                                displayFieldCss(fourthFormGroup, 'areaConstruidaLevantamiento')
+                              "
+                            >
+                              <input
+                                type="number"
+                                name="areaConstruidaLevantamiento"
+                                matInput
+                                id="areaConstruidaLevantamiento"
+                                placeholder="ÁREA CONSTRUIDA LEVANTAMIENTO m2"
+                                formControlName="areaConstruidaLevantamiento"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(fourthFormGroup, 'areaConstruidaLevantamiento')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fourthFormGroup, 'tipoConstruccionId')"
+                            >
+                              <mat-select
+                                placeholder="TIPO DE CONSTRUCCIONES"
+                                name="tipoConstruccionId"
+                                formControlName="tipoConstruccionId"
+                              >
+                                <mat-option
+                                  *ngFor="let tipoConstruccio of tipoConstrucciones"
+                                  [value]="tipoConstruccio.id"
+                                >
+                                  {{ tipoConstruccio.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fourthFormGroup, 'tipoConstruccionId')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fourthFormGroup, 'tipoUsoId')"
+                            >
+                              <mat-select
+                                placeholder="USO"
+                                name="tipoUsoId"
+                                formControlName="tipoUsoId"
+                              >
+                                <mat-option *ngFor="let tipoUso of tipoUsos" [value]="tipoUso.id">
+                                  {{ tipoUso.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fourthFormGroup, 'tipoUsoId')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fourthFormGroup, 'tipoExplotacionId')"
+                            >
+                              <mat-select
+                                placeholder="TIPO DE EXPLOTACIÓN"
+                                name="tipoExplotacionId"
+                                formControlName="tipoExplotacionId"
+                              >
+                                <mat-option
+                                  *ngFor="let tipoExplotacion of tipoExplotaciones"
+                                  [value]="tipoExplotacion.id"
+                                >
+                                  {{ tipoExplotacion.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fourthFormGroup, 'tipoExplotacionId')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button mat-button matStepperPrevious class="btn btn-fill btn-link btn-wd">
+                      Volver
+                    </button>
+                    <button
+                      mat-button
+                      matStepperNext
+                      (click)="onNext(fourthFormGroup, 'fourthFormGroup')"
+                      class="btn btn-next btn-fill btn-success btn-wd"
+                    >
+                      Siguiente
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="fifthFormGroup">
+              <form [formGroup]="fifthFormGroup">
+                <ng-template matStepLabel
+                  >ANALISIS JURIDICO / CONCLUSIÓN Y RUTA JURIDICA</ng-template
+                >
+                <div class="card card-wizard">
+                  <div class="card-header">ANALISIS JURIDICO / CONCLUSIÓN Y RUTA JURIDICA</div>
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="
+                                displayFieldCss(
+                                  fifthFormGroup,
+                                  'naturalezaJuridicaPredioAcuerdoEstudioFmi'
+                                )
+                              "
+                            >
+                              <input
+                                type="text"
+                                name="naturalezaJuridicaPredioAcuerdoEstudioFmi"
+                                matInput
+                                id="naturalezaJuridicaPredioAcuerdoEstudioFmi"
+                                placeholder="ID PROYECTO"
+                                formControlName="naturalezaJuridicaPredioAcuerdoEstudioFmi"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(
+                                    fifthFormGroup,
+                                    'naturalezaJuridicaPredioAcuerdoEstudioFmi'
+                                  )
+                                "
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'descripcionCaso')"
+                            >
+                              <input
+                                type="text"
+                                name="descripcionCaso"
+                                matInput
+                                id="descripcionCaso"
+                                placeholder="DIRECCIÓN"
+                                formControlName="descripcionCaso"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fifthFormGroup, 'descripcionCaso')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'conclusionRutaJuridica')"
+                            >
+                              <input
+                                type="text"
+                                name="conclusionRutaJuridica"
+                                matInput
+                                id="conclusionRutaJuridica"
+                                placeholder="CONCLUSIÓN Y RUTA JURIDICA"
+                                formControlName="conclusionRutaJuridica"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(fifthFormGroup, 'conclusionRutaJuridica')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'ingenieroElaboroId')"
+                            >
+                              <mat-select
+                                placeholder="INGENIERO QUE ELABORÓ"
+                                name="ingenieroElaboroId"
+                                formControlName="ingenieroElaboroId"
+                              >
+                                <mat-option
+                                  *ngFor="let userIngeniero of usersIngeniero"
+                                  [value]="userIngeniero.id"
+                                >
+                                  {{ userIngeniero.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fifthFormGroup, 'ingenieroElaboroId')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'abogadoElaboroId')"
+                            >
+                              <mat-select
+                                placeholder="ABOGADO QUE ELABORÓ"
+                                name="abogadoElaboroId"
+                                formControlName="abogadoElaboroId"
+                              >
+                                <mat-option
+                                  *ngFor="let userAbodago of usersAbodago"
+                                  [value]="userAbodago.id"
+                                >
+                                  {{ userAbodago.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fifthFormGroup, 'abogadoElaboroId')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'validadorLiderTecnicoId')"
+                            >
+                              <mat-select
+                                placeholder="VALIDACIÓN TÉCNICA LÍDER TÉCNICO"
+                                name="validadorLiderTecnicoId"
+                                formControlName="validadorLiderTecnicoId"
+                              >
+                                <mat-option
+                                  *ngFor="let userAbodago of usersAbodago"
+                                  [value]="userAbodago.id"
+                                >
+                                  {{ userAbodago.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(fifthFormGroup, 'validadorLiderTecnicoId')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="
+                                displayFieldCss(fifthFormGroup, 'validadorLiderJuridicoId')
+                              "
+                            >
+                              <mat-select
+                                placeholder="VALIDACIÓN JURÍDICA LÍDER JURÍDICO"
+                                name="validadorLiderJuridicoId"
+                                formControlName="validadorLiderJuridicoId"
+                              >
+                                <mat-option
+                                  *ngFor="let userAbodago of usersAbodago"
+                                  [value]="userAbodago.id"
+                                >
+                                  {{ userAbodago.nombre }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(fifthFormGroup, 'validadorLiderJuridicoId')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button mat-button matStepperPrevious class="btn btn-fill btn-link btn-wd">
+                      Volver
+                    </button>
+                    <button
+                      mat-button
+                      (click)="save('fifthFormGroup', true)"
+                      class="btn btn-next btn-fill btn-success btn-wd"
+                    >
+                      Guardar
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+          </mat-horizontal-stepper>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
