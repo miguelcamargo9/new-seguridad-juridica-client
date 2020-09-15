@@ -329,7 +329,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
         break;
       case "secondFormGroup":
         const dataSecondFormGroup = this.secondFormGroup.value;
-        dataSecondFormGroup.informacionVurId = this.informacionVurId * 1;
+        dataSecondFormGroup.id = this.informacionVurId * 1;
         dataSecondFormGroup.solicitudId = this.solicitudId * 1;
         dataSecondFormGroup.informeTecnicoJuridicoId = this.informeTecnicoJuridicoId * 1;
         if (this.informacionVurId == null || this.informacionVurId == 0) {
@@ -358,7 +358,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
         break;
       case "thirdFormGroup":
         const dataThirdFormGroup = this.thirdFormGroup.value;
-        dataThirdFormGroup.informacionCatastralId = this.informacionCatastralId * 1;
+        dataThirdFormGroup.id = this.informacionCatastralId * 1;
         dataThirdFormGroup.solicitudId = this.solicitudId * 1;
         dataThirdFormGroup.informeTecnicoJuridicoId = this.informeTecnicoJuridicoId * 1;
         if (this.informacionCatastralId == null || this.informacionCatastralId == 0) {
@@ -387,7 +387,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
         break;
       case "fourthFormGroup":
         const dataFourthFormGroup = this.fourthFormGroup.value;
-        dataFourthFormGroup.informacionPredialId = this.informacionPredialId * 1;
+        dataFourthFormGroup.id = this.informacionPredialId * 1;
         dataFourthFormGroup.solicitudId = this.solicitudId * 1;
         dataFourthFormGroup.informeTecnicoJuridicoId = this.informeTecnicoJuridicoId * 1;
         if (this.informacionPredialId == null || this.informacionPredialId == 0) {
@@ -422,7 +422,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
         } else {
           const dataFifthFormGroup = this.fifthFormGroup.value;
           dataFifthFormGroup.solicitudId = this.solicitudId * 1;
-          dataFifthFormGroup.informeTecnicoJuridicoId = this.informeTecnicoJuridicoId * 1;
+          dataFifthFormGroup.id = this.informeTecnicoJuridicoId * 1;
           if (this.informeTecnicoJuridicoId == null || this.informeTecnicoJuridicoId == 0) {
             console.log("Create");
             this.informeTecnicoJuridicoService
@@ -436,7 +436,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
           } else {
             console.log("Update");
             this.informeTecnicoJuridicoService
-              .putUpdateInformeTecnicoJuridico(dataFifthFormGroup)
+              .putUpdateInformeTecnicoJuridicoUltimaHoja(dataFifthFormGroup)
               .subscribe((params) => {
                 this.toastr.success(
                   "Formulario Actualizado Correctamente",

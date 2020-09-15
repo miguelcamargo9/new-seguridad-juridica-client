@@ -25,6 +25,13 @@ export class InformeTecnicoJuridicoService {
     return this.http.put(environment.apiUrl + "/informeTecnicoJuridico/" + data.solicitudId, data);
   }
 
+  putUpdateInformeTecnicoJuridicoUltimaHoja(data: any): Observable<any> {
+    return this.http.put(
+      environment.apiUrl + "/informeTecnicoJuridico/ultimaHoja/" + data.solicitudId,
+      data
+    );
+  }
+
   getInformacionVurByInformeTecnicoJuridicoId(
     informeTecnicoJuridicoId: number
   ): Observable<InformacionVur> {

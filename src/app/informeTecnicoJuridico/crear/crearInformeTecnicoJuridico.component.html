@@ -214,7 +214,7 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="secondFormGroup">
+            <mat-step [stepControl]="secondFormGroup" [optional]="!secondFormGroup.invalid">
               <form [formGroup]="secondFormGroup">
                 <ng-template matStepLabel
                   >ANALISIS PREDIAL - INFORMACIÓN REGISTRAL (VUR)</ng-template
@@ -433,7 +433,7 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="thirdFormGroup">
+            <mat-step [stepControl]="thirdFormGroup" [optional]="!thirdFormGroup.invalid">
               <form [formGroup]="thirdFormGroup">
                 <ng-template matStepLabel
                   >ANALISIS PREDIAL - INFORMACIÓN CATASTRAL (IGAC)</ng-template
@@ -577,7 +577,7 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="fourthFormGroup">
+            <mat-step [stepControl]="fourthFormGroup" [optional]="!fourthFormGroup.invalid">
               <form [formGroup]="fourthFormGroup">
                 <ng-template matStepLabel
                   >ANALISIS PREDIAL - INFORMACIÓN PREDIAL SOLICITUD</ng-template
@@ -777,7 +777,7 @@
                                 name="naturalezaJuridicaPredioAcuerdoEstudioFmi"
                                 matInput
                                 id="naturalezaJuridicaPredioAcuerdoEstudioFmi"
-                                placeholder="ID PROYECTO"
+                                placeholder="NATURALEZA JURÍDICA DEL PREDIO DE ACUERDO A ESTUDIOS DE TÍTULOS Y/O FMI"
                                 formControlName="naturalezaJuridicaPredioAcuerdoEstudioFmi"
                                 oninput="this.value = this.value.toUpperCase()"
                               />
@@ -805,7 +805,7 @@
                                 name="descripcionCaso"
                                 matInput
                                 id="descripcionCaso"
-                                placeholder="DIRECCIÓN"
+                                placeholder="DESCRIPCIÓN DEL CASO"
                                 formControlName="descripcionCaso"
                                 oninput="this.value = this.value.toUpperCase()"
                               />
