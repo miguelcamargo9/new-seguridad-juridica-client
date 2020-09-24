@@ -11,6 +11,7 @@ import { InformeTecnicoJuridicoService } from "./informeTecnicoJuridico.service"
 import { DomainService } from "../domains/domain.service";
 import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
 import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/format-datepicker";
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/form
     ReactiveFormsModule,
     MaterialModule,
     UtilsModule,
+    CKEditorModule,
   ],
   declarations: [CrearInformeTecnicoJuridicoComponent],
   providers: [

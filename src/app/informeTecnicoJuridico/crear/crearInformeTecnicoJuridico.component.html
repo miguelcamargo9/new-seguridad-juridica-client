@@ -751,97 +751,65 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="fifthFormGroup">
-              <form [formGroup]="fifthFormGroup">
+            <mat-step [stepControl]="editorsFormGroup">
+              <form [formGroup]="editorsFormGroup">
                 <ng-template matStepLabel
-                  >ANALISIS JURIDICO / CONCLUSIÓN Y RUTA JURIDICA</ng-template
+                  >ANALISIS ESPACIAL / ANALISIS JURIDICO / CONCLUSIÓN Y RUTA JURIDICA</ng-template
                 >
                 <div class="card card-wizard">
-                  <div class="card-header">ANALISIS JURIDICO / CONCLUSIÓN Y RUTA JURIDICA</div>
+                  <div class="card-header">
+                    ANALISIS ESPACIAL / ANALISIS JURIDICO / CONCLUSIÓN Y RUTA JURIDICA
+                  </div>
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <h6>ANALISIS ESPACIAL</h6>
+                      <br />
+                      <ckeditor [editor]="editor" formControlName="analisisEspacial"></ckeditor>
+                      <app-field-error-display
+                        [displayError]="isFieldValid(editorsFormGroup, 'analisisEspacial')"
+                        errorMsg="Diligenciar el campo."
+                      ></app-field-error-display>
+                      <br />
+                      <h6>ANALISIS JURIDICO</h6>
+                      NATURALEZA JURÍDICA DEL PREDIO DE ACUERDO A ESTUDIOS DE TÍTULOS Y/O FMI
+                      <br />
+                      <ckeditor
+                        [editor]="editor"
+                        formControlName="naturalezaJuridicaPredioAcuerdoEstudioFmi"
+                      ></ckeditor>
+                      <br />
+                      DESCRIPCIÓN DEL CASO
+                      <ckeditor [editor]="editor" formControlName="descripcionCaso"></ckeditor>
+                      <br />
+                      <h6>CONCLUSIÓN</h6>
+                      <br />
+                      <ckeditor
+                        [editor]="editor"
+                        formControlName="conclusionRutaJuridica"
+                      ></ckeditor>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button
+                      mat-button
+                      matStepperNext
+                      (click)="onNext(editorsFormGroup, 'editorsFormGroup')"
+                      class="btn btn-next btn-fill btn-success btn-wd"
+                    >
+                      Siguiente
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="fifthFormGroup">
+              <form [formGroup]="fifthFormGroup">
+                <ng-template matStepLabel>RUTA JURIDICA</ng-template>
+                <div class="card card-wizard">
+                  <div class="card-header">RUTA JURIDICA</div>
                   <div class="card-body">
                     <div class="tab-content">
                       <div class="row">
-                        <div class="col-sm-6">
-                          <div class="input-group form-control-lg">
-                            <mat-form-field
-                              class="example-full-width has-label"
-                              [ngClass]="
-                                displayFieldCss(
-                                  fifthFormGroup,
-                                  'naturalezaJuridicaPredioAcuerdoEstudioFmi'
-                                )
-                              "
-                            >
-                              <input
-                                type="text"
-                                name="naturalezaJuridicaPredioAcuerdoEstudioFmi"
-                                matInput
-                                id="naturalezaJuridicaPredioAcuerdoEstudioFmi"
-                                placeholder="NATURALEZA JURÍDICA DEL PREDIO DE ACUERDO A ESTUDIOS DE TÍTULOS Y/O FMI"
-                                formControlName="naturalezaJuridicaPredioAcuerdoEstudioFmi"
-                                oninput="this.value = this.value.toUpperCase()"
-                              />
-                              <app-field-error-display
-                                [displayError]="
-                                  isFieldValid(
-                                    fifthFormGroup,
-                                    'naturalezaJuridicaPredioAcuerdoEstudioFmi'
-                                  )
-                                "
-                                errorMsg="Diligenciar el campo."
-                              >
-                              </app-field-error-display>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="input-group form-control-lg">
-                            <mat-form-field
-                              class="example-full-width has-label"
-                              [ngClass]="displayFieldCss(fifthFormGroup, 'descripcionCaso')"
-                            >
-                              <input
-                                type="text"
-                                name="descripcionCaso"
-                                matInput
-                                id="descripcionCaso"
-                                placeholder="DESCRIPCIÓN DEL CASO"
-                                formControlName="descripcionCaso"
-                                oninput="this.value = this.value.toUpperCase()"
-                              />
-                              <app-field-error-display
-                                [displayError]="isFieldValid(fifthFormGroup, 'descripcionCaso')"
-                                errorMsg="Diligenciar el campo."
-                              >
-                              </app-field-error-display>
-                            </mat-form-field>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="input-group form-control-lg">
-                            <mat-form-field
-                              class="example-full-width has-label"
-                              [ngClass]="displayFieldCss(fifthFormGroup, 'conclusionRutaJuridica')"
-                            >
-                              <input
-                                type="text"
-                                name="conclusionRutaJuridica"
-                                matInput
-                                id="conclusionRutaJuridica"
-                                placeholder="CONCLUSIÓN Y RUTA JURIDICA"
-                                formControlName="conclusionRutaJuridica"
-                                oninput="this.value = this.value.toUpperCase()"
-                              />
-                              <app-field-error-display
-                                [displayError]="
-                                  isFieldValid(fifthFormGroup, 'conclusionRutaJuridica')
-                                "
-                                errorMsg="Diligenciar el campo."
-                              >
-                              </app-field-error-display>
-                            </mat-form-field>
-                          </div>
-                        </div>
                         <div class="col-sm-6">
                           <div class="input-group form-control-lg">
                             <mat-form-field

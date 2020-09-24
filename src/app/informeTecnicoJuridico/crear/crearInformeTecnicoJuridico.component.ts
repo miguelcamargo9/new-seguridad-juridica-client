@@ -6,6 +6,7 @@ import { InformeTecnicoJuridicoService } from "../informeTecnicoJuridico.service
 import { Subscription } from "rxjs";
 import { DomainService } from "src/app/domains/domain.service";
 import { Domain } from "src/app/domains/domain.model";
+import * as ClassicEditor from "ckeditor5-build-alignment-b64image";
 
 @Component({
   selector: "app-crearInformeTecnicoJuridico",
@@ -15,11 +16,14 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
   routeSub: Subscription;
   isLinear = true;
 
+  editor = ClassicEditor;
+
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
   fifthFormGroup: FormGroup;
+  editorsFormGroup: FormGroup;
 
   tipoPredios: Domain[];
   tipoEstadosInformeTecnicoJuridico: Domain[];
@@ -90,13 +94,16 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
       tipoExplotacionId: ["", Validators.required],
     });
     this.fifthFormGroup = this._formBuilder.group({
-      naturalezaJuridicaPredioAcuerdoEstudioFmi: ["", Validators.required],
-      descripcionCaso: ["", Validators.required],
-      conclusionRutaJuridica: ["", Validators.required],
       ingenieroElaboroId: ["", Validators.required],
       abogadoElaboroId: ["", Validators.required],
       validadorLiderTecnicoId: ["", Validators.required],
       validadorLiderJuridicoId: ["", Validators.required],
+    });
+    this.editorsFormGroup = this._formBuilder.group({
+      analisisEspacial: ["", Validators.required],
+      naturalezaJuridicaPredioAcuerdoEstudioFmi: ["", Validators.required],
+      descripcionCaso: ["", Validators.required],
+      conclusionRutaJuridica: ["", Validators.required],
     });
   }
 
@@ -118,16 +125,18 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
         );
         this.firstFormGroup.controls["idPredial"].setValue(informeTecnicoJuridicoData.idPredial);
 
-        // FormGroup5
-        this.fifthFormGroup.controls["naturalezaJuridicaPredioAcuerdoEstudioFmi"].setValue(
+        // EditorsGroup
+        this.editorsFormGroup.controls["naturalezaJuridicaPredioAcuerdoEstudioFmi"].setValue(
           informeTecnicoJuridicoData.naturalezaJuridicaPredioAcuerdoEstudioFmi
         );
-        this.fifthFormGroup.controls["descripcionCaso"].setValue(
+        this.editorsFormGroup.controls["descripcionCaso"].setValue(
           informeTecnicoJuridicoData.descripcionCaso
         );
-        this.fifthFormGroup.controls["conclusionRutaJuridica"].setValue(
+        this.editorsFormGroup.controls["conclusionRutaJuridica"].setValue(
           informeTecnicoJuridicoData.conclusionRutaJuridica
         );
+
+        // FormGroup5
         this.fifthFormGroup.controls["ingenieroElaboroId"].setValue(
           informeTecnicoJuridicoData.ingenieroElaboroId
         );
