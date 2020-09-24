@@ -33,7 +33,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 @Component({
   selector: "app-editarsolicitud-cmp",
-  templateUrl: "editarsolicitud.component.html"
+  templateUrl: "editarsolicitud.component.html",
 })
 export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewInit {
   departamentos: Departament[];
@@ -72,7 +72,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   displayFieldCss(form: FormGroup, field: string) {
     return {
       "has-error": this.isFieldValid(form, field),
-      "has-feedback": this.isFieldValid(form, field)
+      "has-feedback": this.isFieldValid(form, field),
     };
   }
   ngOnInit() {
@@ -83,7 +83,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       // To add a validator, we must first convert the string value into an array. The first item in the array is the default value if any, then the next item in the array is the validator. Here we are adding a required validator meaning that the firstName attribute must have a value in it.
       expedienteSIT: [
         null,
-        [Validators.required, Validators.minLength(19), Validators.maxLength(19)]
+        [Validators.required, Validators.minLength(19), Validators.maxLength(19)],
       ],
       fiso: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
       departamentoId: [null, [Validators.required]],
@@ -106,7 +106,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       numeroPredialNacional: [null],
       predioDeMayorExtension: [null, [Validators.required]],
       nombrePredioMayorExtension: [null],
-      areaSolicitada: [null, [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]]
+      areaSolicitada: [null, [Validators.required, Validators.pattern(/^\d*\.?\d*$/)]],
     });
     // this.populateForm();
     // Code for the Validator
@@ -115,60 +115,54 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
         expedienteSIT: {
           required: true,
           minlength: 19,
-          maxlength: 19
+          maxlength: 19,
         },
         fiso: {
           required: true,
-          minlength: 7
+          minlength: 7,
         },
         departamentoId: {
-          required: true
+          required: true,
         },
         departamentoDane: {
-          required: true
+          required: true,
         },
         municipioId: {
-          required: true
+          required: true,
         },
         municipioDane: {
-          required: true
+          required: true,
         },
         condicionDelSolicitante: {
-          required: true
+          required: true,
         },
         nombreDelPredioAFormalizar: {
-          required: true
+          required: true,
         },
         folioDeMatriculaInmobiliaria: {
-          required: true
+          required: true,
         },
         predioDeMayorExtension: {
-          required: true
-        }
+          required: true,
+        },
       },
 
-      highlight: function(element) {
-        $(element)
-          .closest(".form-group")
-          .removeClass("has-success")
-          .addClass("has-danger");
+      highlight: function (element) {
+        $(element).closest(".form-group").removeClass("has-success").addClass("has-danger");
       },
-      success: function(element) {
-        $(element)
-          .closest(".form-group")
-          .removeClass("has-danger")
-          .addClass("has-success");
+      success: function (element) {
+        $(element).closest(".form-group").removeClass("has-danger").addClass("has-success");
       },
-      errorPlacement: function(error, element) {
+      errorPlacement: function (error, element) {
         $(element).append(error);
-      }
+      },
     });
 
-    this.routeSub = this.route.params.subscribe(params => {
+    this.routeSub = this.route.params.subscribe((params) => {
       this.solicitudId = params["id"];
       this.solicitante = new Persona();
       this.solicitudService.getSolicitudById(this.solicitudId).subscribe(
-        solicitudData => {
+        (solicitudData) => {
           //Page1
           this.solicitud.controls["expedienteSIT"].setValue(solicitudData.expedienteSit);
           this.solicitud.controls["fiso"].setValue(solicitudData.fiso);
@@ -183,7 +177,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
           );
           this.solicitud.controls["pruebaUnion"].setValue(solicitudData.pruebaUnion);
 
-          this.solicitante = solicitudData.personas.filter(persona => {
+          this.solicitante = solicitudData.personas.filter((persona) => {
             return persona.tipoPersonaId === 1;
           })[0];
 
@@ -214,7 +208,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
           }
 
           //Page3
-          this.personas = solicitudData.personas.filter(persona => {
+          this.personas = solicitudData.personas.filter((persona) => {
             return persona.tipoPersonaId === 2;
           });
           if (this.personas.length > 0) {
@@ -240,7 +234,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
           );
           this.solicitud.controls["areaSolicitada"].setValue(solicitudData.areaSolicitada);
         },
-        error => {
+        (error) => {
           console.log("Error Obteniendo el Objeto!" + error);
         }
       );
@@ -252,7 +246,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       nextSelector: ".btn-next",
       previousSelector: ".btn-previous",
 
-      onNext: function(tab, navigation, index) {
+      onNext: function (tab, navigation, index) {
         var $valid = $(".card-wizard form").valid();
         if (!$valid) {
           $validator.focusInvalid();
@@ -260,7 +254,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
         }
       },
 
-      onInit: function(tab: any, navigation: any, index: any) {
+      onInit: function (tab: any, navigation: any, index: any) {
         // check number of tabs and fill the entire row
         let $total = navigation.find("li").length;
         let $wizard = navigation.closest(".card-wizard");
@@ -307,12 +301,12 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
         $wizard.find(".moving-tab").css("width", step_width);
         $(".moving-tab").css({
           transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
-          transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
+          transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)",
         });
         $(".moving-tab").css("transition", "transform 0s");
       },
 
-      onTabClick: function(tab: any, navigation: any, index: any) {
+      onTabClick: function (tab: any, navigation: any, index: any) {
         const $valid = $(".card-wizard form").valid();
 
         if (!$valid) {
@@ -322,7 +316,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
         }
       },
 
-      onTabShow: function(tab: any, navigation: any, index: any) {
+      onTabShow: function (tab: any, navigation: any, index: any) {
         let $total = navigation.find("li").length;
         let $current = index + 1;
         elemMainPanel.scrollTop = 0;
@@ -330,24 +324,16 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
 
         // If it's the last tab then hide the last button and show the finish instead
         if ($current >= $total) {
-          $($wizard)
-            .find(".btn-next")
-            .hide();
-          $($wizard)
-            .find(".btn-finish")
-            .show();
+          $($wizard).find(".btn-next").hide();
+          $($wizard).find(".btn-finish").show();
         } else {
-          $($wizard)
-            .find(".btn-next")
-            .show();
-          $($wizard)
-            .find(".btn-finish")
-            .hide();
+          $($wizard).find(".btn-next").show();
+          $($wizard).find(".btn-finish").hide();
         }
 
         const button_text = navigation.find("li:nth-child(" + $current + ") a").html();
 
-        setTimeout(function() {
+        setTimeout(function () {
           $(".moving-tab").text(button_text);
         }, 150);
 
@@ -357,12 +343,12 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
           $(checkbox).css({
             opacity: "0",
             visibility: "hidden",
-            position: "absolute"
+            position: "absolute",
           });
         } else {
           $(checkbox).css({
             opacity: "1",
-            visibility: "visible"
+            visibility: "visible",
           });
         }
         $total = $wizard.find(".nav li").length;
@@ -403,50 +389,40 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
         $wizard.find(".moving-tab").css("width", step_width);
         $(".moving-tab").css({
           transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
-          transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
+          transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)",
         });
-      }
+      },
     });
 
     // Prepare the preview for profile picture
-    $("#wizard-picture").change(function() {
+    $("#wizard-picture").change(function () {
       const input = $(this);
 
       if (input[0].files && input[0].files[0]) {
         const reader = new FileReader();
 
-        reader.onload = function(e: any) {
-          $("#wizardPicturePreview")
-            .attr("src", e.target.result)
-            .fadeIn("slow");
+        reader.onload = function (e: any) {
+          $("#wizardPicturePreview").attr("src", e.target.result).fadeIn("slow");
         };
         reader.readAsDataURL(input[0].files[0]);
       }
     });
 
-    $('[data-toggle="wizard-radio"]').click(function() {
+    $('[data-toggle="wizard-radio"]').click(function () {
       const wizard = $(this).closest(".card-wizard");
       wizard.find('[data-toggle="wizard-radio"]').removeClass("active");
       $(this).addClass("active");
-      $(wizard)
-        .find('[type="radio"]')
-        .removeAttr("checked");
-      $(this)
-        .find('[type="radio"]')
-        .attr("checked", "true");
+      $(wizard).find('[type="radio"]').removeAttr("checked");
+      $(this).find('[type="radio"]').attr("checked", "true");
     });
 
-    $('[data-toggle="wizard-checkbox"]').click(function() {
+    $('[data-toggle="wizard-checkbox"]').click(function () {
       if ($(this).hasClass("active")) {
         $(this).removeClass("active");
-        $(this)
-          .find('[type="checkbox"]')
-          .removeAttr("checked");
+        $(this).find('[type="checkbox"]').removeAttr("checked");
       } else {
         $(this).addClass("active");
-        $(this)
-          .find('[type="checkbox"]')
-          .attr("checked", "true");
+        $(this).find('[type="checkbox"]').attr("checked", "true");
       }
     });
 
@@ -459,17 +435,15 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     if (input[0].files && input[0].files[0]) {
       const reader: any = new FileReader();
 
-      reader.onload = function(e: any) {
-        $("#wizardPicturePreview")
-          .attr("src", e.target.result)
-          .fadeIn("slow");
+      reader.onload = function (e: any) {
+        $("#wizardPicturePreview").attr("src", e.target.result).fadeIn("slow");
       };
       reader.readAsDataURL(input[0].files[0]);
     }
   }
   ngAfterViewInit() {
     $(window).resize(() => {
-      $(".card-wizard").each(function() {
+      $(".card-wizard").each(function () {
         setTimeout(() => {
           const $wizard = $(this);
           const index = $wizard.bootstrapWizard("currentIndex");
@@ -510,11 +484,11 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
           $wizard.find(".moving-tab").css("width", step_width);
           $(".moving-tab").css({
             transform: "translate3d(" + move_distance + "px, " + vertical_level + "px, 0)",
-            transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)"
+            transition: "all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1)",
           });
 
           $(".moving-tab").css({
-            transition: "transform 0s"
+            transition: "transform 0s",
           });
         }, 500);
       });
@@ -525,17 +499,17 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   }
   setDepartamento(departamentoId, municipioId = null) {
     const selectDepartamento = this.departamentos.find(
-      departamento => departamento.id === departamentoId
+      (departamento) => departamento.id === departamentoId
     );
     this.solicitud.controls["departamentoDane"].setValue(selectDepartamento.dane);
     this.domainServcie.getMunicipiosPorDepartamento(selectDepartamento.id).subscribe(
-      municipiosData => {
+      (municipiosData) => {
         this.municipios = municipiosData;
         if (municipioId) {
           this.setMunicipio(municipioId);
         }
       },
-      error => {
+      (error) => {
         console.log("There was an error while retrieving Municipios!" + error);
       }
     );
@@ -544,53 +518,53 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     this.setMunicipio(event.value);
   }
   setMunicipio(municipioId) {
-    const selectMunicipio = this.municipios.find(municipio => municipio.id === municipioId);
+    const selectMunicipio = this.municipios.find((municipio) => municipio.id === municipioId);
     this.solicitud.controls["municipioDane"].setValue(selectMunicipio.dane);
   }
   selectCondicionSolicitante(event) {
     const selectCondicionSolicitante = this.tiposCondicionSolicitante.find(
-      condicionSolicitante => condicionSolicitante.id === event.value
+      (condicionSolicitante) => condicionSolicitante.id === event.value
     );
     this.showPersonas = selectCondicionSolicitante.id !== 1 ? true : false;
   }
   getDomains() {
     this.domainServcie.getDepartamentos().subscribe(
-      departamentosData => {
+      (departamentosData) => {
         this.departamentos = departamentosData;
       },
-      error => {
+      (error) => {
         console.log("There was an error while retrieving Departamentos!" + error);
       }
     );
     this.domainServcie.getTipoCondicionSolicitante().subscribe(
-      tiposCondicionSolicitanteData => {
+      (tiposCondicionSolicitanteData) => {
         this.tiposCondicionSolicitante = tiposCondicionSolicitanteData;
       },
-      error => {
+      (error) => {
         console.log("There was an error while retrieving Condicion Solicitante!" + error);
       }
     );
     this.domainServcie.getTipoPruebaUnion().subscribe(
-      tiposPruebaUnionData => {
+      (tiposPruebaUnionData) => {
         this.tiposPruebaUnion = tiposPruebaUnionData;
       },
-      error => {
+      (error) => {
         console.log("There was an error while retrieving Prueba Union!" + error);
       }
     );
     this.domainServcie.getTipoSexo().subscribe(
-      tiposSexosData => {
+      (tiposSexosData) => {
         this.tiposSexos = tiposSexosData;
       },
-      error => {
+      (error) => {
         console.log("There was an error while retrieving Sexo!" + error);
       }
     );
     this.domainServcie.getTipoDocumento().subscribe(
-      tiposDocumentosData => {
+      (tiposDocumentosData) => {
         this.tiposDocumento = tiposDocumentosData;
       },
-      error => {
+      (error) => {
         console.log("There was an error while retrieving Tipo Documento!" + error);
       }
     );
@@ -611,7 +585,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   }
   populateForm() {
     // console.log("POPULATE", this.personas);
-    this.personas.forEach(persona => {
+    this.personas.forEach((persona) => {
       if (persona.index === undefined) {
         persona.index = this.indexPersonas;
         this.indexPersonas++;
@@ -661,7 +635,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   onSubmit() {
     const formData = this.solicitud.value;
 
-    const personas = this.personas.map(persona => {
+    const personas = this.personas.map((persona) => {
       return {
         id: persona.id,
         tipoPersonaId: 2,
@@ -672,7 +646,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
         sexoId: formData[`sexoOtro${persona.index}`],
         tipoDocumentoId: formData[`tipoDocumentoOtro${persona.index}`],
         noDocumento: formData[`documentoOtro${persona.index}`],
-        solicitudId: this.solicitudId
+        solicitudId: this.solicitudId,
       };
     });
 
@@ -686,12 +660,12 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       sexoId: formData.sexo,
       tipoDocumentoId: formData.tipoDocumento,
       noDocumento: formData.documento,
-      solicitudId: this.solicitudId
+      solicitudId: this.solicitudId,
     };
 
     personas.splice(0, 0, solicitante);
 
-    if (formData.condicionDelSolicitante === 1) {
+    if (formData.condicionDelSolicitante === 1 && personas.length > 1) {
       personas.pop();
     }
 
@@ -710,10 +684,10 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       numeroPredialNacional: formData.numeroPredialNacional,
       predioDeMayorExtension: formData.predioDeMayorExtension === "1" ? true : false,
       nombrePredioMayorExtension:
-      formData.predioDeMayorExtension === "1" ? formData.nombrePredioMayorExtension : null,
+        formData.predioDeMayorExtension === "1" ? formData.nombrePredioMayorExtension : null,
       areaSolicitada: formData.areaSolicitada,
       personas: personas,
-      idsDeletedPersonas: this.idsDeletedPersonas
+      idsDeletedPersonas: this.idsDeletedPersonas,
     };
 
     if (this.solicitud.invalid) {
@@ -721,9 +695,9 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       this.toastr.error("Formulario Invalido", "Solicitud");
       return;
     }
-    console.log("Formulario valido")
+    console.log("Formulario valido");
     // console.log("DATA", data);
-    this.solicitudService.putUpdateSolicitud(data).subscribe(solicitudResult => {
+    this.solicitudService.putUpdateSolicitud(data).subscribe((solicitudResult) => {
       console.log("Result update: ", solicitudResult);
       if (solicitudResult) {
         this.toastr.success("Solicitud actualizada con exito", "Solicitud");
@@ -745,23 +719,18 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   }
   standardWord(str) {
     var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÇç",
-        to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuucc",
-        mapping = {};
+      to = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuucc",
+      mapping = {};
 
-    for(let i = 0, j = from.length; i < j; i++ )
-      mapping[ from.charAt( i ) ] = to.charAt( i );
-
+    for (let i = 0, j = from.length; i < j; i++) mapping[from.charAt(i)] = to.charAt(i);
 
     var ret = [];
-    for( let i = 0, j = str.length; i < j; i++ ) {
-      var c = str.charAt( i );
-      if( mapping.hasOwnProperty( str.charAt( i ) ) )
-        ret.push( mapping[ c ] );
-      else
-        ret.push( c );
+    for (let i = 0, j = str.length; i < j; i++) {
+      var c = str.charAt(i);
+      if (mapping.hasOwnProperty(str.charAt(i))) ret.push(mapping[c]);
+      else ret.push(c);
     }
-    console.log("STrign finallll: ", ret.join( '' ))
-    return ret.join( '' );
-
-  };
+    console.log("STrign finallll: ", ret.join(""));
+    return ret.join("");
+  }
 }
