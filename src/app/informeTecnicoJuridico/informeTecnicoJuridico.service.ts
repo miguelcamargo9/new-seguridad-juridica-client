@@ -32,6 +32,13 @@ export class InformeTecnicoJuridicoService {
     );
   }
 
+  putUpdateInformeTecnicoJuridicoTexts(data: any): Observable<any> {
+    return this.http.put(
+      environment.apiUrl + "/informeTecnicoJuridico/texts/" + data.solicitudId,
+      data
+    );
+  }
+
   getInformacionVurByInformeTecnicoJuridicoId(
     informeTecnicoJuridicoId: number
   ): Observable<InformacionVur> {

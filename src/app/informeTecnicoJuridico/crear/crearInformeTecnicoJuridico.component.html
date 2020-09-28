@@ -751,7 +751,7 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="editorsFormGroup">
+            <mat-step [stepControl]="editorsFormGroup" [optional]="!editorsFormGroup.invalid">
               <form [formGroup]="editorsFormGroup">
                 <ng-template matStepLabel
                   >ANALISIS ESPACIAL / ANALISIS JURIDICO / CONCLUSIÓN Y RUTA JURIDICA</ng-template
@@ -839,6 +839,33 @@
                           <div class="input-group form-control-lg">
                             <mat-form-field
                               class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'ingenieroElaboroFecha')"
+                            >
+                              <input
+                                matInput
+                                [matDatepicker]="ingenieroElaboroFechapicker"
+                                placeholder="INGENIERO ELABORO FECHA"
+                                name="ingenieroElaboroFecha"
+                                id="ingenieroElaboroFecha"
+                                (click)="ingenieroElaboroFechapicker.open()"
+                                formControlName="ingenieroElaboroFecha"
+                              />
+                              <mat-datepicker-toggle matSuffix [for]="ingenieroElaboroFechapicker">
+                              </mat-datepicker-toggle>
+                              <mat-datepicker #ingenieroElaboroFechapicker></mat-datepicker>
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(fifthFormGroup, 'ingenieroElaboroFecha')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
                               [ngClass]="displayFieldCss(fifthFormGroup, 'abogadoElaboroId')"
                             >
                               <mat-select
@@ -855,6 +882,31 @@
                               </mat-select>
                               <app-field-error-display
                                 [displayError]="isFieldValid(fifthFormGroup, 'abogadoElaboroId')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'abogadoElaboroFecha')"
+                            >
+                              <input
+                                matInput
+                                [matDatepicker]="abogadoElaboroFechapicker"
+                                placeholder="ABOGADO ELABORO FECHA"
+                                name="abogadoElaboroFecha"
+                                id="abogadoElaboroFecha"
+                                (click)="abogadoElaboroFechapicker.open()"
+                                formControlName="abogadoElaboroFecha"
+                              />
+                              <mat-datepicker-toggle matSuffix [for]="abogadoElaboroFechapicker">
+                              </mat-datepicker-toggle>
+                              <mat-datepicker #abogadoElaboroFechapicker></mat-datepicker>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(fifthFormGroup, 'abogadoElaboroFecha')"
                                 errorMsg="Diligenciar el campo."
                               ></app-field-error-display>
                             </mat-form-field>
@@ -891,6 +943,33 @@
                           <div class="input-group form-control-lg">
                             <mat-form-field
                               class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'fechaValidacionTecnica')"
+                            >
+                              <input
+                                matInput
+                                [matDatepicker]="fechaValidacionTecnicapicker"
+                                placeholder="FECHA VALIDACIÓN TÉCNICA"
+                                name="fechaValidacionTecnica"
+                                id="fechaValidacionTecnica"
+                                (click)="fechaValidacionTecnicapicker.open()"
+                                formControlName="fechaValidacionTecnica"
+                              />
+                              <mat-datepicker-toggle matSuffix [for]="fechaValidacionTecnicapicker">
+                              </mat-datepicker-toggle>
+                              <mat-datepicker #fechaValidacionTecnicapicker></mat-datepicker>
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(fifthFormGroup, 'fechaValidacionTecnica')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
                               [ngClass]="
                                 displayFieldCss(fifthFormGroup, 'validadorLiderJuridicoId')
                               "
@@ -910,6 +989,36 @@
                               <app-field-error-display
                                 [displayError]="
                                   isFieldValid(fifthFormGroup, 'validadorLiderJuridicoId')
+                                "
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(fifthFormGroup, 'fechaValidacionJuridica')"
+                            >
+                              <input
+                                matInput
+                                [matDatepicker]="fechaValidacionJuridicapicker"
+                                placeholder="FECHA VALIDACIÓN JURÍDICA"
+                                name="fechaValidacionJuridica"
+                                id="fechaValidacionJuridica"
+                                (click)="fechaValidacionJuridicapicker.open()"
+                                formControlName="fechaValidacionJuridica"
+                              />
+                              <mat-datepicker-toggle
+                                matSuffix
+                                [for]="fechaValidacionJuridicapicker"
+                              >
+                              </mat-datepicker-toggle>
+                              <mat-datepicker #fechaValidacionJuridicapicker></mat-datepicker>
+                              <app-field-error-display
+                                [displayError]="
+                                  isFieldValid(fifthFormGroup, 'fechaValidacionJuridica')
                                 "
                                 errorMsg="Diligenciar el campo."
                               ></app-field-error-display>

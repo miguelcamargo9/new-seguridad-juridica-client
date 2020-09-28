@@ -17,4 +17,8 @@ export class InformeTecnicoJuridico {
   validadorLiderJuridicoId: number;
   validadorLiderTecnicoId: number;
   zona: string;
+  ingenieroElaboroFecha: Date;
+  abogadoElaboroFecha: Date;
+  fechaValidacionTecnica: Date;
+  fechaValidacionJuridica: Date;
 }

@@ -98,6 +98,10 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
       abogadoElaboroId: ["", Validators.required],
       validadorLiderTecnicoId: ["", Validators.required],
       validadorLiderJuridicoId: ["", Validators.required],
+      ingenieroElaboroFecha: ["", Validators.required],
+      abogadoElaboroFecha: ["", Validators.required],
+      fechaValidacionTecnica: ["", Validators.required],
+      fechaValidacionJuridica: ["", Validators.required],
     });
     this.editorsFormGroup = this._formBuilder.group({
       analisisEspacial: ["", Validators.required],
@@ -126,6 +130,9 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
         this.firstFormGroup.controls["idPredial"].setValue(informeTecnicoJuridicoData.idPredial);
 
         // EditorsGroup
+        this.editorsFormGroup.controls["analisisEspacial"].setValue(
+          informeTecnicoJuridicoData.analisisEspacial
+        );
         this.editorsFormGroup.controls["naturalezaJuridicaPredioAcuerdoEstudioFmi"].setValue(
           informeTecnicoJuridicoData.naturalezaJuridicaPredioAcuerdoEstudioFmi
         );
@@ -140,14 +147,26 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
         this.fifthFormGroup.controls["ingenieroElaboroId"].setValue(
           informeTecnicoJuridicoData.ingenieroElaboroId
         );
+        this.fifthFormGroup.controls["ingenieroElaboroFecha"].setValue(
+          this.changeDate(informeTecnicoJuridicoData.ingenieroElaboroFecha)
+        );
         this.fifthFormGroup.controls["abogadoElaboroId"].setValue(
           informeTecnicoJuridicoData.abogadoElaboroId
+        );
+        this.fifthFormGroup.controls["abogadoElaboroFecha"].setValue(
+          this.changeDate(informeTecnicoJuridicoData.abogadoElaboroFecha)
         );
         this.fifthFormGroup.controls["validadorLiderTecnicoId"].setValue(
           informeTecnicoJuridicoData.validadorLiderTecnicoId
         );
+        this.fifthFormGroup.controls["fechaValidacionTecnica"].setValue(
+          this.changeDate(informeTecnicoJuridicoData.fechaValidacionTecnica)
+        );
         this.fifthFormGroup.controls["validadorLiderJuridicoId"].setValue(
           informeTecnicoJuridicoData.validadorLiderJuridicoId
+        );
+        this.fifthFormGroup.controls["fechaValidacionJuridica"].setValue(
+          this.changeDate(informeTecnicoJuridicoData.fechaValidacionJuridica)
         );
 
         // FormGroup2
@@ -457,6 +476,40 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
           }
         }
         break;
+      case "editorsFormGroup":
+        if (this.editorsFormGroup.invalid) {
+          console.log("Invalido", this.findInvalidControls(this.editorsFormGroup));
+          this.toastr.error("Formulario Invalido", "Informe Tecnico Juridico");
+          return;
+        } else {
+          const dataEditorsFormGroup = this.editorsFormGroup.value;
+          dataEditorsFormGroup.solicitudId = this.solicitudId * 1;
+          dataEditorsFormGroup.id = this.informeTecnicoJuridicoId * 1;
+          if (this.informeTecnicoJuridicoId == null || this.informeTecnicoJuridicoId == 0) {
+            console.log("Create");
+            this.informeTecnicoJuridicoService
+              .postCreateInformeTecnicoJuridico(dataEditorsFormGroup)
+              .subscribe((result) => {
+                this.informeTecnicoJuridicoId = result;
+                this.toastr.success("Formulario Creado Correctamente", "Informe Tecnico Juridico");
+                if (redirect)
+                  this.router.navigate(["/solicitudes/ver/" + dataEditorsFormGroup.solicitudId]);
+              });
+          } else {
+            console.log("Update");
+            this.informeTecnicoJuridicoService
+              .putUpdateInformeTecnicoJuridicoTexts(dataEditorsFormGroup)
+              .subscribe((params) => {
+                this.toastr.success(
+                  "Formulario Actualizado Correctamente",
+                  "Informe Tecnico Juridico"
+                );
+                if (redirect)
+                  this.router.navigate(["/solicitudes/ver/" + dataEditorsFormGroup.solicitudId]);
+              });
+          }
+        }
+        break;
     }
   }
 
@@ -479,5 +532,14 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
       }
     }
     return invalid;
+  }
+
+  changeDate(d: Date) {
+    if (d == null) return null;
+    return new Date(d);
+  }
+  showDate(d: String) {
+    if (d == null) return null;
+    return d.substring(0, 10);
   }
 }
