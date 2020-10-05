@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-12 mr-auto ml-auto">
         <div class="wizard-container">
-          <mat-horizontal-stepper [linear]="isLinear" #stepper>
+          <mat-vertical-stepper [linear]="isLinear" #stepper>
             <mat-step [stepControl]="firstFormGroup">
               <form [formGroup]="firstFormGroup">
                 <ng-template matStepLabel>IDENTIFICACIÓN SOLICITUD</ng-template>
@@ -1043,7 +1043,7 @@
                 </div>
               </form>
             </mat-step>
-          </mat-horizontal-stepper>
+          </mat-vertical-stepper>
         </div>
       </div>
     </div>
