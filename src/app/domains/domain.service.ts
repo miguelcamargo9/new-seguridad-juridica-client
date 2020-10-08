@@ -81,4 +81,19 @@ export class DomainService {
   getTipoViabilidadTecnica(): Observable<Domain[]> {
     return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoViabilidadTecnica");
   }
+  getTipoPredio(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoPredio");
+  }
+  getTipoEstadoVur(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoEstadoVur");
+  }
+  getTipoConstruccion(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoConstruccion");
+  }
+  getTipoUso(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoUso");
+  }
+  getTipoExplotacion(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoExplotacion");
+  }
 }
