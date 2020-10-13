@@ -6,6 +6,7 @@ import { InformeTecnicoJuridico } from "./informeTecnicoJuridico.model";
 import { InformacionVur } from "./informacionVur.model";
 import { InformacionCatastral } from "./informacionCatastral.model";
 import { InformacionPredial } from "./informacionPredial.model";
+import { Colindante } from "./colindante.model";
 
 @Injectable()
 export class InformeTecnicoJuridicoService {
@@ -111,5 +112,9 @@ export class InformeTecnicoJuridicoService {
         data.informeTecnicoJuridicoId,
       data
     );
+  }
+
+  getColindanteByid(colidanteId: number): Observable<Colindante> {
+    return this.http.get<Colindante>(environment.apiUrl + "/colindante/" + colidanteId);
   }
 }

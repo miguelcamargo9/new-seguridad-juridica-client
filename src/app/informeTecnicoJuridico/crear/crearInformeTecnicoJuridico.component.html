@@ -751,6 +751,56 @@
                 </div>
               </form>
             </mat-step>
+            <mat-step [stepControl]="colindanteForm" [optional]="!colindanteForm.invalid">
+              <form [formGroup]="colindanteForm">
+                <ng-template matStepLabel>INFORMACIÓN COLINDANTES</ng-template>
+                <div class="card card-wizard">
+                  <div class="card-header">INFORMACIÓN COLINDANTES</div>
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(colindanteForm, 'cardinalidad')"
+                            >
+                              <input
+                                type="text"
+                                name="cardinalidad"
+                                matInput
+                                id="cardinalidad"
+                                placeholder="CARDINALIDAD"
+                                formControlName="cardinalidad"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(colindanteForm, 'cardinalidad')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button mat-button matStepperPrevious class="btn btn-fill btn-link btn-wd">
+                      Volver
+                    </button>
+                    <button
+                      mat-button
+                      matStepperNext
+                      (click)="onNext(colindanteForm, 'colindanteForm')"
+                      class="btn btn-next btn-fill btn-success btn-wd"
+                    >
+                      Siguiente
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-step>
             <mat-step [stepControl]="editorsFormGroup" [optional]="!editorsFormGroup.invalid">
               <form [formGroup]="editorsFormGroup">
                 <ng-template matStepLabel

@@ -24,6 +24,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
   fourthFormGroup: FormGroup;
   fifthFormGroup: FormGroup;
   editorsFormGroup: FormGroup;
+  colindanteForm: FormGroup;
 
   tipoPredios: Domain[];
   tipoEstadosInformeTecnicoJuridico: Domain[];
@@ -108,6 +109,9 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
       naturalezaJuridicaPredioAcuerdoEstudioFmi: ["", Validators.required],
       descripcionCaso: ["", Validators.required],
       conclusionRutaJuridica: ["", Validators.required],
+    });
+    this.colindanteForm = this._formBuilder.group({
+      cardinalidad: ["", Validators.required],
     });
   }
 
