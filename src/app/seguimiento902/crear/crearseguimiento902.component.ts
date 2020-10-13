@@ -175,45 +175,45 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     // Code for the Validator
     const $validator = $(".card-wizard form").validate({
       rules: {
-        // tipoViabilidadTecnicaId: { required: true },
-        // estadoInformeTecnicoJuridicoId: { required: true },
-        // areaDelPredioEnCatastroR1YR2: { required: true },
-        // areaDelPredioEnFolioDeMatriculaInmobiliaria: { required: true },
-        // areaLevantamientoPredial: { required: true },
-        // ingenieroProyectoItjId: { required: true },
-        // ingenieroRevisoItjId: { required: true },
-        // tipoSoporteValoracionId: { required: true },
-        // noResolucionOMemorando: { required: true },
-        // fechaResolucionMemorando: { required: true },
-        // tipoDePruebaAportadaId: { required: true },
-        // requierePruebasAdicionales: { required: true },
-        // anosDePosesionSegunFiso: { required: true },
-        // anosDePosesionSegunPrueba: { required: true },
-        // tipoDeRutaId: { required: true },
-        // tipoTieneViabilidadJuridicaId: { required: true },
-        // tipoMedidaDeProteccionUrtId: { required: true },
-        // tipoMedidaCautelarId: { required: true },
-        // tipoDeActoId: { required: true },
-        // abogadoProyeccionId: { required: true },
-        // numeroResolucionInicioArchivo: { required: true },
-        // fechaResolucion: { required: true },
-        // recursoDeReposicion: { required: true },
+        tipoViabilidadTecnicaId: { required: true },
+        estadoInformeTecnicoJuridicoId: { valueNotEquals: "default" },
+        areaDelPredioEnCatastroR1YR2: { required: true },
+        areaDelPredioEnFolioDeMatriculaInmobiliaria: { required: true },
+        areaLevantamientoPredial: { required: true },
+        ingenieroProyectoItjId: { required: true },
+        ingenieroRevisoItjId: { required: true },
+        tipoSoporteValoracionId: { required: true },
+        noResolucionOMemorando: { required: true },
+        fechaResolucionMemorando: { required: true },
+        tipoDePruebaAportadaId: { required: true },
+        requierePruebasAdicionales: { required: true },
+        anosDePosesionSegunFiso: { required: true },
+        anosDePosesionSegunPrueba: { required: true },
+        tipoDeRutaId: { required: true },
+        tipoTieneViabilidadJuridicaId: { required: true },
+        tipoMedidaDeProteccionUrtId: { required: true },
+        tipoMedidaCautelarId: { required: true },
+        tipoDeActoId: { required: true },
+        abogadoProyeccionId: { required: true },
+        numeroResolucionInicioArchivo: { required: true },
+        fechaResolucion: { required: true },
+        recursoDeReposicion: { required: true },
         // fechaComunicacionAProcuraduria: { required: true },
         // fechaEnvioAOripResolucionInicio: { required: true },
         // fechaRegistroEnOripResolucionInicio: { required: true },
-        // resolucionModificacionAclaracion: { required: true },
-        // resolucionModificacionAclaracionCierre: { required: true },
-        // tipoDecisionDeCierreId: { required: true },
-        // abogadoProyeccionCierreId: { required: true },
-        // oposicion: { required: true },
-        // numeroDeResolucionDeCierre: { required: true },
-        // fechaResolucionDeCierre: { required: true },
-        // recursoResolucionCierre: { required: true },
-        // fechaEnvioAOripResolucionFinal: { required: true },
-        // fechaAnotacionANombreDelNuevoPropietario: { required: true },
-        // fmiConInscripcionANombreDelNuevoPropietario: { required: true },
-        // nombreDelPredioFormalizado: { required: true },
-        // areaFormalizada: { required: true },
+        resolucionModificacionAclaracion: { required: true },
+        resolucionModificacionAclaracionCierre: { required: true },
+        tipoDecisionDeCierreId: { required: true },
+        abogadoProyeccionCierreId: { required: true },
+        oposicion: { required: true },
+        numeroDeResolucionDeCierre: { required: true },
+        fechaResolucionDeCierre: { required: true },
+        recursoResolucionCierre: { required: true },
+        fechaEnvioAOripResolucionFinal: { required: true },
+        fechaAnotacionANombreDelNuevoPropietario: { required: true },
+        fmiConInscripcionANombreDelNuevoPropietario: { required: true },
+        nombreDelPredioFormalizado: { required: true },
+        areaFormalizada: { required: true },
       },
 
       highlight: function (element) {
@@ -238,7 +238,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         var form = e.createSeguimiento902.value;
         var $valid = $(".card-wizard form").valid();
         if (!$valid) {
-          console.log("Formulario invalido!")
+          console.log("Formulario invalido!");
           if (index === 5 && e.initialStages.length > 0) {
             e.loadEtapaInicio(e.initialStages[0].id, "edit");
             return true;
@@ -252,7 +252,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
             }
           }
         } else {
-          console.log("Formulario valido!")
+          console.log("Formulario valido!");
           if (index === 5 && e.initialStages.length < 1) {
             e.toastr.error("Debe Agregar al menos un registro.");
             return false;
@@ -261,12 +261,12 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
               e.toastr.error("Debe Agregar al menos un registro.");
               return false;
             } else {
-              if(form.estadoInformeTecnicoJuridicoId === 2 && index === 2) {
-                  e.toastr.success("Guardando información pero no puede continuar.");
-                  e.save();
-                  return false;
+              if (form.estadoInformeTecnicoJuridicoId === 2 && index === 2) {
+                e.toastr.success("Guardando información pero no puede continuar.");
+                e.save();
+                return false;
               } else {
-                if(form.tipoTieneViabilidadJuridicaId === 2 && index === 4) {
+                if (form.tipoTieneViabilidadJuridicaId === 2 && index === 4) {
                   e.toastr.success("Guardando información pero no puede continuar.");
                   e.save();
                   return false;
@@ -332,7 +332,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         $(".moving-tab").css("transition", "transform 0s");
       },
 
-      onTabClick: function (tab: any, navigation: any, indexCurrent: any, indexDestination:any) {
+      onTabClick: function (tab: any, navigation: any, indexCurrent: any, indexDestination: any) {
         // indexDestination++;//Fix to index next
         console.log(tab, navigation, indexCurrent, indexDestination);
         const $valid = $(".card-wizard form").valid();
@@ -359,12 +359,12 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
               e.toastr.error("Debe Agregar al menos un registro.");
               return false;
             } else {
-              if(form.estadoInformeTecnicoJuridicoId === 2 && indexDestination > 1) {
+              if (form.estadoInformeTecnicoJuridicoId === 2 && indexDestination > 1) {
                 e.toastr.success("Guardando información pero no puede continuar.");
                 e.save();
                 return false;
               } else {
-                if(form.tipoTieneViabilidadJuridicaId === 2 && indexDestination > 3) {
+                if (form.tipoTieneViabilidadJuridicaId === 2 && indexDestination > 3) {
                   e.toastr.success("Guardando información pero no puede continuar.");
                   e.save();
                   return false;
@@ -630,118 +630,42 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       }
     );
     this.domainService.getTipoViabilidadTecnica().subscribe(
-        (data) => {
-          this.tipoViabilidadTecnica = data;
-        },
-        (error) => {
-          console.log("It don't getDomain!" + error);
-        }
+      (data) => {
+        this.tipoViabilidadTecnica = data;
+      },
+      (error) => {
+        console.log("It don't getDomain!" + error);
+      }
     );
   }
   initForm() {
     this.createSeguimiento902 = this.formBuilder.group({
-      tipoViabilidadTecnicaId: [null],
-      estadoInformeTecnicoJuridicoId: [null],
-      fechaInformeTecnicoJuridico: [null],
-      areaDelPredioEnCatastroR1YR2: [null],
-      areaDelPredioEnFolioDeMatriculaInmobiliaria: [null],
-      areaLevantamientoPredial: [null],
-      ingenieroProyectoItjId: [null],
-      ingenieroRevisoItjId: [null],
-      tipoSoporteValoracionId: [null],
-      noResolucionOMemorando: [null],
-      fechaResolucionMemorando: [null],
-      tipoDePruebaAportadaId: [null],
-      requierePruebasAdicionales: [null],
-      pruebaAdicionalSolicitada: [null],
-      anosDePosesionSegunFiso: [null],
-      anosDePosesionSegunPrueba: [null],
-      tipoDeRutaId: [null],
-      tipoTieneViabilidadJuridicaId: [null],
-      tipoDeNoViabilidadId: [null],
-      tipoMotivoSuspensionId: [null],
-      tipoMedidaDeProteccionUrtId: [null],
-      tipoMedidaCautelarId: [null],
-      tipoDeActoId: [null],
-      abogadoProyeccionId: [null],
-      numeroResolucionInicioArchivo: [null],
-      fechaResolucion: [null],
-      notificacionPersonalInicio: [null],
-      fechaNotificacionPersonalInicio: [null],
-      notificacionPorAvisoInicio: [null],
-      fechaFijacionNotificacionPorAvisoInicio: [null],
-      publicacionWebInicio: [null],
-      fechaPublicacionWebInicio: [null],
-      publicacionEmisora: [null],
-      fechaPublicacionEnEmisora: [null],
-      publicacionAlcaldia: [null],
-      fechaPublicacionAlcaldia: [null],
-      recursoDeReposicion: [null],
-      numeroDeResolucionQueResuelveRecurso: [null],
-      fechaResolucionQueResuelveRecurso: [null],
-      fechaComunicacionAProcuraduria: [null],
-      fechaEnvioAOripResolucionInicio: [null],
-      fechaRegistroEnOripResolucionInicio: [null],
-      resolucionModificacionAclaracion: [null],
-      resolucionModificacionAclaracionCierre: [null],
-      numeroDeResolucionDePruebas: [null],
-      fechaResolucionDePruebas: [null],
-      fechaPublicacionEnRadio: [null],
-      audienciaPublica: [null],
-      fechaAudienciaPublica: [null],
-      tipoDecisionDeCierreId: [null],
-      abogadoProyeccionCierreId: [null],
-      oposicion: [null],
-      motivoOposicion: [null],
-      fechaRadicadoOposicion: [null],
-      numeroDeResolucionDeCierre: [null],
-      fechaResolucionDeCierre: [null],
-      notificacionPersonalCierre: [null],
-      fechaNotificacionPersonalCierre: [null],
-      notificacionPorAvisoCierre: [null],
-      fechaFijacionNotificacionPorAvisoCierre: [null],
-      publicacionResolucionCierre: [null],
-      fechaPublicacion: [null],
-      recursoResolucionCierre: [null],
-      tipoRecursoId: [null],
-      numeroResolucionResuelveRecurso: [null],
-      fechaResolucionResuelveRecurso: [null],
-      fechaEnvioAOripResolucionFinal: [null],
-      fechaAnotacionANombreDelNuevoPropietario: [null],
-      fmiConInscripcionANombreDelNuevoPropietario: [null],
-      nombreDelPredioFormalizado: [null],
-      areaFormalizada: [null],
-      fechaEntregaTitulo: [null],
-      tipoEstadoSinegiaId: [null],
-      fechaAprobacionSinergia: [null],
-      tipoMotivoDeCorreccionSinergiaId: [null],
-
-      // tipoViabilidadTecnicaId: [null, Validators.required],
-      // estadoInformeTecnicoJuridicoId: [null, Validators.required],
+      // tipoViabilidadTecnicaId: [null],
+      // estadoInformeTecnicoJuridicoId: [null],
       // fechaInformeTecnicoJuridico: [null],
-      // areaDelPredioEnCatastroR1YR2: [null, Validators.required],
-      // areaDelPredioEnFolioDeMatriculaInmobiliaria: [null, Validators.required],
-      // areaLevantamientoPredial: [null, Validators.required],
-      // ingenieroProyectoItjId: [null, Validators.required],
-      // ingenieroRevisoItjId: [null, Validators.required],
-      // tipoSoporteValoracionId: [null, Validators.required],
-      // noResolucionOMemorando: [null, Validators.required],
-      // fechaResolucionMemorando: [null, Validators.required],
-      // tipoDePruebaAportadaId: [null, Validators.required],
-      // requierePruebasAdicionales: [null, Validators.required],
+      // areaDelPredioEnCatastroR1YR2: [null],
+      // areaDelPredioEnFolioDeMatriculaInmobiliaria: [null],
+      // areaLevantamientoPredial: [null],
+      // ingenieroProyectoItjId: [null],
+      // ingenieroRevisoItjId: [null],
+      // tipoSoporteValoracionId: [null],
+      // noResolucionOMemorando: [null],
+      // fechaResolucionMemorando: [null],
+      // tipoDePruebaAportadaId: [null],
+      // requierePruebasAdicionales: [null],
       // pruebaAdicionalSolicitada: [null],
-      // anosDePosesionSegunFiso: [null, Validators.required],
-      // anosDePosesionSegunPrueba: [null, Validators.required],
-      // tipoDeRutaId: [null, Validators.required],
-      // tipoTieneViabilidadJuridicaId: [null, Validators.required],
+      // anosDePosesionSegunFiso: [null],
+      // anosDePosesionSegunPrueba: [null],
+      // tipoDeRutaId: [null],
+      // tipoTieneViabilidadJuridicaId: [null],
       // tipoDeNoViabilidadId: [null],
       // tipoMotivoSuspensionId: [null],
-      // tipoMedidaDeProteccionUrtId: [null, Validators.required],
-      // tipoMedidaCautelarId: [null, Validators.required],
-      // tipoDeActoId: [null, Validators.required],
-      // abogadoProyeccionId: [null, Validators.required],
-      // numeroResolucionInicioArchivo: [null, Validators.required],
-      // fechaResolucion: [null, Validators.required],
+      // tipoMedidaDeProteccionUrtId: [null],
+      // tipoMedidaCautelarId: [null],
+      // tipoDeActoId: [null],
+      // abogadoProyeccionId: [null],
+      // numeroResolucionInicioArchivo: [null],
+      // fechaResolucion: [null],
       // notificacionPersonalInicio: [null],
       // fechaNotificacionPersonalInicio: [null],
       // notificacionPorAvisoInicio: [null],
@@ -752,45 +676,121 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       // fechaPublicacionEnEmisora: [null],
       // publicacionAlcaldia: [null],
       // fechaPublicacionAlcaldia: [null],
-      // recursoDeReposicion: [null, Validators.required],
+      // recursoDeReposicion: [null],
       // numeroDeResolucionQueResuelveRecurso: [null],
       // fechaResolucionQueResuelveRecurso: [null],
-      // fechaComunicacionAProcuraduria: [null, Validators.required],
-      // fechaEnvioAOripResolucionInicio: [null, Validators.required],
-      // fechaRegistroEnOripResolucionInicio: [null, Validators.required],
-      // resolucionModificacionAclaracion: [null, Validators.required],
-      // resolucionModificacionAclaracionCierre: [null, Validators.required],
+      // fechaComunicacionAProcuraduria: [null],
+      // fechaEnvioAOripResolucionInicio: [null],
+      // fechaRegistroEnOripResolucionInicio: [null],
+      // resolucionModificacionAclaracion: [null],
+      // resolucionModificacionAclaracionCierre: [null],
       // numeroDeResolucionDePruebas: [null],
       // fechaResolucionDePruebas: [null],
       // fechaPublicacionEnRadio: [null],
       // audienciaPublica: [null],
       // fechaAudienciaPublica: [null],
-      // tipoDecisionDeCierreId: [null, Validators.required],
-      // abogadoProyeccionCierreId: [null, Validators.required],
-      // oposicion: [null, Validators.required],
+      // tipoDecisionDeCierreId: [null],
+      // abogadoProyeccionCierreId: [null],
+      // oposicion: [null],
       // motivoOposicion: [null],
       // fechaRadicadoOposicion: [null],
-      // numeroDeResolucionDeCierre: [null, Validators.required],
-      // fechaResolucionDeCierre: [null, Validators.required],
+      // numeroDeResolucionDeCierre: [null],
+      // fechaResolucionDeCierre: [null],
       // notificacionPersonalCierre: [null],
       // fechaNotificacionPersonalCierre: [null],
       // notificacionPorAvisoCierre: [null],
       // fechaFijacionNotificacionPorAvisoCierre: [null],
       // publicacionResolucionCierre: [null],
       // fechaPublicacion: [null],
-      // recursoResolucionCierre: [null, Validators.required],
+      // recursoResolucionCierre: [null],
       // tipoRecursoId: [null],
       // numeroResolucionResuelveRecurso: [null],
       // fechaResolucionResuelveRecurso: [null],
-      // fechaEnvioAOripResolucionFinal: [null, Validators.required],
-      // fechaAnotacionANombreDelNuevoPropietario: [null, Validators.required],
-      // fmiConInscripcionANombreDelNuevoPropietario: [null, Validators.required],
-      // nombreDelPredioFormalizado: [null, Validators.required],
-      // areaFormalizada: [null, Validators.required],
+      // fechaEnvioAOripResolucionFinal: [null],
+      // fechaAnotacionANombreDelNuevoPropietario: [null],
+      // fmiConInscripcionANombreDelNuevoPropietario: [null],
+      // nombreDelPredioFormalizado: [null],
+      // areaFormalizada: [null],
       // fechaEntregaTitulo: [null],
       // tipoEstadoSinegiaId: [null],
       // fechaAprobacionSinergia: [null],
       // tipoMotivoDeCorreccionSinergiaId: [null],
+
+      tipoViabilidadTecnicaId: [null, Validators.required],
+      estadoInformeTecnicoJuridicoId: [null, Validators.required],
+      fechaInformeTecnicoJuridico: [null],
+      areaDelPredioEnCatastroR1YR2: [null, Validators.required],
+      areaDelPredioEnFolioDeMatriculaInmobiliaria: [null, Validators.required],
+      areaLevantamientoPredial: [null, Validators.required],
+      ingenieroProyectoItjId: [null, Validators.required],
+      ingenieroRevisoItjId: [null, Validators.required],
+      tipoSoporteValoracionId: [null, Validators.required],
+      noResolucionOMemorando: [null, Validators.required],
+      fechaResolucionMemorando: [null, Validators.required],
+      tipoDePruebaAportadaId: [null, Validators.required],
+      requierePruebasAdicionales: [null, Validators.required],
+      pruebaAdicionalSolicitada: [null],
+      anosDePosesionSegunFiso: [null, Validators.required],
+      anosDePosesionSegunPrueba: [null, Validators.required],
+      tipoDeRutaId: [null, Validators.required],
+      tipoTieneViabilidadJuridicaId: [null, Validators.required],
+      tipoDeNoViabilidadId: [null],
+      tipoMotivoSuspensionId: [null],
+      tipoMedidaDeProteccionUrtId: [null, Validators.required],
+      tipoMedidaCautelarId: [null, Validators.required],
+      tipoDeActoId: [null, Validators.required],
+      abogadoProyeccionId: [null, Validators.required],
+      numeroResolucionInicioArchivo: [null, Validators.required],
+      fechaResolucion: [null, Validators.required],
+      notificacionPersonalInicio: [null],
+      fechaNotificacionPersonalInicio: [null],
+      notificacionPorAvisoInicio: [null],
+      fechaFijacionNotificacionPorAvisoInicio: [null],
+      publicacionWebInicio: [null],
+      fechaPublicacionWebInicio: [null],
+      publicacionEmisora: [null],
+      fechaPublicacionEnEmisora: [null],
+      publicacionAlcaldia: [null],
+      fechaPublicacionAlcaldia: [null],
+      recursoDeReposicion: [null, Validators.required],
+      numeroDeResolucionQueResuelveRecurso: [null],
+      fechaResolucionQueResuelveRecurso: [null],
+      fechaComunicacionAProcuraduria: [null],
+      fechaEnvioAOripResolucionInicio: [null],
+      fechaRegistroEnOripResolucionInicio: [null],
+      resolucionModificacionAclaracion: [null, Validators.required],
+      resolucionModificacionAclaracionCierre: [null, Validators.required],
+      numeroDeResolucionDePruebas: [null],
+      fechaResolucionDePruebas: [null],
+      fechaPublicacionEnRadio: [null],
+      audienciaPublica: [null],
+      fechaAudienciaPublica: [null],
+      tipoDecisionDeCierreId: [null, Validators.required],
+      abogadoProyeccionCierreId: [null, Validators.required],
+      oposicion: [null, Validators.required],
+      motivoOposicion: [null],
+      fechaRadicadoOposicion: [null],
+      numeroDeResolucionDeCierre: [null, Validators.required],
+      fechaResolucionDeCierre: [null, Validators.required],
+      notificacionPersonalCierre: [null],
+      fechaNotificacionPersonalCierre: [null],
+      notificacionPorAvisoCierre: [null],
+      fechaFijacionNotificacionPorAvisoCierre: [null],
+      publicacionResolucionCierre: [null],
+      fechaPublicacion: [null],
+      recursoResolucionCierre: [null, Validators.required],
+      tipoRecursoId: [null],
+      numeroResolucionResuelveRecurso: [null],
+      fechaResolucionResuelveRecurso: [null],
+      fechaEnvioAOripResolucionFinal: [null, Validators.required],
+      fechaAnotacionANombreDelNuevoPropietario: [null, Validators.required],
+      fmiConInscripcionANombreDelNuevoPropietario: [null, Validators.required],
+      nombreDelPredioFormalizado: [null, Validators.required],
+      areaFormalizada: [null, Validators.required],
+      fechaEntregaTitulo: [null],
+      tipoEstadoSinegiaId: [null],
+      fechaAprobacionSinergia: [null],
+      tipoMotivoDeCorreccionSinergiaId: [null],
     });
   }
   changeDate(d: Date) {
@@ -808,8 +808,10 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         this.seguimiento902Id = seguimiento902Data.id;
         this.fiso = seguimiento902Data.fiso;
         this.expedienteSit = seguimiento902Data.expedienteSit;
-        this.viewTipoMotivoSuspension = seguimiento902Data.tipoTieneViabilidadJuridicaId === 3 ? true : false;
-        this.viewTipoDeNoViabilidadId = seguimiento902Data.tipoTieneViabilidadJuridicaId === 2 ? true : false;
+        this.viewTipoMotivoSuspension =
+          seguimiento902Data.tipoTieneViabilidadJuridicaId === 3 ? true : false;
+        this.viewTipoDeNoViabilidadId =
+          seguimiento902Data.tipoTieneViabilidadJuridicaId === 2 ? true : false;
 
         this.createSeguimiento902.controls["tipoViabilidadTecnicaId"].setValue(
           seguimiento902Data.tipoViabilidadTecnicaId
@@ -1035,7 +1037,9 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
           seguimiento902Data.resolucionModificacionAclaracionCierre
         );
         this.initialStageButton = seguimiento902Data.resolucionModificacionAclaracion ? "add" : "";
-        this.finalStageButton = seguimiento902Data.resolucionModificacionAclaracionCierre ? "add" : "";
+        this.finalStageButton = seguimiento902Data.resolucionModificacionAclaracionCierre
+          ? "add"
+          : "";
 
         this.getSeguimiento902EtapaInicioBySeguimiento902Id(seguimiento902Data.id);
         this.getSeguimiento902EtapaCierreBySeguimiento902Id(seguimiento902Data.id);
@@ -1135,7 +1139,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     this.viewMotivoOposicion = event.value ? true : false;
   }
   selectTieneViabilidadJuridica(event) {
-    this.viewTipoDeNoViabilidadId = event.value === 2 ? true : false;
+    // this.viewTipoDeNoViabilidadId = event.value === 2 ? true : false;
     this.viewTipoMotivoSuspension = event.value === 3 ? true : false;
   }
   selectEstadoSinegia(event) {
@@ -1162,7 +1166,6 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
       }
     }
   }
-
 
   // Form Cierre
   selectOposicionCierre(event) {
@@ -1247,12 +1250,15 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
         this.createSeguimiento902.controls["fechaRegistroEnOripResolucionInicio"].setValue(
           this.changeDate(seguimiento902EtapaInicialData.fechaRegistroEnOripResolucionInicio)
         );
-        this.viewFechaNotificacionPersonalInicio = seguimiento902EtapaInicialData.notificacionPersonalInicio;
-        this.viewFechaFijacionNotificacionPorAvisoInicio = seguimiento902EtapaInicialData.notificacionPorAvisoInicio;
+        this.viewFechaNotificacionPersonalInicio =
+          seguimiento902EtapaInicialData.notificacionPersonalInicio;
+        this.viewFechaFijacionNotificacionPorAvisoInicio =
+          seguimiento902EtapaInicialData.notificacionPorAvisoInicio;
         this.viewFechaPublicacionWebInicio = seguimiento902EtapaInicialData.publicacionWebInicio;
         this.viewFechaPublicacionEnEmisora = seguimiento902EtapaInicialData.publicacionEmisora;
         this.viewFechaPublicacionAlcaldia = seguimiento902EtapaInicialData.publicacionAlcaldia;
-        this.viewNumeroDeResolucionQueResuelveRecurso = seguimiento902EtapaInicialData.recursoDeReposicion;
+        this.viewNumeroDeResolucionQueResuelveRecurso =
+          seguimiento902EtapaInicialData.recursoDeReposicion;
       });
   }
 
@@ -1437,9 +1443,12 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
           this.changeDate(seguimiento902EtapaCierreData.fechaResolucionResuelveRecurso)
         );
         this.viewMotivoOposicionCierre = seguimiento902EtapaCierreData.oposicion;
-        this.viewFechaNotificacionPersonalCierre = seguimiento902EtapaCierreData.notificacionPersonalCierre;
-        this.viewFechaNotificacionPorAvisoCierre = seguimiento902EtapaCierreData.notificacionPorAvisoCierre;
-        this.viewFechaPublicacionResolucionCierre = seguimiento902EtapaCierreData.publicacionResolucionCierre;
+        this.viewFechaNotificacionPersonalCierre =
+          seguimiento902EtapaCierreData.notificacionPersonalCierre;
+        this.viewFechaNotificacionPorAvisoCierre =
+          seguimiento902EtapaCierreData.notificacionPorAvisoCierre;
+        this.viewFechaPublicacionResolucionCierre =
+          seguimiento902EtapaCierreData.publicacionResolucionCierre;
         this.viewResolucionCierre = seguimiento902EtapaCierreData.recursoResolucionCierre;
       });
   }

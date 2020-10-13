@@ -8,10 +8,10 @@
             <form [formGroup]="createSeguimiento902">
               <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
               <div class="card-header text-center">
-                <h3 class="card-title">
-                  Seguimiento 902
-                </h3>
-                <h5 class="card-description">Expediente SIT: {{ expedienteSit }} <br />FISO: {{ fiso }}</h5>
+                <h3 class="card-title">Seguimiento 902</h3>
+                <h5 class="card-description">
+                  Expediente SIT: {{ expedienteSit }} <br />FISO: {{ fiso }}
+                </h5>
               </div>
               <div class="wizard-navigation">
                 <ul class="nav nav-pills">
@@ -81,7 +81,11 @@
                               id="tipoViabilidadTecnicaId"
                               formControlName="tipoViabilidadTecnicaId"
                             >
-                              <mat-option *ngFor="let item of tipoViabilidadTecnica" [value]="item.id">
+                              <mat-option value="">Seleccionar</mat-option>
+                              <mat-option
+                                *ngFor="let item of tipoViabilidadTecnica"
+                                [value]="item.id"
+                              >
                                 {{ item.nombre }}
                               </mat-option>
                             </mat-select>
@@ -176,9 +180,12 @@
                               name="areaDelPredioEnCatastroR1YR2"
                               matInput
                               id="areaDelPredioEnCatastroR1YR2"
-                              placeholder="ÁREA DEL PREDIO EN CATASTRO (R1 Y R2) - m2 * - {{createSeguimiento902.get('areaDelPredioEnCatastroR1YR2').value | replaceArea}}"
+                              placeholder="ÁREA DEL PREDIO EN CATASTRO (R1 Y R2) - m2 * - {{
+                                createSeguimiento902.get('areaDelPredioEnCatastroR1YR2').value
+                                  | replaceArea
+                              }}"
                               formControlName="areaDelPredioEnCatastroR1YR2"
-                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
+                              onkeypress="return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)"
                             />
                             <app-field-error-display
                               [displayError]="
@@ -206,9 +213,13 @@
                               name="areaDelPredioEnFolioDeMatriculaInmobiliaria"
                               matInput
                               id="areaDelPredioEnFolioDeMatriculaInmobiliaria"
-                              placeholder="ÁREA DEL PREDIO EN FOLIO DE MATRÍCULA INMOBILIARIA - m2 * - {{createSeguimiento902.get('areaDelPredioEnFolioDeMatriculaInmobiliaria').value | replaceArea}}"
+                              placeholder="ÁREA DEL PREDIO EN FOLIO DE MATRÍCULA INMOBILIARIA - m2 * - {{
+                                createSeguimiento902.get(
+                                  'areaDelPredioEnFolioDeMatriculaInmobiliaria'
+                                ).value | replaceArea
+                              }}"
                               formControlName="areaDelPredioEnFolioDeMatriculaInmobiliaria"
-                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
+                              onkeypress="return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)"
                             />
                             <app-field-error-display
                               [displayError]="
@@ -236,9 +247,12 @@
                               name="areaLevantamientoPredial"
                               matInput
                               id="areaLevantamientoPredial"
-                              placeholder="ÁREA LEVANTAMIENTO PREDIAL - m2* - {{createSeguimiento902.get('areaLevantamientoPredial').value | replaceArea}}"
+                              placeholder="ÁREA LEVANTAMIENTO PREDIAL - m2* - {{
+                                createSeguimiento902.get('areaLevantamientoPredial').value
+                                  | replaceArea
+                              }}"
                               formControlName="areaLevantamientoPredial"
-                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
+                              onkeypress="return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)"
                             />
                             <app-field-error-display
                               [displayError]="
@@ -506,7 +520,7 @@
                               id="anosDePosesionSegunFiso"
                               placeholder="AÑOS DE POSESIÓN SEGÚN FISO*"
                               formControlName="anosDePosesionSegunFiso"
-                              onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                             />
                             <app-field-error-display
                               [displayError]="
@@ -533,7 +547,7 @@
                               id="anosDePosesionSegunPrueba"
                               placeholder="AÑOS DE POSESIÓN SEGÚN PRUEBA*"
                               formControlName="anosDePosesionSegunPrueba"
-                              onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                             />
                             <app-field-error-display
                               [displayError]="
@@ -1771,7 +1785,7 @@
                           </app-field-error-display>
                         </div>
                       </div>
-                      <div class="col-sm-6"  [hidden]="!viewMotivoOposicionCierre">
+                      <div class="col-sm-6" [hidden]="!viewMotivoOposicionCierre">
                         <div class="input-group form-control-lg">
                           <mat-form-field
                             class="example-full-width has-label"
@@ -2456,9 +2470,11 @@
                               name="areaFormalizada"
                               matInput
                               id="areaFormalizada"
-                              placeholder="ÁREA FORMALIZADA* - {{createSeguimiento902.get('areaFormalizada').value | replaceArea}}"
+                              placeholder="ÁREA FORMALIZADA* - {{
+                                createSeguimiento902.get('areaFormalizada').value | replaceArea
+                              }}"
                               formControlName="areaFormalizada"
-                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
+                              onkeypress="return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(createSeguimiento902, 'areaFormalizada')"
@@ -2609,11 +2625,11 @@
                 </div>
                 <div class="ml-auto">
                   <input
-                          type="button"
-                          class="btn btn-fill btn-link btn-wd"
-                          name="volver"
-                          value="Salir sin guardar"
-                          [routerLink]="'/solicitudes/ver/'+solicitudId"
+                    type="button"
+                    class="btn btn-fill btn-link btn-wd"
+                    name="volver"
+                    value="Salir sin guardar"
+                    [routerLink]="'/solicitudes/ver/' + solicitudId"
                   />
                   <input
                     type="button"
@@ -2626,7 +2642,7 @@
                     class="btn btn-finish btn-fill btn-warning btn-wd"
                     name="finish"
                     value="Guardar"
-                    style="display: none;"
+                    style="display: none"
                     (click)="onSubmit()"
                   />
                   <div class="clearfix"></div>
