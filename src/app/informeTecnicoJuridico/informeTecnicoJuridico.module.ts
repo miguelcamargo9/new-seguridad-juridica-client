@@ -5,7 +5,7 @@ import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { MaterialModule, UtilsModule } from "../app.module";
-import { CrearInformeTecnicoJuridicoComponent } from "./crear/CrearInformeTecnicoJuridico.component";
+import { CrearInformeTecnicoJuridicoComponent } from "./crear/crearInformeTecnicoJuridico.component";
 import { InformeTecnicoJuridicoRoutes } from "./informeTecnicoJuridico.routing";
 import { InformeTecnicoJuridicoService } from "./informeTecnicoJuridico.service";
 import { DomainService } from "../domains/domain.service";
