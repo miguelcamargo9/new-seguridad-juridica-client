@@ -763,19 +763,42 @@
                           <div class="input-group form-control-lg">
                             <mat-form-field
                               class="example-full-width has-label"
-                              [ngClass]="displayFieldCss(colindanteForm, 'cardinalidad')"
+                              [ngClass]="displayFieldCss(colindanteForm, 'nombre')"
                             >
                               <input
                                 type="text"
-                                name="cardinalidad"
+                                name="nombre"
                                 matInput
-                                id="cardinalidad"
-                                placeholder="CARDINALIDAD"
-                                formControlName="cardinalidad"
+                                id="nombre"
+                                placeholder="NOMBRE"
+                                formControlName="nombre"
                                 oninput="this.value = this.value.toUpperCase()"
                               />
                               <app-field-error-display
-                                [displayError]="isFieldValid(colindanteForm, 'cardinalidad')"
+                                [displayError]="isFieldValid(colindanteForm, 'nombre')"
+                                errorMsg="Diligenciar el campo."
+                              >
+                              </app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(colindanteForm, 'apellido')"
+                            >
+                              <input
+                                type="text"
+                                name="apellido"
+                                matInput
+                                id="apellido"
+                                placeholder="APELLIDO"
+                                formControlName="apellido"
+                                oninput="this.value = this.value.toUpperCase()"
+                              />
+                              <app-field-error-display
+                                [displayError]="isFieldValid(colindanteForm, 'apellido')"
                                 errorMsg="Diligenciar el campo."
                               >
                               </app-field-error-display>
@@ -783,6 +806,109 @@
                           </div>
                         </div>
                       </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="input-group form-control-lg">
+                            <mat-form-field
+                              class="example-full-width has-label"
+                              [ngClass]="displayFieldCss(colindanteForm, 'cardinalidad')"
+                            >
+                              <mat-select
+                                placeholder="CARDINALIDAD"
+                                name="cardinalidad"
+                                formControlName="cardinalidad"
+                              >
+                              <mat-option
+                                *ngFor="let cardinal of cardinalidadValues ; let i = index"
+                                [value]="i"
+                              >
+                                {{ cardinal }}
+                                </mat-option>
+                              </mat-select>
+                              <app-field-error-display
+                                [displayError]="isFieldValid(colindanteForm, 'cardinalidad')"
+                                errorMsg="Diligenciar el campo."
+                              ></app-field-error-display>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <button
+                            [hidden]="colindanteButton !== 'add'"
+                            mat-raised-button
+                            class="btn btn-warning btn-sm"
+                            (click)="addColindante()"
+                          >
+                            Guardar
+                          </button>
+                          <button
+                            [hidden]="colindanteButton !== 'edit'"
+                            mat-raised-button
+                            class="btn btn-warning btn-sm"
+                            (click)="editColindante()"
+                          >
+                            Editar
+                          </button>
+                          <button
+                            [hidden]="colindanteButton !== 'delete'"
+                            mat-raised-button
+                            class="btn btn-danger btn-sm"
+                            (click)="deleteEtapaInicio()"
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-11">
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th class="text-center">#</th>
+                                  <th>NOMBRE</th>
+                                  <th>APELLIDO</th>
+                                  <th>CARDINALIDAD</th>
+                                  
+                                  <th class="text-right">OPCIONES</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let colsInfo of colindantesInfo">
+                                  <td class="text-center">{{ colsInfo.id }}</td>
+                                  <td>{{ colsInfo.nombre }}</td>
+                                  <td>{{ colsInfo.apellido }}</td>
+                                  <td>{{ colsInfo.cardinalidad }}</td>
+                                  
+                                  <td class="td-actions">
+                                    <button
+                                      type="button"
+                                      rel="tooltip"
+                                      class="btn btn-warning btn-round"
+                                      (click)="loadEtapaInicio(colsInfo.id, 'edit')"
+                                    >
+                                      <i class="material-icons">edit</i>
+                                    </button>
+                                    <button
+                                      type="button"
+                                      rel="tooltip"
+                                      class="btn btn-danger btn-round"
+                                      (click)="loadEtapaInicio(colsInfo.id, 'delete')"
+                                    >
+                                      <i class="material-icons">close</i>
+                                    </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                   <div class="card-footer">

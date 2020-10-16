@@ -6,6 +6,7 @@ import { InformeTecnicoJuridicoService } from "../informeTecnicoJuridico.service
 import { Subscription } from "rxjs";
 import { DomainService } from "src/app/domains/domain.service";
 import { Domain } from "src/app/domains/domain.model";
+import { Colindante } from "../colindante.model";
 import * as ClassicEditor from "ckeditor5-build-alignment-b64image";
 
 @Component({
@@ -33,12 +34,17 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
   tipoExplotaciones: Domain[];
   usersAbodago: Domain[];
   usersIngeniero: Domain[];
+  cardinalidadValues = ["NORTE","ESTE","OESTE","SUR"] ;
 
   solicitudId: number;
   informeTecnicoJuridicoId: number;
   informacionVurId: number;
   informacionCatastralId: number;
   informacionPredialId: number;
+  colindanteId: number;
+
+  colindantesInfo: Colindante[];
+  colindanteButton: String = "add";
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -50,6 +56,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.cardinalidadValues)
     this.initForms();
     this.getDomains();
     this.routeSub = this.route.params.subscribe((params) => {
@@ -112,6 +119,8 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
     });
     this.colindanteForm = this._formBuilder.group({
       cardinalidad: ["", Validators.required],
+      nombre: ["", Validators.required],
+      apellido: ["", Validators.required],
     });
   }
 
@@ -514,7 +523,91 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
           }
         }
         break;
+        case "colindanteForm":
+          if (this.colindanteForm.invalid) {
+            console.log("Invalido", this.findInvalidControls(this.fifthFormGroup));
+            this.toastr.error("Formulario Invalido", "Informe Tecnico Juridico");
+            return;
+          }else{
+            const dataColindanteForm = this.colindanteForm.value;
+            dataColindanteForm.informeTecnicoJuridicoId = this.informeTecnicoJuridicoId * 1;
+            
+          }
+          break;
+
     }
+  }
+
+  loadColindantes(colindanteId: number, process: String) {
+    this.colindanteId = colindanteId;
+    this.colindanteButton = process;
+    this.informeTecnicoJuridicoService
+      .getColindanteByid(colindanteId)
+      .subscribe((colindanteData) => {
+        this.colindanteForm.controls["nombre"].setValue(
+          colindanteData.nombre || null
+        );
+        this.colindanteForm.controls["apellido"].setValue(
+          colindanteData.apellido
+        );
+        this.colindanteForm.controls["cardinalidad"].setValue(
+          colindanteData.cardinalidad
+        );
+        
+      });
+  }
+
+  getColindantesByInformeTecnicoJuridicoId(seguimiento902Id: number) {
+    this.informeTecnicoJuridicoService
+      .geColindanteByInformeTecnicoJuridicoId(seguimiento902Id)
+      .subscribe((dataColindante) => {
+        this.colindantesInfo = dataColindante;
+        if (this.colindantesInfo[0]) {
+          this.loadColindantes(this.colindantesInfo[0].id, "edit");
+        }
+      });
+  }
+
+  getDataFormColindantes() {
+    const formData = this.colindanteForm.value;
+    return {
+      informeTecnicoJuridicoId: this.informeTecnicoJuridicoId,
+      nombre: formData.nombre,
+      apellido: formData.apellido,
+      cardinalidad: formData.cardinalidad
+    };
+  }
+
+  addColindante() {
+    if (this.colindanteForm.invalid) {
+      console.log("Invalido", this.findInvalidControls(this.fifthFormGroup));
+      this.toastr.error("Formulario Invalido", "Informe Tecnico Juridico");
+    } else {
+      const data = this.getDataFormColindantes();
+      this.informeTecnicoJuridicoService.postCreateColindante(data).subscribe((result) => {
+        this.toastr.success(
+          "Colindante creado con exito",
+          "Informe Tecnico Juridico"
+        );
+        this.getColindantesByInformeTecnicoJuridicoId(this.informeTecnicoJuridicoId);
+        //this.clearEtapaInicio();
+      });
+    }
+  }
+
+  editColindante() {
+    const data = this.getDataFormColindantes();
+    const finalData = {
+      ...data,
+      id: this.colindanteId,
+    };
+    this.informeTecnicoJuridicoService.putUpdateColindante(finalData).subscribe(() => {
+      this.toastr.success(
+        "Colindante editada con exito",
+        "Informe Tecnico Juridico"
+      );
+      this.getColindantesByInformeTecnicoJuridicoId(this.informeTecnicoJuridicoId);
+    });
   }
 
   onNext(formGroup, nameForm) {

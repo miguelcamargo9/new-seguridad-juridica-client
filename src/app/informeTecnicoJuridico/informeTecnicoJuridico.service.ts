@@ -117,4 +117,20 @@ export class InformeTecnicoJuridicoService {
   getColindanteByid(colidanteId: number): Observable<Colindante> {
     return this.http.get<Colindante>(environment.apiUrl + "/colindante/" + colidanteId);
   }
+
+  postCreateColindante(data: any) {
+    return this.http.post<number>(environment.apiUrl + "/colindante", data);
+  }
+
+  geColindanteByInformeTecnicoJuridicoId(
+    InformeTecnicoJuridicoId: number
+  ): Observable<Colindante[]> {
+    return this.http.get<Colindante[]>(
+      environment.apiUrl + "/colindante/byInformTecnicoJuridicoId/" + InformeTecnicoJuridicoId
+    );
+  }
+
+  putUpdateColindante(data: any): Observable<any> {
+    return this.http.put(environment.apiUrl + "/seguimiento902/etapaInicio/" + data.id, data);
+  }
 }
