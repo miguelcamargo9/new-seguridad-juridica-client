@@ -131,6 +131,12 @@ export class InformeTecnicoJuridicoService {
   }
 
   putUpdateColindante(data: any): Observable<any> {
-    return this.http.put(environment.apiUrl + "/seguimiento902/etapaInicio/" + data.id, data);
+    return this.http.put(environment.apiUrl + "/colindante" , data);
+  }
+
+  deleteColindante(colindanteID): Observable<any> {
+    return this.http.delete(
+      environment.apiUrl + "/colindante/" + colindanteID
+    );
   }
 }

@@ -3,5 +3,5 @@ export class Colindante {
   informeTecnicoJuridicoId: number;
   nombre: string;
   apellido: string;
-  cardinalidad: number;
+  cardinalidad: string;
 }

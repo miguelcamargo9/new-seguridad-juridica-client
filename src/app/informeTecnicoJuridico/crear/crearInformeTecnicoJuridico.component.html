@@ -751,7 +751,7 @@
                 </div>
               </form>
             </mat-step>
-            <mat-step [stepControl]="colindanteForm" [optional]="!colindanteForm.invalid">
+            <mat-step [stepControl]="colindanteForm" [optional]="colindantesInfo.length > 0">
               <form [formGroup]="colindanteForm">
                 <ng-template matStepLabel>INFORMACIÓN COLINDANTES</ng-template>
                 <div class="card card-wizard">
@@ -818,11 +818,11 @@
                                 name="cardinalidad"
                                 formControlName="cardinalidad"
                               >
-                              <mat-option
-                                *ngFor="let cardinal of cardinalidadValues ; let i = index"
-                                [value]="i"
-                              >
-                                {{ cardinal }}
+                                <mat-option
+                                  *ngFor="let cardinal of cardinalidadValues; let i = index"
+                                  [value]="i"
+                                >
+                                  {{ cardinal }}
                                 </mat-option>
                               </mat-select>
                               <app-field-error-display
@@ -856,7 +856,7 @@
                             [hidden]="colindanteButton !== 'delete'"
                             mat-raised-button
                             class="btn btn-danger btn-sm"
-                            (click)="deleteEtapaInicio()"
+                            (click)="deleteColindante()"
                           >
                             Eliminar
                           </button>
@@ -873,7 +873,7 @@
                                   <th>NOMBRE</th>
                                   <th>APELLIDO</th>
                                   <th>CARDINALIDAD</th>
-                                  
+
                                   <th class="text-right">OPCIONES</th>
                                 </tr>
                               </thead>
@@ -883,13 +883,13 @@
                                   <td>{{ colsInfo.nombre }}</td>
                                   <td>{{ colsInfo.apellido }}</td>
                                   <td>{{ colsInfo.cardinalidad }}</td>
-                                  
+
                                   <td class="td-actions">
                                     <button
                                       type="button"
                                       rel="tooltip"
                                       class="btn btn-warning btn-round"
-                                      (click)="loadEtapaInicio(colsInfo.id, 'edit')"
+                                      (click)="loadColindantes(colsInfo.id, 'edit')"
                                     >
                                       <i class="material-icons">edit</i>
                                     </button>
@@ -897,7 +897,7 @@
                                       type="button"
                                       rel="tooltip"
                                       class="btn btn-danger btn-round"
-                                      (click)="loadEtapaInicio(colsInfo.id, 'delete')"
+                                      (click)="loadColindantes(colsInfo.id, 'delete')"
                                     >
                                       <i class="material-icons">close</i>
                                     </button>
@@ -908,7 +908,6 @@
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                   <div class="card-footer">

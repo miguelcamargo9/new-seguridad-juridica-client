@@ -34,7 +34,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
   tipoExplotaciones: Domain[];
   usersAbodago: Domain[];
   usersIngeniero: Domain[];
-  cardinalidadValues = ["NORTE","ESTE","OESTE","SUR"] ;
+  cardinalidadValues = ["NORTE", "SUR", "ESTE", "OESTE"];
 
   solicitudId: number;
   informeTecnicoJuridicoId: number;
@@ -43,7 +43,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
   informacionPredialId: number;
   colindanteId: number;
 
-  colindantesInfo: Colindante[];
+  colindantesInfo: Colindante[] = [];
   colindanteButton: String = "add";
 
   constructor(
@@ -56,7 +56,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.cardinalidadValues)
+    console.log(this.cardinalidadValues);
     this.initForms();
     this.getDomains();
     this.routeSub = this.route.params.subscribe((params) => {
@@ -262,6 +262,8 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
               console.log("Error Obteniendo el Objeto!" + error);
             }
           );
+        //INFORMACION DE COLINDANTES
+        this.getColindantesByInformeTecnicoJuridicoId(this.informeTecnicoJuridicoId);
       },
       (error) => {
         console.log("Error Obteniendo el Objeto!" + error);
@@ -523,19 +525,21 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
           }
         }
         break;
-        case "colindanteForm":
-          if (this.colindanteForm.invalid) {
-            console.log("Invalido", this.findInvalidControls(this.fifthFormGroup));
-            this.toastr.error("Formulario Invalido", "Informe Tecnico Juridico");
-            return;
-          }else{
-            const dataColindanteForm = this.colindanteForm.value;
-            dataColindanteForm.informeTecnicoJuridicoId = this.informeTecnicoJuridicoId * 1;
-            
-          }
-          break;
-
+      case "colindanteForm":
+        if (this.colindantesInfo.length <= 0 && this.colindanteForm.invalid) {
+          console.log("Invalido no sale", this.findInvalidControls(this.fifthFormGroup));
+          this.toastr.error("Formulario Invalido", "Informe Tecnico Juridico");
+          return;
+        }
+        break;
     }
+  }
+
+  clearColindante() {
+    this.colindanteButton = "add";
+    this.colindanteForm.controls["nombre"].setValue(null);
+    this.colindanteForm.controls["apellido"].setValue(null);
+    this.colindanteForm.controls["cardinalidad"].setValue(null);
   }
 
   loadColindantes(colindanteId: number, process: String) {
@@ -544,26 +548,22 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
     this.informeTecnicoJuridicoService
       .getColindanteByid(colindanteId)
       .subscribe((colindanteData) => {
-        this.colindanteForm.controls["nombre"].setValue(
-          colindanteData.nombre || null
-        );
-        this.colindanteForm.controls["apellido"].setValue(
-          colindanteData.apellido
-        );
+        this.colindanteForm.controls["nombre"].setValue(colindanteData.nombre || null);
+        this.colindanteForm.controls["apellido"].setValue(colindanteData.apellido);
         this.colindanteForm.controls["cardinalidad"].setValue(
-          colindanteData.cardinalidad
+          this.cardinalidadValues.indexOf(colindanteData.cardinalidad)
         );
-        
       });
   }
 
   getColindantesByInformeTecnicoJuridicoId(seguimiento902Id: number) {
+    console.log("Llenando informacion");
     this.informeTecnicoJuridicoService
       .geColindanteByInformeTecnicoJuridicoId(seguimiento902Id)
       .subscribe((dataColindante) => {
         this.colindantesInfo = dataColindante;
         if (this.colindantesInfo[0]) {
-          this.loadColindantes(this.colindantesInfo[0].id, "edit");
+          //this.loadColindantes(this.colindantesInfo[0].id, "add");
         }
       });
   }
@@ -574,7 +574,7 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
       informeTecnicoJuridicoId: this.informeTecnicoJuridicoId,
       nombre: formData.nombre,
       apellido: formData.apellido,
-      cardinalidad: formData.cardinalidad
+      cardinalidad: formData.cardinalidad,
     };
   }
 
@@ -585,12 +585,9 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
     } else {
       const data = this.getDataFormColindantes();
       this.informeTecnicoJuridicoService.postCreateColindante(data).subscribe((result) => {
-        this.toastr.success(
-          "Colindante creado con exito",
-          "Informe Tecnico Juridico"
-        );
+        this.toastr.success("Colindante creado con exito", "Informe Tecnico Juridico");
         this.getColindantesByInformeTecnicoJuridicoId(this.informeTecnicoJuridicoId);
-        //this.clearEtapaInicio();
+        this.clearColindante();
       });
     }
   }
@@ -602,16 +599,26 @@ export class CrearInformeTecnicoJuridicoComponent implements OnInit {
       id: this.colindanteId,
     };
     this.informeTecnicoJuridicoService.putUpdateColindante(finalData).subscribe(() => {
-      this.toastr.success(
-        "Colindante editada con exito",
-        "Informe Tecnico Juridico"
-      );
+      this.toastr.success("Colindante editada con exito", "Informe Tecnico Juridico");
       this.getColindantesByInformeTecnicoJuridicoId(this.informeTecnicoJuridicoId);
     });
   }
 
+  deleteColindante() {
+    this.informeTecnicoJuridicoService.deleteColindante(this.colindanteId).subscribe((result) => {
+      this.toastr.success("Colindante eliminado con exito", "Informe Tecnico Juridico");
+      this.getColindantesByInformeTecnicoJuridicoId(this.informeTecnicoJuridicoId);
+      this.colindanteButton = "add";
+      this.clearColindante();
+    });
+  }
+
   onNext(formGroup, nameForm) {
-    if (formGroup.invalid) {
+    if (nameForm === "colindanteForm" && this.colindantesInfo.length <= 0 && formGroup.invalid) {
+      console.log("Invalido", this.findInvalidControls(formGroup));
+      this.toastr.error("Formulario Invalido", "Informe Tecnico Juridico");
+      return;
+    } else if (formGroup.invalid && nameForm !== "colindanteForm") {
       console.log("Invalido", this.findInvalidControls(formGroup));
       this.toastr.error("Formulario Invalido", "Informe Tecnico Juridico");
       return;
