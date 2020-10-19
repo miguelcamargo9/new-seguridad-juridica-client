@@ -261,19 +261,20 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
               e.toastr.error("Debe Agregar al menos un registro.");
               return false;
             } else {
-              if (form.estadoInformeTecnicoJuridicoId === 2 && index === 2) {
-                e.toastr.success("Guardando información pero no puede continuar.");
-                e.save();
-                return false;
-              } else {
-                if (form.tipoTieneViabilidadJuridicaId === 2 && index === 4) {
-                  e.toastr.success("Guardando información pero no puede continuar.");
-                  e.save();
-                  return false;
-                } else {
-                  e.save();
-                }
-              }
+              e.save();
+              // if (form.estadoInformeTecnicoJuridicoId === 2 && index === 2) {
+              //   e.toastr.success("Guardando información pero no puede continuar.");
+              //   e.save();
+              //   return false;
+              // } else {
+              //   if (form.tipoTieneViabilidadJuridicaId === 2 && index === 4) {
+              //     e.toastr.success("Guardando información pero no puede continuar.");
+              //     e.save();
+              //     return false;
+              //   } else {
+              //     e.save();
+              //   }
+              // }
             }
           }
         }
@@ -359,19 +360,20 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
               e.toastr.error("Debe Agregar al menos un registro.");
               return false;
             } else {
-              if (form.estadoInformeTecnicoJuridicoId === 2 && indexDestination > 1) {
-                e.toastr.success("Guardando información pero no puede continuar.");
-                e.save();
-                return false;
-              } else {
-                if (form.tipoTieneViabilidadJuridicaId === 2 && indexDestination > 3) {
-                  e.toastr.success("Guardando información pero no puede continuar.");
-                  e.save();
-                  return false;
-                } else {
-                  e.save();
-                }
-              }
+              e.save();
+              // if (form.estadoInformeTecnicoJuridicoId === 2 && indexDestination > 1) {
+              //   e.toastr.success("Guardando información pero no puede continuar.");
+              //   e.save();
+              //   return false;
+              // } else {
+              //   if (form.tipoTieneViabilidadJuridicaId === 2 && indexDestination > 3) {
+              //     e.toastr.success("Guardando información pero no puede continuar.");
+              //     e.save();
+              //     return false;
+              //   } else {
+              //     e.save();
+              //   }
+              // }
             }
           }
         }
@@ -1139,7 +1141,7 @@ export class CrearSeguimiento902Component implements OnInit, OnChanges, AfterVie
     this.viewMotivoOposicion = event.value ? true : false;
   }
   selectTieneViabilidadJuridica(event) {
-    // this.viewTipoDeNoViabilidadId = event.value === 2 ? true : false;
+    this.viewTipoDeNoViabilidadId = event.value === 2 ? true : false;
     this.viewTipoMotivoSuspension = event.value === 3 ? true : false;
   }
   selectEstadoSinegia(event) {
