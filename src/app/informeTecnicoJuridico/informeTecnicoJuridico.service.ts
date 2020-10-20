@@ -6,6 +6,7 @@ import { InformeTecnicoJuridico } from "./informeTecnicoJuridico.model";
 import { InformacionVur } from "./informacionVur.model";
 import { InformacionCatastral } from "./informacionCatastral.model";
 import { InformacionPredial } from "./informacionPredial.model";
+import { Colindante } from "./colindante.model";
 
 @Injectable()
 export class InformeTecnicoJuridicoService {
@@ -110,6 +111,32 @@ export class InformeTecnicoJuridicoService {
         "/informeTecnicoJuridico/informacionPredial/" +
         data.informeTecnicoJuridicoId,
       data
+    );
+  }
+
+  getColindanteByid(colidanteId: number): Observable<Colindante> {
+    return this.http.get<Colindante>(environment.apiUrl + "/colindante/" + colidanteId);
+  }
+
+  postCreateColindante(data: any) {
+    return this.http.post<number>(environment.apiUrl + "/colindante", data);
+  }
+
+  geColindanteByInformeTecnicoJuridicoId(
+    InformeTecnicoJuridicoId: number
+  ): Observable<Colindante[]> {
+    return this.http.get<Colindante[]>(
+      environment.apiUrl + "/colindante/byInformTecnicoJuridicoId/" + InformeTecnicoJuridicoId
+    );
+  }
+
+  putUpdateColindante(data: any): Observable<any> {
+    return this.http.put(environment.apiUrl + "/colindante" , data);
+  }
+
+  deleteColindante(colindanteID): Observable<any> {
+    return this.http.delete(
+      environment.apiUrl + "/colindante/" + colindanteID
     );
   }
 }
