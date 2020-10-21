@@ -8,12 +8,8 @@
             <form [formGroup]="solicitud">
               <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
               <div class="card-header text-center">
-                <h3 class="card-title">
-                  Crear Solicitud
-                </h3>
-                <h5 class="card-description">
-                  Insertar la informacion de la solicitud.
-                </h5>
+                <h3 class="card-title">Crear Solicitud</h3>
+                <h5 class="card-description">Insertar la informacion de la solicitud.</h5>
               </div>
               <div class="wizard-navigation">
                 <ul class="nav nav-pills">
@@ -47,6 +43,34 @@
                         <div class="input-group form-control-lg">
                           <div class="input-group-prepend">
                             <span class="input-group-text">
+                              <i class="material-icons">build</i>
+                            </span>
+                          </div>
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="displayFieldCss(solicitud, 'tipoProcesoId')"
+                          >
+                            <mat-select
+                              placeholder="tipoProcesoS"
+                              name="tipoProcesoId"
+                              id="tipoProcesoId"
+                              formControlName="tipoProcesoId"
+                              (selectionChange)="selectDepartmento($event)"
+                            >
+                              <mat-option
+                                *ngFor="let tipoProceso of tiposProceso"
+                                [value]="tipoProceso.id"
+                              >
+                                {{ tipoProceso.nombre }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
                               <i class="material-icons">extension</i>
                             </span>
                           </div>
@@ -59,7 +83,7 @@
                               name="expedienteSIT"
                               matInput
                               id="text"
-                              placeholder="Expediente SIT"
+                              placeholder="Expediente ORFEO/SIT"
                               formControlName="expedienteSIT"
                               oninput="this.value = this.value.toUpperCase()"
                             />
@@ -96,6 +120,36 @@
                               errorMsg="Diligenciar el campo."
                             >
                             </app-field-error-display>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="input-group form-control-lg">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">
+                              <i class="material-icons">calendar_today</i>
+                            </span>
+                          </div>
+                          <mat-form-field
+                            class="example-full-width has-label"
+                            [ngClass]="displayFieldCss(solicitud, 'fechaFiso')"
+                          >
+                            <input
+                              matInput
+                              [matDatepicker]="fechaFisopicker"
+                              placeholder="FECHA FISO"
+                              name="fechaFiso"
+                              id="fechaFiso"
+                              (click)="fechaFisopicker.open()"
+                              formControlName="fechaFiso"
+                            />
+                            <mat-datepicker-toggle matSuffix [for]="fechaFisopicker">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #fechaFisopicker></mat-datepicker>
+                            <app-field-error-display
+                              [displayError]="isFieldValid(solicitud, 'fechaFiso')"
+                              errorMsg="Diligenciar el campo."
+                            ></app-field-error-display>
                           </mat-form-field>
                         </div>
                       </div>
@@ -298,7 +352,11 @@
                               id="primerNombreSolicitante"
                               placeholder="PRIMER NOMBRE SOLICITANTE"
                               formControlName="primerNombreSolicitante"
-                              (focusout)="this.solicitud.controls['primerNombreSolicitante'].setValue(standardWord(this.solicitud.value.primerNombreSolicitante))"
+                              (focusout)="
+                                this.solicitud.controls['primerNombreSolicitante'].setValue(
+                                  standardWord(this.solicitud.value.primerNombreSolicitante)
+                                )
+                              "
                               oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
@@ -324,7 +382,11 @@
                               type="text"
                               id="segundoNombreSolicitante"
                               name="segundoNombreSolicitante"
-                              (focusout)="this.solicitud.controls['segundoNombreSolicitante'].setValue(standardWord(this.solicitud.value.segundoNombreSolicitante))"
+                              (focusout)="
+                                this.solicitud.controls['segundoNombreSolicitante'].setValue(
+                                  standardWord(this.solicitud.value.segundoNombreSolicitante)
+                                )
+                              "
                               oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
@@ -348,7 +410,11 @@
                               id="primerApellidoSolicitante"
                               placeholder="PRIMER APELLIDO SOLICITANTE"
                               formControlName="primerApellidoSolicitante"
-                              (focusout)="this.solicitud.controls['primerApellidoSolicitante'].setValue(standardWord(this.solicitud.value.primerApellidoSolicitante))"
+                              (focusout)="
+                                this.solicitud.controls['primerApellidoSolicitante'].setValue(
+                                  standardWord(this.solicitud.value.primerApellidoSolicitante)
+                                )
+                              "
                               oninput="this.value = this.value.toUpperCase()"
                             />
                             <app-field-error-display
@@ -374,7 +440,11 @@
                               type="text"
                               id="segundoApellidoSolicitante"
                               name="segundoApellidoSolicitante"
-                              (focusout)="this.solicitud.controls['segundoApellidoSolicitante'].setValue(standardWord(this.solicitud.value.segundoApellidoSolicitante))"
+                              (focusout)="
+                                this.solicitud.controls['segundoApellidoSolicitante'].setValue(
+                                  standardWord(this.solicitud.value.segundoApellidoSolicitante)
+                                )
+                              "
                               oninput="this.value = this.value.toUpperCase()"
                             />
                           </mat-form-field>
@@ -751,9 +821,11 @@
                               name="areaSolicitada"
                               matInput
                               id="areaSolicitada"
-                              placeholder="ÁREA SOLICITADA m2 (FISO) * - {{solicitud.get('areaSolicitada').value | replaceArea}}"
+                              placeholder="ÁREA SOLICITADA m2 (FISO) * - {{
+                                solicitud.get('areaSolicitada').value | replaceArea
+                              }}"
                               formControlName="areaSolicitada"
-                              onkeypress='return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)'
+                              onkeypress="return event.charCode === 46 || event.charCode === 110 || (event.charCode >= 48 && event.charCode <= 57)"
                             />
                             <app-field-error-display
                               [displayError]="isFieldValid(solicitud, 'areaSolicitada')"
@@ -788,7 +860,7 @@
                     class="btn btn-finish btn-fill btn-warning btn-wd"
                     name="finish"
                     value="Guardar"
-                    style="display: none;"
+                    style="display: none"
                     (click)="onSubmit()"
                   />
                 </div>

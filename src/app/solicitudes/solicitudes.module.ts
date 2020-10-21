@@ -13,6 +13,8 @@ import { BuscarSolicitudComponent } from "./buscar/buscarsolicitud.component";
 import { DataTablesModule } from "angular-datatables";
 import { VerSolicitudComponent } from "./ver/versolicitud.component";
 import { EditarSolicitudComponent } from "./editar/editarsolicitud.component";
+import { MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
+import { AppDateAdapter, APP_DATE_FORMATS } from "../core/format-datepicker/format-datepicker";
 
 @NgModule({
   imports: [
@@ -22,14 +24,19 @@ import { EditarSolicitudComponent } from "./editar/editarsolicitud.component";
     ReactiveFormsModule,
     MaterialModule,
     UtilsModule,
-    DataTablesModule
+    DataTablesModule,
   ],
   declarations: [
     CrearSolicitudComponent,
     BuscarSolicitudComponent,
     VerSolicitudComponent,
-    EditarSolicitudComponent
+    EditarSolicitudComponent,
   ],
-  providers: [DomainService, SolicitudService]
+  providers: [
+    DomainService,
+    SolicitudService,
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+  ],
 })
 export class SolicitudModule {}

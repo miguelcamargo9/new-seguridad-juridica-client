@@ -42,6 +42,7 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   tiposPruebaUnion: Domain[];
   tiposSexos: Domain[];
   tiposDocumento: Domain[];
+  tiposProceso: Domain[];
 
   showPersonas: Boolean = false;
   showNombrePredioMayor: Boolean = false;
@@ -81,11 +82,13 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
 
     this.solicitud = this.formBuilder.group({
       // To add a validator, we must first convert the string value into an array. The first item in the array is the default value if any, then the next item in the array is the validator. Here we are adding a required validator meaning that the firstName attribute must have a value in it.
+      tipoProcesoId: [null, [Validators.required]],
       expedienteSIT: [
         null,
         [Validators.required, Validators.minLength(19), Validators.maxLength(19)],
       ],
       fiso: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
+      fechaFiso: [null, [Validators.required]],
       departamentoId: [null, [Validators.required]],
       departamentoDane: [{ value: null, disabled: true }, [Validators.required]],
       municipioId: [null, [Validators.required]],
@@ -120,6 +123,9 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
         fiso: {
           required: true,
           minlength: 7,
+        },
+        fechaFiso: {
+          required: true,
         },
         departamentoId: {
           required: true,
@@ -164,8 +170,10 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
       this.solicitudService.getSolicitudById(this.solicitudId).subscribe(
         (solicitudData) => {
           //Page1
+          this.solicitud.controls["tipoProcesoId"].setValue(solicitudData.tipoProcesoId);
           this.solicitud.controls["expedienteSIT"].setValue(solicitudData.expedienteSit);
           this.solicitud.controls["fiso"].setValue(solicitudData.fiso);
+          this.solicitud.controls["fechaFiso"].setValue(this.changeDate(solicitudData.fechaFiso));
           this.solicitud.controls["departamentoId"].setValue(solicitudData.departamentoId);
           this.setDepartamento(solicitudData.departamentoId, solicitudData.municipioId);
           this.solicitud.controls["municipioId"].setValue(solicitudData.municipioId);
@@ -568,6 +576,14 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
         console.log("There was an error while retrieving Tipo Documento!" + error);
       }
     );
+    this.domainServcie.getTipoProceso().subscribe(
+      (tiposProcesoData) => {
+        this.tiposProceso = tiposProcesoData;
+      },
+      (error) => {
+        console.log("There was an error while retrieving Tipo Documento!" + error);
+      }
+    );
   }
   addPersona() {
     const persona = new Persona();
@@ -635,6 +651,8 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
   onSubmit() {
     const formData = this.solicitud.value;
 
+    console.log("FOROM ", formData);
+
     const personas = this.personas.map((persona) => {
       return {
         id: persona.id,
@@ -671,8 +689,10 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
 
     const data = {
       id: this.solicitudId,
+      tipoProcesoId: formData.tipoProcesoId,
       expedienteSit: formData.expedienteSIT,
       fiso: formData.fiso,
+      fechaFiso: formData.fechaFiso,
       departamentoId: formData.departamentoId,
       municipioId: formData.municipioId,
       corregimiento: formData.corregimiento,
@@ -732,5 +752,13 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     }
     console.log("STrign finallll: ", ret.join(""));
     return ret.join("");
+  }
+  changeDate(d: Date) {
+    if (d == null) return null;
+    return new Date(d);
+  }
+  showDate(d: String) {
+    if (d == null) return null;
+    return d.substring(0, 10);
   }
 }

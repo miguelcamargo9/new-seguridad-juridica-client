@@ -96,4 +96,7 @@ export class DomainService {
   getTipoExplotacion(): Observable<Domain[]> {
     return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoExplotacion");
   }
+  getTipoProceso(): Observable<Domain[]> {
+    return this.http.get<Domain[]>(environment.apiUrl + "/domains/tipoProceso");
+  }
 }

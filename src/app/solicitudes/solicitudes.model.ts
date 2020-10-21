@@ -2,8 +2,10 @@ import { Persona } from "../models/Persona";
 
 export class Solicitud {
   id: number;
+  tipoProcesoId: number;
   expedienteSit: string;
   fiso: string;
+  fechaFiso: Date;
   departamentoId: number;
   municipioId: number;
   departamento: string;

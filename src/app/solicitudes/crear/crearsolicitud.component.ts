@@ -41,6 +41,7 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
   tiposPruebaUnion: Domain[];
   tiposSexos: Domain[];
   tiposDocumento: Domain[];
+  tiposProceso: Domain[];
 
   showPersonas: Boolean = false;
   showNombrePredioMayor: Boolean = false;
@@ -75,11 +76,13 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
 
     this.solicitud = this.formBuilder.group({
       // To add a validator, we must first convert the string value into an array. The first item in the array is the default value if any, then the next item in the array is the validator. Here we are adding a required validator meaning that the firstName attribute must have a value in it.
+      tipoProcesoId: [null, [Validators.required]],
       expedienteSIT: [
         null,
         [Validators.required, Validators.minLength(19), Validators.maxLength(19)],
       ],
       fiso: [null, [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
+      fechaFiso: [null, [Validators.required]],
       departamentoId: [null, [Validators.required]],
       departamentoDane: [{ value: null, disabled: true }, [Validators.required]],
       municipioId: [null, [Validators.required]],
@@ -471,6 +474,14 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
         console.log("There was an error while retrieving Tipo Documento!" + error);
       }
     );
+    this.domainServcie.getTipoProceso().subscribe(
+      (tiposProcesoData) => {
+        this.tiposProceso = tiposProcesoData;
+      },
+      (error) => {
+        console.log("There was an error while retrieving Tipo Documento!" + error);
+      }
+    );
   }
   addPersona() {
     const persona = new Persona();
@@ -552,7 +563,9 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
 
     const data = {
       expedienteSit: formData.expedienteSIT,
+      tipoProcesoId: formData.tipoProcesoId,
       fiso: formData.fiso,
+      fechaFiso: formData.fechaFiso,
       departamentoId: formData.departamentoId,
       municipioId: formData.municipioId,
       corregimiento: formData.corregimiento,
