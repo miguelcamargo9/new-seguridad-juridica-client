@@ -51,11 +51,11 @@
                             [ngClass]="displayFieldCss(solicitud, 'tipoProcesoId')"
                           >
                             <mat-select
-                              placeholder="tipoProcesoS"
+                              placeholder="TIPO PROCESO"
                               name="tipoProcesoId"
                               id="tipoProcesoId"
                               formControlName="tipoProcesoId"
-                              (selectionChange)="selectDepartmento($event)"
+                              (selectionChange)="verifyFisoValidate($event)"
                             >
                               <mat-option
                                 *ngFor="let tipoProceso of tiposProceso"

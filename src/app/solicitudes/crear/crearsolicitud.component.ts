@@ -115,7 +115,9 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
           maxlength: 19,
         },
         fiso: {
-          required: true,
+          required: () => {
+            return this.verifyFisoValidate();
+          },
           minlength: 7,
         },
         departamentoId: {
@@ -342,6 +344,32 @@ export class CrearSolicitudComponent implements OnInit, OnChanges, AfterViewInit
     });
 
     $(".set-full-height").css("height", "auto");
+  }
+
+  verifyFisoValidate() {
+    let tipoProceso = this.solicitud.value["tipoProcesoId"];
+
+    switch (tipoProceso) {
+      case 1:
+        this.solicitud.controls["fiso"].setValidators(Validators.required);
+        this.solicitud.get("fiso").updateValueAndValidity();
+        return true;
+        break;
+      case 2:
+        this.solicitud.get("fiso").clearValidators();
+        this.solicitud.get("fiso").updateValueAndValidity();
+        return false;
+        break;
+      case 3:
+        this.solicitud.controls["fiso"].setValidators(Validators.required);
+        this.solicitud.get("fiso").updateValueAndValidity();
+        return true;
+        break;
+      default:
+        this.solicitud.controls["fiso"].setValidators(Validators.required);
+        this.solicitud.get("fiso").updateValueAndValidity();
+        return true;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
