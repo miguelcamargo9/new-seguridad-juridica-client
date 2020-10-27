@@ -10,6 +10,7 @@ export class Solicitud {
   municipioId: number;
   departamento: string;
   municipio: string;
+  tipoProceso: string;
   corregimiento: string;
   vereda: string;
   condicionDelSolicitante: number;
