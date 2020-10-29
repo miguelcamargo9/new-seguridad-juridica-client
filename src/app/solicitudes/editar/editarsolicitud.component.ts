@@ -444,18 +444,13 @@ export class EditarSolicitudComponent implements OnInit, OnChanges, AfterViewIni
     let tipoProceso = this.solicitud.value["tipoProcesoId"];
     switch (tipoProceso) {
       case 1:
+      case 3:
         this.solicitud.get("fiso").clearValidators();
-        this.solicitud.get("fiso").updateValueAndValidity();
-        return true;
-        break;
-      case 2:
-        this.solicitud.controls["fiso"].setValidators(Validators.required);
         this.solicitud.get("fiso").updateValueAndValidity();
         return false;
         break;
-      case 3:
-        // this.solicitud.controls["fiso"].setValidators(Validators.required);
-        this.solicitud.get("fiso").clearValidators();
+      case 2:
+        this.solicitud.controls["fiso"].setValidators(Validators.required);
         this.solicitud.get("fiso").updateValueAndValidity();
         return true;
         break;
