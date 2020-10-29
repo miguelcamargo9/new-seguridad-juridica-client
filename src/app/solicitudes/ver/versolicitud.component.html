@@ -7,7 +7,7 @@
             <div class="card-icon">
               <i class="material-icons">info</i>
             </div>
-            <h4 class="card-title">Expediente #{{ solicitud.expedienteSit }}</h4>
+            <h4 class="card-title">Expediente #{{ solicitud.expedienteSit }} - {{ solicitud.tipoProceso }}</h4>
           </div>
           <div class="card-body">
             <div class="row">
@@ -19,10 +19,10 @@
                 <h4>FECHA FISO:</h4>
                 <p>{{ showDate(solicitud.fechaFiso) }}</p>
               </div>
-              <div class="col-md-6">
-                <h4>TIPO PROCESO:</h4>
-                <p>{{ solicitud.tipoProceso }}</p>
-              </div>
+<!--              <div class="col-md-6">-->
+<!--                <h4>TIPO PROCESO:</h4>-->
+<!--                <p>{{ solicitud.tipoProceso }}</p>-->
+<!--              </div>-->
               <div class="col-md-6">
                 <h4>Predio:</h4>
                 <p>{{ solicitud.nombreDelPredioAFormalizar }}</p>

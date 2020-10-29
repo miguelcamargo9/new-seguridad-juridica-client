@@ -12,13 +12,13 @@ export class ReporteSeguimiento902Component {
     constructor(private reportsService: ReportsService) {
     }
 
-    downloadFile() {
-        this.reportsService.getReporteSeguimiento902().subscribe(data => {
+    downloadFile(tipoProceso) {
+        this.reportsService.getReporteSeguimiento902(tipoProceso).subscribe(data => {
             const blob = new Blob([data], {
                 'type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             });
 
-          FileSaver.saveAs(blob, 'reporte902.xlsx');
+          FileSaver.saveAs(blob, 'reporte ' + tipoProceso + '.xlsx');
         });
     }
 }
