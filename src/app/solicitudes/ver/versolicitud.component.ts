@@ -8,7 +8,7 @@ import { Persona } from "src/app/models/Persona";
 
 @Component({
   selector: "app-versolicitud-cmp",
-  templateUrl: "versolicitud.component.html"
+  templateUrl: "versolicitud.component.html",
 })
 export class VerSolicitudComponent implements OnInit {
   routeSub: Subscription;
@@ -25,16 +25,20 @@ export class VerSolicitudComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.solicitudService.onSolicitudChanged.subscribe(
-      solicitudData => {
+      (solicitudData) => {
         this.solicitud = solicitudData;
         this.hasSeguimiento902 = this.solicitudService.hasSeguimiento902;
-        this.solicitante = solicitudData.personas.filter(persona => {
+        this.solicitante = solicitudData.personas.filter((persona) => {
           return persona.tipoPersonaId === 1;
         })[0];
       },
-      error => {
+      (error) => {
         this.toastr.error("Solicitud no encontrada", "Solicitud");
       }
     );
+  }
+  showDate(d: String) {
+    if (d == null) return null;
+    return d.substring(0, 10);
   }
 }
